@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="span8 offset2">
+		<strong><h1>Sign Up Now!</h1></strong>
+	</div>
+</div>
+<div class="row space20">
+	<div class="span8 offset2 floating-paper">
+	  <%= form_for(:user) do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, :placeholder=>'Type your name here' %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email, :placeholder=>'Type your email here' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, :placeholder=>'Type your password here' %>
+
+      <%= f.label :password_confirmation, "Password confirmation" %>
+      <%= f.password_field :password_confirmation, :placeholder=>'Type your password again' %>
+
+      <%= f.label :company_name %>
+      <%= f.text_field :company_name, :placeholder=>'Type your company name here' %>
+
+      <%= f.label :address %>
+      <%= f.text_field :address, :placeholder=>'Type your company address here' %>
+
+      <%= f.label :contact %>
+      <%= f.text_field :contact, :placeholder=>'Type your contact number here' %>
+
+      <%= f.hidden_field :owner %>
+
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+      <% end %>
+	</div>
+</div>

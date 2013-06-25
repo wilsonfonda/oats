@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Profile</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<%= form_for(:user) do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, :placeholder=>'Type your name here' %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email, :placeholder=>'Type your email here' %>
+
+      <%= f.label :office %>
+      <%= f.text_field :office, :placeholder=>'Name your branch office here' %>
+
+      <%= f.label :division %>
+      <%= f.text_field :division, :placeholder=>'Type your division here' %>
+
+      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+      <% end %>
+		</div>
+		<div class="row">
+			<strong><h2>Change Password</h2></strong>
+		</div>
+		<div class="row floating-paper">
+			<%= form_for(:user) do |f| %>
+
+			<%= f.label :old_password %>
+      <%= f.password_field :old_password, :placeholder=>'Your old password' %>
+
+      <%= f.label :new_password %>
+      <%= f.password_field :new_password, :placeholder=>'Your new password' %>
+
+      <%= f.label :password_confirmation, "Password confirmation" %>
+      <%= f.password_field :password_confirmation, :placeholder=>'Type your new password again' %>
+
+      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+      <% end %>
+		</div>	
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Home</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<dl class="dl-horizontal">
+			    <dt>Username</dt>
+			    <dd>Kevin</dd>
+			    <dt>Email</dt>
+			    <dd>kevin@example.com</dd>
+			    <dt>Office</dt>
+			    <dd>Suitmedia Bandung</dd>
+			    <dt>Division</dt>
+			    <dd>Mobile</dd>
+			    <dt>Role</dt>
+			    <dd>Boss</dd>
+		    </dl>
+		</div>
+		<div class="row horizontal-bar"></div>
+		<div class="row">
+			<strong><h2>Check In / Check Out</h2></strong>
+		</div>
+		<div class="row transparent-field">
+			<div class="span4 pull-left">
+				<div id="timer">
+					<div id="timer-hour">
+						00
+					</div>
+					<div id="timer-symbol">
+						:
+					</div>
+					<div id="timer-minute">
+						00
+					</div>
+					<div id="timer-symbol">
+						:
+					</div>
+					<div id="timer-second">
+						00
+					</div>
+				</div>
+			</div>
+			<div class="span3 pull-right space20">
+				<input type="button" id="checkin_button" class="btn btn-large btn-success center" value="Check In" onclick="check_in();">
+				<input type="button" id="checkout_button" class="btn btn-large btn-danger center" value="Check Out" onclick="check_out();">
+			</div>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
