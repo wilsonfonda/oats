@@ -1,6 +1,6 @@
 Oats::Application.routes.draw do
-  get "static_pages/index"
-  
+
+  get 'main/index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
