@@ -9,7 +9,6 @@ html, body {
 
 body
 {
-	//background-color: black;
 	/* Note: This gradient may render differently in browsers that don't support the unprefixed gradient syntax */
 
 	/* IE10 Consumer Preview */ 
@@ -63,5 +62,17 @@ h1
 	background-color: rgb(27,27,27);
 	padding-top: 20px;
 	padding-bottom: 20px;
-	position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -60px;
 }
