@@ -7,30 +7,44 @@
 	<div class="span8 offset2 floating-paper">
 	  <%= form_for(:user) do |f| %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name, :placeholder=>'Type your name here' %>
+    <%= f.label :email %>
+    <%= f.text_field :email, :placeholder=>'Type your email here' %>
 
-      <%= f.label :email %>
-      <%= f.text_field :email, :placeholder=>'Type your email here' %>
+    <%= f.label :password %>
+    <%= f.password_field :password, :placeholder=>'Type your password here' %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, :placeholder=>'Type your password here' %>
+    <%= f.label :password_confirmation, "Password confirmation" %>
+    <%= f.password_field :password_confirmation, :placeholder=>'Type your password again' %>
 
-      <%= f.label :password_confirmation, "Password confirmation" %>
-      <%= f.password_field :password_confirmation, :placeholder=>'Type your password again' %>
+    <%= f.label :name %>
+    <%= f.text_field :name, :placeholder=>'Type your name here' %>
+    <br/><br/><h4>Company Data</h4><br/>
 
-      <%= f.label :company_name %>
-      <%= f.text_field :company_name, :placeholder=>'Type your company name here' %>
+    <%= f.label :company_name %>
+    <%= f.text_field :company_name, :placeholder=>'Type your company name here' %>
 
-      <%= f.label :address %>
-      <%= f.text_field :address, :placeholder=>'Type your company address here' %>
+    <%= f.label :address %>
+    <%= f.text_field :address, :placeholder=>'Type your company address here' %>
 
-      <%= f.label :contact %>
-      <%= f.text_field :contact, :placeholder=>'Type your contact number here' %>
+    <%= f.label :contact %>
+    <%= f.text_field :contact, :placeholder=>'Type your contact number here' %>
 
-      <%= f.hidden_field :owner %>
+    <%= f.hidden_field :owner %>
 
-      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
-      <% end %>
+    <br/><br/><h4>Office Data</h4><br/>
+
+    <%= f.label :office_name %>
+    <%= f.text_field :office_name, :placeholder=>'Type your office name here' %>
+
+    <%= f.label :latitude %>
+    <%= f.text_field :latitude, :placeholder=>'Insert the latitude of your office location here' %>
+
+    <%= f.label :longitude %>
+    <%= f.text_field :longitude, :placeholder=>'Insert the longitude of your office location here' %>
+
+    <input type="button" value="Get my current location" onclick="" class="btn btn-success"/><br/><br/>
+
+    <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
 	</div>
 </div>

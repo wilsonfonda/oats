@@ -14,4 +14,13 @@ class MainController < ApplicationController
 
   def edit_profile
   end
+
+  def company
+  end
+
+  def edit_company
+  end
+
+  def employee
+  end
 end

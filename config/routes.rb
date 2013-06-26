@@ -5,6 +5,9 @@ Oats::Application.routes.draw do
   match '/signin', to: 'main#signin'
   match '/home', to: 'main#home'
   match '/profile', to: 'main#edit_profile'
+  match '/company', to: 'main#company'
+  match '/company/edit', to: 'main#edit_company'
+  match '/employees', to: 'main#employee'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
