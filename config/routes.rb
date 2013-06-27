@@ -1,10 +1,22 @@
 Oats::Application.routes.draw do
+  root :to => 'main#index'
 
   get 'main/index'
   get 'main/contact'
   get 'main/about'
   get 'main/help'
   get 'main/testimony'
+  get 'main/terms'
+  get 'main/privacy'
+
+  match '/index', to: "main#index"
+  match '/contact', to: 'main#contact'
+  match '/about', to: 'main#about'
+  match '/help', to: 'main#help'
+  match '/testimony', to: 'main#testimony'
+  match '/terms', to: 'main#terms'
+  match '/privacy', to: 'main#privacy' 
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
