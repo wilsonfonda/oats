@@ -4,6 +4,7 @@ Oats::Application.routes.draw do
   resources :companies
   resources :worktimes
   resources :offices
+  post "add", :to =>"users#add"
   
   devise_scope :user do
     get "signin", :to => "devise/sessions#new"

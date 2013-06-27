@@ -5,8 +5,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    
-
     @company = Company.new()
     @company.name = params[:company_name]
     @company.address = params[:company_address]
@@ -34,6 +32,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user.password_confirmation = params[:password_confirmation]
     @user.name = params[:name]
     @user.division = params[:division]
+    @user.access_token = Digest::SHA2.hexdigest(params[:email])
     @user.role = 1
     @user.save
 
