@@ -1,99 +1,24 @@
-<div id="wrap">
-	<div id="openRegister" class="indexDialog" >
-		<div class="row">
-			<a href="#close" title="Close" class="close">X</a>
-			 <%= form_for :company, :html=> {:class => 'form-horizontal center', :style=> 'margin-top:25px;'} do |f| %>
-			 	<legend class="center" style="font-size:40px;">Sign Up Form</legend>
-			 	<div class="control-group">
-				    <%= f.label :username, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-				    	<%= f.text_field :username%>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :name, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-				    	<%= f.text_field :name%>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :email, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-				    	<%= f.text_field :email%>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :password, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-			    	<%= f.password_field :password %>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :password_confirmation, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-			    	<%= f.password_field :password_confirmation %>
-				   	</div>
-				</div>
-			    <%= f.submit "Sign Up", class: "btn btn-primary btn-large", style: "width:60%"%>
-			  <% end %>
+<div class="row center">
+	<div class="span4 column ui-sortable">
+		<div class="row center" style="padding-top:40px;">
+			<strong><h1 class="center space10">Welcome</h1></strong>
+			<strong><h1 class="center space10">to OATS!</h1></strong>
+		</div>
+		<div class="row center">
+			<h2 class="center space10">Open Attendance System</h2>
+		</div>
+		<div class="row center">
+			<button class="btn btn-primary btn-large center space10" type="button" style="margin-top:-5px" onclick="to_signup()" >Sign up today</a>
+		</div>
+		<div class="row center">
+			<button class="btn btn-primary btn-large center space10" type="button" style="margin-top:-5px" onclick="to_signin();">Sign in</a>
 		</div>
 	</div>
-
-		<div id="openSignin" class="indexDialog" >
+	<div class="span6 column ui-sortable">
 		<div class="row">
-			<a href="#close" title="Close" class="close">X</a>
-			 <%= form_for :company, :html=> {:class => 'form-horizontal center', :style=> 'margin-top:25px;'} do |f| %>
-			 	<legend class="center" style="font-size:40px;">Sign In Form</legend>
-				<div class="control-group">
-				    <%= f.label :email, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-				    	<%= f.text_field :email%>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :password, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-			    	<%= f.password_field :password %>
-				   	</div>
-				</div>
-
-				<div class="control-group">
-				    <%= f.label :password_confirmation, class: "control-label", style: "width:auto" %>
-				 	<div class="controls">
-			    	<%= f.password_field :password_confirmation %>
-				   	</div>
-				</div>
-			    <%= f.submit "Sign Up", class: "btn btn-primary btn-large", style: "width:60%"%>
-			  <% end %>
-		</div>
-	</div>
-
-	<div class="row center">
-		<div class="span4 column ui-sortable">
-			<div class="row center" style="padding-top:40px;">
-				<strong><h1 class="center space10">Welcome</h1></strong>
-				<strong><h1 class="center space10">to OATS!</h1></strong>
-			</div>
-			<div class="row center">
-				<h2 class="center space10">Open Attendance System</h2>
-			</div>
-			<div class="row center">
-				<button class="btn btn-primary btn-large center space10" type="button" style="margin-top:-5px" onclick="to_signup()" >Sign up today</a>
-			</div>
-			<div class="row center">
-				<button class="btn btn-primary btn-large center space10" type="button" style="margin-top:-5px" onclick="to_signin();">Sign in</a>
-			</div>
-		</div>
-		<div class="span6 column ui-sortable">
-			<div class="row">
-				<%=image_tag("Buildings.png", alt: "Buildings") %>
-			</div>
+			<%=image_tag("Buildings.png", alt: "Buildings") %>
 		</div>
 	</div>
 </div>
-
+<div class="push">
+</div>
