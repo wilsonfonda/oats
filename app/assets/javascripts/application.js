@@ -13,6 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+function to_signup()
+{
+	window.location = '/signup';
+}
+
+function to_signin()
+{
+	window.location = '/signin';
+}
+
 function check_in()
 {
 	document.getElementById("checkin_button").style.display = "none";
