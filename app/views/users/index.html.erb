@@ -1,0 +1,20 @@
+<% @users.each do |user| %>
+<br/>
+	<%= form_for(user) do |f| %>
+
+	<%= f.label :name %>
+      <%= f.text_field :name%>
+
+	  <%= f.label :division %>
+      <%= f.text_field :division %>
+
+      <%= f.label :role %>
+      <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+
+	  <%= f.label :office %>
+      <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+
+      <%= f.submit "Save", class: "btn btn-primary" %>
+      <%= link_to "delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.email %>
+    <% end %>
+<% end %>

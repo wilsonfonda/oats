@@ -1,7 +1,10 @@
 Oats::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
-
+  resources :companies
+  resources :worktimes
+  resources :offices
+  
   devise_scope :user do
     get "signin", :to => "devise/sessions#new"
     get "signout", :to => "devise/sessions#destroy"

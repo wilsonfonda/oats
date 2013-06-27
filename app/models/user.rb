@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :division, :role, :access_token
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :division, :role, :access_token, :office_id
   
   has_many :worktimes, dependent: :destroy
   has_one :ownership, foreign_key: "owner_id", dependent: :destroy

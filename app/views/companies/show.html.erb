@@ -1,0 +1,13 @@
+<%= @company.name %><br/>
+<%= @company.address %><br/>
+<%= @company.contact %><br/>
+<%= @company.deposit %><br/>
+<% if @company.status %>Working<%else%>Freeze<% end %>
+<br/>
+Offices
+<% @offices.each do |office| %> 
+	<%= office.name %><span/>
+	<%= office.range %><span/>
+	<%= office.longitude %><span/>
+	<%= office.latitude %><br/>
+<% end %>

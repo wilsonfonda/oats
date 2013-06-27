@@ -1,24 +1,47 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= form_tag(resource, :as => resource_name, :url => registration_path(resource_name)) do %>
   <%= devise_error_messages! %>
+Your Profile <br/>
+  <div><%= label_tag :email %><br />
+  <%= email_field_tag :email, :autofocus => true %></div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <div><%= label_tag :password %><br />
+  <%= password_field_tag :password %></div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <div><%= label_tag :password_confirmation %><br />
+  <%= password_field_tag :password_confirmation %></div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <div><%= label_tag :name %><br />
+  <%= text_field_tag :name %></div>
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name %></div>
+  <div><%= label_tag :division %><br />
+  <%= text_field_tag :division %></div>
 
-  <div><%= f.label :division %><br />
-  <%= f.text_field :division %></div>
+<br/>Company Profile<br/>
+  <div><%= label_tag :company_name %><br />
+  <%= text_field_tag :company_name %></div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= label_tag :company_address %><br />
+  <%= text_field_tag :company_address %></div>
+
+  <div><%= label_tag :company_contact %><br />
+  <%= text_field_tag :company_contact %></div>
+
+<br/>Office<br/>
+  <div><%= label_tag :office_latitude %><br />
+  <%= text_field_tag :office_latitude %></div>
+
+  <div><%= label_tag :office_longitude %><br />
+  <%= text_field_tag :office_longitude %></div>
+
+  <div><%= label_tag :office_name %><br />
+  <%= text_field_tag :office_name %></div>
+
+  <div><%= label_tag :office_range %><br />
+  <%= text_field_tag :office_range %></div>
+
+  <div><%= submit_tag "Sign up" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>

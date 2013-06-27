@@ -1,0 +1,17 @@
+<% @companies.each do |company| %>
+<br/>
+	<%= company.id %>
+	<%= company.name %>
+	<%= company.address %>
+	<%= company.contact %>
+	<%= form_for(company) do |f| %>
+	  <%= f.label :status %>
+      <%= f.select :status, {"Working"=>true, "Freeze"=>false}%>
+
+      <%= f.label :deposit %>
+      <%= f.text_field :deposit %>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+      <%= link_to "delete", company, method: :delete, data: { confirm: "You sure?" }, title: company.name %>
+    <% end %>
+	<%= User.find(Ownership.find_by_company_id(company).owner_id).email %>
+<% end %>
