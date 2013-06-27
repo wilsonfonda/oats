@@ -113,3 +113,13 @@ h1
 	background: -webkit-linear-gradient(#fff, #999);
 	background: -o-linear-gradient(#fff, #999);
 }
+
+.dialog{
+	opacity:0;
+	position:fixed;
+}
+
+.dialog:target {
+	opacity:1;
+	position: relative;
+}

@@ -2,6 +2,9 @@ Oats::Application.routes.draw do
 
   get 'main/index'
   get 'main/contact'
+  get 'main/about'
+  get 'main/help'
+  get 'main/testimony'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
