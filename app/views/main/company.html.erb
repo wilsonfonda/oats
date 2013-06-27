@@ -1,0 +1,60 @@
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Company</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<dl class="dl-horizontal">
+		    <dt>Company Name</dt>
+		    <dd>Suitmedia</dd>
+		    <dt>Address</dt>
+		    <dd>Sekeloa 2</dd>
+		    <dt>Contact</dt>
+		    <dd>(022) 1234567</dd>
+		    <dt>Billing</dt>
+		    <dd>$ 10.0 / month</dd>
+		    <dt>Status</dt>
+		    <dd>Active</dd>
+	    </dl>
+	    <form method="link" action="/company/edit">
+				<input type="submit" value="Edit information" class="btn btn-primary">
+			</form>
+		</div>
+		<div class="row">
+			<strong><h1>Offices</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Office name</th>
+						<th>Address</th>
+						<th>Latitude</th>
+						<th>Longitude</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Suitmedia Jakarta</td>
+						<td>Jalan Jakarta 1</td>
+						<td>-6.50005</td>
+						<td>105.55101</td>
+						<td><a href="#">delete</a></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Suitmedia Bandung</td>
+						<td>Jalan Sekeloa 2</td>
+						<td>-6.00005</td>
+						<td>107.55101</td>
+						<td><a href="#">delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Edit Company</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<%= form_for(:user) do |f| %>
+
+      <%= f.label :company_name %>
+      <%= f.text_field :name, :placeholder=>'Type your name here' %>
+
+      <%= f.label :address %>
+      <%= f.text_field :email, :placeholder=>'Type your email here' %>
+
+      <%= f.label :contact %>
+      <%= f.text_field :office, :placeholder=>'Name your branch office here' %>
+
+      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+      <% end %>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
