@@ -81,7 +81,7 @@ h1
 	margin-bottom: 0px;
 }
 
-.registerDialog {
+.indexDialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
 	top: 0;
@@ -97,12 +97,12 @@ h1
 	pointer-events: none;
 }
 
-.registerDialog:target {
+.indexDialog:target {
 	opacity:1;
 	pointer-events: auto;
 }
 
-.registerDialog > div {
+.indexDialog > div {
 	width: 400px;
 	position: relative;
 	margin: 10% auto;
