@@ -4,18 +4,30 @@
 			<strong><h1>Edit Company</h1></strong>
 		</div>
 		<div class="row floating-paper">
-			<%= form_for(:user) do |f| %>
+			<%= form_for :user, html: {class: "form-horizontal"} do |f| %>
 
-      <%= f.label :company_name %>
-      <%= f.text_field :name, :placeholder=>'Type your name here' %>
+			<div class="control-group">
+				<%= f.label :company_name, :class=>'control-label' %>
+        <div class="controls">
+        	<%= f.text_field :name, :placeholder=>'Type your name here' %>
+        </div>
+      </div>
 
-      <%= f.label :address %>
-      <%= f.text_field :email, :placeholder=>'Type your email here' %>
+      <div class="control-group">
+      	<%= f.label :address, :class=>'control-label' %>
+        <div class="controls">
+        	<%= f.text_field :email, :placeholder=>'Type your email here' %>
+        </div>
+      </div>
 
-      <%= f.label :contact %>
-      <%= f.text_field :office, :placeholder=>'Name your branch office here' %>
+      <div class="control-group">
+      	<%= f.label :contact, :class=>'control-label' %>
+        <div class="controls">
+        	<%= f.text_field :office, :placeholder=>'Name your branch office here' %>
+        </div>
+      </div>
 
-      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
       <% end %>
 		</div>
 	</div>

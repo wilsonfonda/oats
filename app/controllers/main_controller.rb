@@ -23,4 +23,8 @@ class MainController < ApplicationController
 
   def employee
   end
+
+  def performance
+  end
+  
 end

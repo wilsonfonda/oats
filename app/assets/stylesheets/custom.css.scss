@@ -120,6 +120,19 @@ footer
 	border-right-width: 0;
 }
 
+.table
+{
+	a
+	{
+		color: darkblue;
+	}
+}
+
+label
+{
+	cursor: pointer;
+}
+
 /* timer */
 #timer{
 	height: 60px;
@@ -180,12 +193,4 @@ footer
 	width: 120px;
 	font-size: 16px;
 	font-weight: bold;
-}
-
-.table
-{
-	a
-	{
-		color: darkblue;
-	}
 }

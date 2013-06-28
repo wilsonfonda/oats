@@ -1,0 +1,51 @@
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag "zingchart-html5-min" %>
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Performance</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<div id="perf_chart">
+
+			</div>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
+
+<script>
+  window.onload = function(){
+    zingchart.render(
+      {
+        id : "perf_chart",
+        height : 450,
+        width : 600,
+        data : myChart
+      }
+    );
+  }
+
+  var myChart = {
+    type : "bar",
+    title : {text : "Performance Graph"},
+    "legend" : {
+            "header" : {
+            "text" : "Legend"
+            },
+
+    },
+    "scale-x"  : {
+        "text" : "Scale-x"
+    },
+    "scale-y"  : {
+        "text" : "Scale-y"
+    },
+    series :[
+    	{	values : [5, 10, 9, 5, 10, 5, 8, 7.3, 6.9],
+    		"text": "Worktime"
+    	}
+    ]
+  };
+</script>
