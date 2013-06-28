@@ -5,46 +5,88 @@
 </div>
 <div class="row space20">
 	<div class="span8 offset2 floating-paper">
-	  <%= form_for(:user) do |f| %>
+	  <%= form_for :user, html: {class: "form-horizontal"} do |f| %>
 
-    <%= f.label :email %>
-    <%= f.text_field :email, :placeholder=>'Type your email here' %>
+    <h4>User Data</h4><br/>
+    <div class="control-group">
+      <%= f.label :email, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :email, :placeholder=>'Type your email here' %>
+      </div>
+    </div>
 
-    <%= f.label :password %>
-    <%= f.password_field :password, :placeholder=>'Type your password here' %>
+    <div class="control-group">
+      <%= f.label :password, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password, :placeholder=>'Type your password here' %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :password_confirmation, "Password confirmation", :class=>'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation, :placeholder=>'Type your password again' %>
+      </div>
+    </div>
 
-    <%= f.label :password_confirmation, "Password confirmation" %>
-    <%= f.password_field :password_confirmation, :placeholder=>'Type your password again' %>
-
-    <%= f.label :name %>
-    <%= f.text_field :name, :placeholder=>'Type your name here' %>
+    <div class="control-group">
+      <%= f.label :name, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name, :placeholder=>'Type your name here' %>
+      </div>
+    </div>
+   
     <br/><br/><h4>Company Data</h4><br/>
 
-    <%= f.label :company_name %>
-    <%= f.text_field :company_name, :placeholder=>'Type your company name here' %>
+    <div class="control-group">
+      <%= f.label :company_name, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :company_name, :placeholder=>'Type your company name here' %>
+      </div>
+    </div>
 
-    <%= f.label :address %>
-    <%= f.text_field :address, :placeholder=>'Type your company address here' %>
-
-    <%= f.label :contact %>
-    <%= f.text_field :contact, :placeholder=>'Type your contact number here' %>
+    <div class="control-group">
+      <%= f.label :address, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :address, :placeholder=>'Type your company address here' %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :contact, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :contact, :placeholder=>'Type your contact number here' %>
+      </div>
+    </div>  
 
     <%= f.hidden_field :owner %>
 
     <br/><br/><h4>Office Data</h4><br/>
 
-    <%= f.label :office_name %>
-    <%= f.text_field :office_name, :placeholder=>'Type your office name here' %>
+    <div class="control-group">
+      <%= f.label :office_name, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :office_name, :placeholder=>'Type your office name here' %>
+      </div>
+    </div>
 
-    <%= f.label :latitude %>
-    <%= f.text_field :latitude, :placeholder=>'Insert the latitude of your office location here' %>
+    <div class="control-group">
+      <%= f.label :latitude, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :latitude, :placeholder=>'Insert the latitude of your office location here' %>
+      </div>
+    </div>
 
-    <%= f.label :longitude %>
-    <%= f.text_field :longitude, :placeholder=>'Insert the longitude of your office location here' %>
+    <div class="control-group">
+      <%= f.label :longitude, :class=>'control-label' %>
+      <div class="controls">
+        <%= f.text_field :longitude, :placeholder=>'Insert the longitude of your office location here' %>
+      </div>
+    </div>
 
-    <input type="button" value="Get my current location" onclick="" class="btn btn-success"/><br/><br/>
+    <input type="button" value="Get my current location" onclick="" class="btn btn-success center"/><br/><br/>
 
-    <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <%= f.submit "Create my account", class: "btn btn-large btn-primary center" %>
     <% end %>
 	</div>
 </div>

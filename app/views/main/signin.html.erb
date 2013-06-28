@@ -7,11 +7,9 @@
 	<div class="span4 offset4 floating-paper">
 	  <%= form_for(:user) do |f| %>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :placeholder=>'Email' %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %><br/>
+      <%= f.password_field :password, :placeholder=>'Password' %><br/>
 
   		<label class="checkbox">
 	      <%= f.check_box :remember %>
