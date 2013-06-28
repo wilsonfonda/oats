@@ -23,6 +23,9 @@ class Ability
 				Ownership.find_by_owner_id(user).company_id == employee.company_id && employee.role != '0' 
 			end
 			can :add, User
+			cannot :destroy, User do |owner|
+				user == owner
+			end
 			cannot :change_status, Company
 			can :read, Worktime
 		elsif user.role == '2'
@@ -37,6 +40,7 @@ class Ability
 			can :manage, Worktime do |worktime|
 				worktime.user_id == user.id
 			end
+			can :create, Worktime
 			can :read, Worktime
 		else
 			can :read, User do |employee|
@@ -48,6 +52,7 @@ class Ability
 			can :manage, Worktime do |worktime|
 				worktime.user_id == user.id
 			end
+			can :create, Worktime
 		end
 	end
 end

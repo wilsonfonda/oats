@@ -3,7 +3,8 @@ class UsersController < ApplicationController
 	load_and_authorize_resource
 	
 	def index
-		@users = User.all
+		@offices = Company.find(current_user.company_id).offices
+		@users = User.where("office_id IN (?)",@offices)
 	end
 
 	def add
@@ -35,7 +36,11 @@ class UsersController < ApplicationController
 
 	def update
 		@user = User.find(params[:id])
-		@user.update_attributes(params[:user])
+		if can? :change_role, @user
+			@user.update_attributes(params[:user])
+		else
+			@user.update_attributes(params[:user].except(:role))
+		end
 		redirect_to :back
 	end
 
