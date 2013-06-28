@@ -135,10 +135,14 @@ label
 	cursor: pointer;
 }
 
-.square-button
+.shown_field
 {
-	height: 70px !important;
-	width: 110px !important;
+	display: block !important;
+}
+
+.hidden_field
+{
+	display: none !important;
 }
 
 /* timer */
@@ -255,4 +259,15 @@ table.tablesorter thead tr .headerSortDown {
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
+}
+
+/* pop-bottom form */
+#add_employee_label
+{
+	display: none;
+}
+
+#add_employee_form
+{
+	display: none;
 }

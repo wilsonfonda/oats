@@ -1,3 +1,5 @@
+<!-- /companies/:id/edit -->
+
 <div class="row">
 	<div class="span8">
 		<div class="row">
@@ -30,5 +32,57 @@
       <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
       <% end %>
 		</div>
+    <div class="row">
+      <strong><h1>Offices</h1></strong>
+    </div>
+    <div class="row floating-paper">
+      <table id="edit-office-table" class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Office name</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <%= form_for :user do |f| %>
+            <td>1</td>
+            <td><%= f.text_field :office_name %></td>
+            <td><%= f.text_field :address %></td>
+            <td><%= f.text_field :latitude %></td>
+            <td><%= f.text_field :longitude %></td>
+            <td><%= f.submit "Save", class: "btn btn-primary" %></td>
+            <td>
+              <form method="link" action="#">
+                <input type="submit" value="Delete" class="btn btn-primary">
+              </form>
+            </td>
+            <% end %>
+          </tr>
+          <tr>
+            <%= form_for :user do |f| %>
+            <td>2</td>
+            <td><%= f.text_field :office_name %></td>
+            <td><%= f.text_field :address %></td>
+            <td><%= f.text_field :latitude %></td>
+            <td><%= f.text_field :longitude %></td>
+            <td><%= f.submit "Save", class: "btn btn-primary" %></td>
+            <td>
+              <form method="link" action="#">
+                <input type="submit" value="Delete" class="btn btn-primary">
+              </form>
+            </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+      <input type="button" value="Add office" class="btn btn-primary" onclick="add_office_row();"/>
+    </div>
 	</div>
+  <%= render 'layouts/navigation' %>
 </div>

@@ -24,6 +24,45 @@ function check_out()
 	stop();
 }
 
+function add_employee()
+{
+	document.getElementById("add_employee_label").style.display = "block";
+	document.getElementById("add_employee_form").style.display = "block";
+
+	var form = $("#add_employee_form");
+    startAnimation();
+    function startAnimation(){
+      form.animate({height:300},"slow");
+    }
+
+    setTimeout(func, 500);
+
+    function func() {
+		document.getElementById("add_employee_label").scrollIntoView();
+	}
+}
+
+function show_hidden()
+{
+	modifyStyleRule('.hidden_field', "display: block !important;");
+	modifyStyleRule('.shown_field', "display: none !important;");
+}
+
+function hide_hidden()
+{
+	window.location.reload();
+}
+
+function add_office_row()
+{
+	var table = document.getElementById("edit-office-table");
+	var tbody = table.getElementsByTagName("tbody")[0];
+	var length = tbody.getElementsByTagName("tr").length;
+	tbody.innerHTML += "<tr><form method='post' action='/company/edit' accept-charset='UTF-8'></form>\n<td>"+(length+1)+"<\/td>\n<td><input id='user_office_name' type='text' size='30' name='user[office_name]'/><\/td>\n<td><input id='user_address' type='text' size='30' name='user[address]'/><\/td>\n<td><input id='user_latitude' type='text' size='30' name='user[latitude]'/><\/td>\n<td><input id='user_longitude' type='text' size='30' name='user[longitude]'/><\/td>\n<td><input class='btn btn-primary' type='submit' value='Save' name='commit'/><\/td>\n<td><form method='link' action='#'><input type='submit' value='Delete' class='btn btn-primary'><\/form><\/td> <\/tr>\n";
+	
+                
+              
+}
 
 /* complementary function */
 
@@ -105,4 +144,80 @@ function checkDate(){
 		return false;
 	}
 	return true;
+}
+
+/* from web */
+
+/* Replace the cssText for rule matching selectorText with value
+** Changes all matching rules in all style sheets
+*/
+function modifyStyleRule(selectorText, value) {
+  var sheets = document.styleSheets;
+  var sheet, rules, rule;
+  var i, j, k, l;
+
+  for (i=0, iLen=sheets.length; i<iLen; i++) {
+    sheet = sheets[i];
+
+    // W3C model
+    if (sheet.cssRules) {
+      rules = sheet.cssRules;
+
+      for (j=0, jLen=rules.length; j<jLen; j++) {
+        rule = rules[j];
+
+        if (rule.selectorText == selectorText) {
+          removeRule(sheet, rule);
+          addRule(sheet, selectorText, value);
+        }
+      }
+
+    // IE model
+    } else if (sheet.rules) {
+      rules = sheet.rules;
+
+      for (k=0, kLen=rules.length; k<kLen; k++) {
+        rule = rules[k];
+
+        // An alternative is to just modify rule.style.cssText,
+        // but this way keeps it consistent with W3C model
+        if (rule.selectorText == selectorText) {
+          removeRule(sheet, rule);
+          addRule(sheet, selectorText, value);
+
+          // Alternative
+          // rule.style.cssText = value;
+        }
+      }
+    }
+  }
+}
+
+/* Remove rule from supplied sheet
+*/
+function removeRule(sheet, rule) {
+
+  // W3C model
+  if (typeof sheet.deleteRule == 'function') {
+    sheet.deleteRule(rule);
+
+  // IE model
+  } else if (sheet.removeRule) {
+    sheet.removeRule(rule);
+  }
+}
+
+/* Add rule from supplied sheet
+** Rule is added as last rule in sheet
+*/
+function addRule(sheet, selectorText, value) {
+
+  // W3C model
+  if (typeof sheet.insertRule == 'function') {
+    sheet.insertRule(selectorText + ' {' + value + '}', sheet.cssRules.length);
+
+  // IE model
+  } else if (sheet.addRule) {
+    sheet.addRule(selectorText, value, sheet.rules.length);
+  }
 }

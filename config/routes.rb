@@ -8,7 +8,9 @@ Oats::Application.routes.draw do
   match '/company', to: 'main#company'
   match '/company/edit', to: 'main#edit_company'
   match '/employees', to: 'main#employee'
+  match '/employees/1', to: 'main#employee_profile'
   match '/performance', to: 'main#performance'
+  match '/office', to: 'main#office'
 
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'

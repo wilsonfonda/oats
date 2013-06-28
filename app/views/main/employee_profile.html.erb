@@ -1,0 +1,28 @@
+<!-- /users/:id -->
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Employee Profile</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<dl class="dl-horizontal">
+			    <dt>Username</dt>
+			    <dd>Kevin</dd>
+			    <dt>Email</dt>
+			    <dd>kevin@example.com</dd>
+			    <dt>Office</dt>
+			    <dd>Suitmedia Bandung</dd>
+			    <dt>Division</dt>
+			    <dd>Mobile</dd>
+			    <dt>Role</dt>
+			    <dd>Boss</dd>
+		    </dl>
+
+		    <form method="link" action="/profile">
+				<input type="submit" value="Edit information" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>

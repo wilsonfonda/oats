@@ -1,0 +1,36 @@
+<!-- -->
+<div class="row">
+  <div class="span8">
+    <div class="row">
+      <strong><h1>Edit Office</h1></strong>
+    </div>
+    <div class="row floating-paper">
+      <%= form_for :user, html: {class: "form-horizontal"} do |f| %>
+
+      <div class="control-group">
+        <%= f.label :office_name, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :name, :placeholder=>'Type your name here' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :latitude, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :latitude, :placeholder=>'Type your division here' %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :longitude, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :longitude, :placeholder=>'Type your role here' %>
+        </div>
+      </div>
+
+      <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
+      <% end %>
+    </div>  
+  </div>
+  <%= render 'layouts/navigation' %>
+</div>
