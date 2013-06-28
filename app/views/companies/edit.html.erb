@@ -1,49 +1,45 @@
 <%= form_for(@company) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+  <%= f.label :address %>
+  <%= f.text_field :address %>
 
-      <%= f.label :address %>
-      <%= f.text_field :address %>
+  <%= f.label :contact %>
+  <%= f.text_field :contact %>
 
-      <%= f.label :contact %>
-      <%= f.text_field :contact %>
-
-      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
-    <% end %>
+  <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+<% end %>
 <br/>
 <br/>
 <% @offices.each do |office| %>
 	<%= form_for(office) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+    <%= f.label :longitude %>
+    <%= f.text_field :longitude %>
 
-      <%= f.label :longitude %>
-      <%= f.text_field :longitude %>
-
-      <%= f.label :latitude %>
-      <%= f.text_field :latitude %>
-      <%= f.submit "Save", class: "btn btn-large btn-primary" %>
-    <% end %>
-    <%= link_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name %>
-    <br/>
+    <%= f.label :latitude %>
+    <%= f.text_field :latitude %>
+    <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+  <% end %>
+  <%= link_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name %>
+  <br/>
  <% end %>
 
- <%= form_for(Office.new) do |f| %>
+<%= form_for(Office.new) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+  <%= f.label :longitude %>
+  <%= f.text_field :longitude %>
 
-      <%= f.label :longitude %>
-      <%= f.text_field :longitude %>
+  <%= f.label :latitude %>
+  <%= f.text_field :latitude %>
 
-      <%= f.label :latitude %>
-      <%= f.text_field :latitude %>
+  <%= f.label :range %>
+  <%= f.text_field :range %>
 
-      <%= f.label :range %>
-      <%= f.text_field :range %>
-
-      <%= f.submit "Add", class: "btn btn-large btn-primary" %>
-
+  <%= f.submit "Add", class: "btn btn-large btn-primary" %>
 <% end %>

@@ -1,0 +1,29 @@
+<%= form_for(@user) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :division %>
+  <%= f.text_field :division %>
+
+  <%= f.label :role %>
+  <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+
+  <%= f.label :office %>
+  <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+
+  <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<br/>
+<%= form_for(@user, :url => url_for(:controller=>'users', :action => 'change_password')) do |f| %>
+  <%= f.label :old_password %>
+  <%= f.password_field :old_password %>
+
+  <%= f.label :new_password %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation, "Confirmation" %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+<% end %>

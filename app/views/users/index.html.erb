@@ -28,13 +28,13 @@
   <%= f.label :email %>
   <%= f.text_field :email%>
 
-<%= f.label :division %>
+  <%= f.label :division %>
   <%= f.text_field :division %>
 
   <%= f.label :role %>
   <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
 
-<%= f.label :office %>
+  <%= f.label :office %>
   <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
 
   <%= f.submit "Add", class: "btn btn-primary" %>

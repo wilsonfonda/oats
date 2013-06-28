@@ -11,7 +11,6 @@ class RegistrationsController < Devise::RegistrationsController
     @company.contact = params[:company_contact]
     @company.status = true
     @company.deposit = 0
-    @company.save
 
     @office = @company.offices.build()
     @office.name = params[:office_name]
@@ -23,8 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
     @office.latitude_min = params[:office_latitude].to_f - delta_lat
     @office.latitude_max = params[:office_latitude].to_f + delta_lat
     @office.longitude_min = params[:office_longitude].to_f - delta_long
-    @office.longitude_max = params[:office_longitude].to_f + delta_long
-    @office.save
+    @office.longitude_max = params[:office_longitude].to_f + delta_long   
 
     @user = @office.users.build()
     @user.email = params[:email]
@@ -34,15 +32,17 @@ class RegistrationsController < Devise::RegistrationsController
     @user.division = params[:division]
     @user.access_token = Digest::SHA2.hexdigest(params[:email])
     @user.role = 1
-    @user.save
 
     @ownership = Ownership.new()
     @ownership.company_id = @company.id
-    @ownership.owner_id = @user.id
-    @ownership.save
+    @ownership.owner_id = @user.id  
 
-    sign_in @user
-    redirect_to user_path current_user
+    if (@company.save && @office.save && @user.save && @ownership.save)
+        sign_in @user
+        redirect_to user_path current_user
+    else
+        redirect_to :back
+    end
   end
 
   def update

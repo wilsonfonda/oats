@@ -22,9 +22,23 @@ class UsersController < ApplicationController
         redirect_to :back	
 	end
 
+	def edit
+		@user = User.find(params[:id])
+	end
+
 	def update
 		@user = User.find(params[:id])
 		@user.update_attributes(params[:user])
+		redirect_to :back
+	end
+
+	def change_password
+		@user = User.find(params[:id])
+		if (@user.valid_password?(params[:user][:old_password]) && (params[:user][:password] == params[:user][:password_confirmation]))
+			@user.update_attribute('password',params[:user][:password])
+			@user.update_attribute('password_confirmation',params[:user][:password_confirmation])
+			sign_in @user
+		end
 		redirect_to :back
 	end
 

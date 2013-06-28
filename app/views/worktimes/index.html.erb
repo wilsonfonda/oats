@@ -1,0 +1,8 @@
+<br/>checkin <span/> place_checkin <span/> checkout <span/> place_checkout
+<% @user.worktimes.each do |w| %>
+	<br/>
+	<%= w.checkin %> <span/>
+	<%= w.place_checkin %> <span/>
+	<%= w.checkout %> <span/>
+	<%= w.place_checkout %> <span/>
+<% end %>

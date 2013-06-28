@@ -1,14 +1,18 @@
 Oats::Application.routes.draw do
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :skip => [:sessions], :controllers => {:registrations => "registrations"}
   resources :users
   resources :companies
   resources :worktimes
   resources :offices
   post "add", :to =>"users#add"
-  
+  put "change_password/:id", :to =>"users#change_password"
+  post "checkin", :to => "worktimes#create"
+  post "checkout", :to => "worktimes#update"
+
   devise_scope :user do
-    get "signin", :to => "devise/sessions#new"
-    get "signout", :to => "devise/sessions#destroy"
+    get "signin" => "devise/sessions#new", :as => :new_user_session
+    post "signin" => "devise/sessions#create", :as => :user_session
+    delete "signout" => "devise/sessions#destroy", :as => :destroy_user_session
     get "signup", :to => "devise/registrations#new"
   end
 
