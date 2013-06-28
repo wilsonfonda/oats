@@ -1,29 +1,52 @@
 <%= form_for(@user) do |f| %>
   <%= f.label :name %>
+  <% if current_user==@user %>
   <%= f.text_field :name %>
+  <% else %>
+  <%= @user.name%>
+  <% end %>
 
   <%= f.label :division %>
   <%= f.text_field :division %>
 
   <%= f.label :role %>
+  <% if can? :change_role, @user %>
   <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+  <% else %>
+      <% if @user.role == "0" %>
+        Admin
+      <% elsif @user.role == "1"%>
+        Owner
+      <% elsif @user.role == "2"%>
+        HR
+      <% elsif @user.role == "3"%>
+        Employee
+      <% end %>
+  <% end %>
 
   <%= f.label :office %>
-  <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+  <% if can? :change_office, @user %>
+    <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+  <% else %>
+    <%= Office.find(@user.office_id).name %>
+  <% end %>
+  
 
   <%= f.submit "Save", class: "btn btn-large btn-primary" %>
 <% end %>
 
-<br/>
-<%= form_for(@user, :url => url_for(:controller=>'users', :action => 'change_password')) do |f| %>
-  <%= f.label :old_password %>
-  <%= f.password_field :old_password %>
+<% if current_user==@user %>
+  <br/>
+  <%= form_for(@user, :url => url_for(:controller=>'users', :action => 'change_password')) do |f| %>
+    <%= f.label :old_password %>
+    <%= f.password_field :old_password %>
 
-  <%= f.label :new_password %>
-  <%= f.password_field :password %>
+    <%= f.label :new_password %>
+    <%= f.password_field :password %>
 
-  <%= f.label :password_confirmation, "Confirmation" %>
-  <%= f.password_field :password_confirmation %>
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation %>
 
-  <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-<% end %>
+    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+  <% end %>
+<% end %> 
