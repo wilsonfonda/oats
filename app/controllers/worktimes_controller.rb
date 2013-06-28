@@ -1,7 +1,17 @@
 class WorktimesController < ApplicationController
-
+	before_filter :authenticate_user!
+	load_and_authorize_resource
+	
 	def index
 		@user = User.find(params[:id])
+		@worktime = @user.worktimes[0]
+		if @worktime.nil?
+			redirect_to user_path current_user
+		else
+			if cannot? :read, @worktime
+				redirect_to worktimes_path+"?id="+current_user.id.to_s
+			end
+		end
 	end
 
 	def create

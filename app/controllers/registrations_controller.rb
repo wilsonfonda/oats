@@ -33,11 +33,11 @@ class RegistrationsController < Devise::RegistrationsController
     @user.access_token = Digest::SHA2.hexdigest(params[:email])
     @user.role = 1
 
-    @ownership = Ownership.new()
-    @ownership.company_id = @company.id
-    @ownership.owner_id = @user.id  
-
-    if (@company.save && @office.save && @user.save && @ownership.save)
+    if (@company.save && @office.save && @user.save)
+        @ownership = Ownership.new()
+        @ownership.company_id = @company.id
+        @ownership.owner_id = @user.id  
+        @ownership.save
         sign_in @user
         redirect_to user_path current_user
     else

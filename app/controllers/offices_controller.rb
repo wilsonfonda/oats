@@ -1,5 +1,7 @@
 class OfficesController < ApplicationController
-
+	before_filter :authenticate_user!
+	load_and_authorize_resource
+	
 	def create
 		@company = Company.find(Ownership.find_by_owner_id(current_user).company_id)
 		@office = @company.offices.build()
