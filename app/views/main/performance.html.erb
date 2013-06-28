@@ -1,4 +1,3 @@
-<%= javascript_include_tag "application" %>
 <%= javascript_include_tag "zingchart-html5-min" %>
 
 <div class="row">
@@ -7,9 +6,32 @@
 			<strong><h1>Performance</h1></strong>
 		</div>
 		<div class="row floating-paper">
+            <div class="row">
+                <div class="span6">
+                    <div class="row">
+                            <div class="span2">Period from : </div>
+                            <div id="datetimepicker_from" class="span4">
+                                <!-- disini buat datetimepicker_from -->
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="span2"> to : </div>
+                            <div id="datetimepicker_to" class="span4">
+                                <!-- disini buat datetimepicker_to -->
+                            </div>
+                    </div>
+                </div>
+                <div class="span1">
+                    <input type="button" class="btn btn-primary square-button" value="Refresh" onclick="refresh_performance()"/>
+                </div>
+            </div>
+
+            
 			<div id="perf_chart">
 
 			</div>
+            <div class="row">
+            </div>
 		</div>
 	</div>
 	<%= render 'layouts/navigation' %>

@@ -1,0 +1,47 @@
+class MainController < ApplicationController
+
+  def index
+  end
+
+  def signup
+  end
+
+  def signin
+  end
+
+  def home
+  end
+
+  def edit_profile
+  end
+
+  def company
+  end
+
+  def edit_company
+  end
+
+  def employee
+  end
+
+<<<<<<< HEAD
+  def performance
+  end
+  
+=======
+  def admin_companies
+  end
+
+  def admin_company
+  end
+
+  def admin_companyprofile
+  end
+
+  def admin_employee
+  end
+
+  def admin_editcompany
+  end
+>>>>>>> 6cc77415439f329a942eb256f7b7d10590e57b05
+end
