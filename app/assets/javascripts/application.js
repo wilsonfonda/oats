@@ -16,6 +16,7 @@
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
+//= require bootstrap-datepicker
 if (window.location == "/performance")
 {
 	//= require_tree .
