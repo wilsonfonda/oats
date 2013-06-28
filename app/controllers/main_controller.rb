@@ -23,8 +23,24 @@ class MainController < ApplicationController
 
   def employee
   end
-
+  
+    
   def performance
   end
-  
+
+  def admin_companies
+  end
+
+  def admin_company
+  end
+
+  def admin_companyprofile
+  end
+
+  def admin_employee
+  end
+
+  def admin_editcompany
+  end
+
 end

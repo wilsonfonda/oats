@@ -13,4 +13,5 @@
 //= require modernizr-2.6.2.min.js
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree .
