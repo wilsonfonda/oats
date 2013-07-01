@@ -9,6 +9,7 @@ Oats::Application.routes.draw do
   post "checkin", :to => "worktimes#create"
   post "checkout", :to => "worktimes#update"
   post "mobile_signin", :to => "users#mobile_signin"
+  post "mobile_graph", :to => "worktimes#mobile_graph"
 
   devise_scope :user do
     get "signin" => "devise/sessions#new", :as => :new_user_session

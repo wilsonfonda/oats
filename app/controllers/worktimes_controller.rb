@@ -132,6 +132,30 @@ class WorktimesController < ApplicationController
 		end
     end
 
+    def mobile_graph
+		@user = User.find_by_access_token(params[:access_token])
+		arr = Array.new
+		worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]))
+		date = Time.parse(params[:from])
+		x = 0
+		while date <= Time.parse(params[:to])
+			a = 0
+			if !worktimes[x].nil? && date.strftime("%d-%m-%Y") == worktimes[x].checkin.strftime("%d-%m-%Y")
+			    a = (worktimes[x].checkout - worktimes[x].checkin).to_i
+			    x += 1
+			    while !worktimes[x].nil? && worktimes[x].checkin.strftime("%d-%m-%Y") == worktimes[x-1].checkin.strftime("%d-%m-%Y") 
+			      a += (worktimes[x].checkout - worktimes[x].checkin).to_i
+			      x += 1
+			    end
+			    arr.push({:date => date.strftime("%d-%m-%Y"), :worktime => (a.to_f/3600).to_s})
+			else
+			    arr.push({:date => date.strftime("%d-%m-%Y"), :worktime => '0'})
+			end
+			date += 1.day
+		end
+		render :json => { :performance => arr }
+    end
+
     private
 
     	def valid_location (office, latitude, longitude)

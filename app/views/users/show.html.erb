@@ -28,4 +28,9 @@
 	  <%= submit_tag "checkin", class: "btn btn-large btn-primary" %>
   <% end %>
 <% end %>
-
+<%= form_tag('/mobile_graph', :method => 'post', :name => "mobile_graph_form") do %>
+  <%= text_field_tag(:access_token) %>
+  <%= text_field_tag(:from) %>
+  <%= text_field_tag(:to) %>
+  <%= submit_tag "mobile_graph", class: "btn btn-large btn-primary" %>
+<% end %>
