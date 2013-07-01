@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       end
       @user.password = params[:user][:email]
       @user.password_confirmation = params[:user][:email]
-      @user.access_token = Digest::SHA2.hexdigest(params[:user][:email])
+      @user.access_token = Digest::SHA2.hexdigest(params[:user][:email]) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
       @user.save
       redirect_to :back
     end

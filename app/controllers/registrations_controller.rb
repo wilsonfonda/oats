@@ -30,7 +30,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user.password_confirmation = params[:password_confirmation]
     @user.name = params[:name]
     @user.division = params[:division]
-    @user.access_token = Digest::SHA2.hexdigest(params[:email])
+    @user.access_token = Digest::SHA2.hexdigest(params[:email]) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
     @user.role = 1
 
     if (@company.save && @office.save && @user.save)
