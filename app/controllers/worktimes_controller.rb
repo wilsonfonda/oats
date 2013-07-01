@@ -19,15 +19,13 @@ class WorktimesController < ApplicationController
 			@worktime = current_user.worktimes.build()
 		    @office = Office.find(current_user.office_id)
 		    @worktime.checkin = Time.now
-		    if (params[:latitude].to_f > @office.latitude_min) && (params[:latitude].to_f < @office.latitude_max &&
-		    	params[:longitude].to_f > @office.longitude_min) && (params[:longitude].to_f < @office.longitude_max)
+		    if valid_location(@office, params[:latitude], params[:longitude])
 		    	@worktime.place_checkin = @office.name
 		    	@worktime.save
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
 		    	@offices.each  do | o |
-		    		if (params[:latitude].to_f > o.latitude_min) && (params[:latitude].to_f < o.latitude_max &&
-		    			params[:longitude].to_f > o.longitude_min) && (params[:longitude].to_f < o.longitude_max)
+		    		if valid_location(o, params[:latitude], params[:longitude])
 		    			@worktime.place_checkin = o.name
 		    			@worktime.save
 		    			break
@@ -41,13 +39,12 @@ class WorktimesController < ApplicationController
 				render :json => { :code => '501', :time => '0' }
 			else
 				if (User.checkin?(@user))
-					render :json => { :code => '505', :time => '0' }
+					render :json => { :code => '504', :time => '0' }
 				else
 					@worktime = @user.worktimes.build()
 				    @office = Office.find(@user.office_id)
 				    @worktime.checkin = Time.now
-				    if (params[:latitude].to_f > @office.latitude_min) && (params[:latitude].to_f < @office.latitude_max &&
-				    	params[:longitude].to_f > @office.longitude_min) && (params[:longitude].to_f < @office.longitude_max)
+				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	@worktime.place_checkin = @office.name
 				    	if @worktime.save
 		    				render :json => { :code => '200', :time => Time.now }
@@ -58,8 +55,7 @@ class WorktimesController < ApplicationController
 				    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
 				    	found = false;
 				    	@offices.each  do | o |
-				    		if (params[:latitude].to_f > o.latitude_min) && (params[:latitude].to_f < o.latitude_max &&
-				    			params[:longitude].to_f > o.longitude_min) && (params[:longitude].to_f < o.longitude_max)
+				    		if valid_location(o, params[:latitude], params[:longitude])
 				    			@worktime.place_checkin = o.name
 				    			if @worktime.save
 				    				render :json => { :code => '200', :time => Time.now }
@@ -83,15 +79,13 @@ class WorktimesController < ApplicationController
 		if (params[:access_token].nil?)
 		    @worktime = Worktime.find_by_user_id(current_user, :limit => 1, :order => 'created_at desc')
 			@office = Office.find(current_user.office_id)
-		    if (params[:latitude].to_f > @office.latitude_min) && (params[:latitude].to_f < @office.latitude_max &&
-		    	params[:longitude].to_f > @office.longitude_min) && (params[:longitude].to_f < @office.longitude_max)
+		    if valid_location(@office, params[:latitude], params[:longitude])
 				@worktime.update_attribute('checkout',Time.now)
 				@worktime.update_attribute('place_checkout',@office.name)
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
 		    	@offices.each  do | o |
-		    		if (params[:latitude].to_f > o.latitude_min) && (params[:latitude].to_f < o.latitude_max &&
-		    			params[:longitude].to_f > o.longitude_min) && (params[:longitude].to_f < o.longitude_max)
+		    		if valid_location(o, params[:latitude], params[:longitude])
 						@worktime.update_attribute('checkout',Time.now)
 						@worktime.update_attribute('place_checkout',o.name)
 		    			break
@@ -105,12 +99,11 @@ class WorktimesController < ApplicationController
 				render :json => { :code => '501', :time => '0' }
 			else
 				if (!User.checkin?(@user))
-					render :json => { :code => '505', :time => '0' }
+					render :json => { :code => '504', :time => '0' }
 				else
 					@worktime = Worktime.find_by_user_id(@user, :limit => 1, :order => 'created_at desc')
 					@office = Office.find(@user.office_id)
-				    if (params[:latitude].to_f > @office.latitude_min) && (params[:latitude].to_f < @office.latitude_max &&
-				    	params[:longitude].to_f > @office.longitude_min) && (params[:longitude].to_f < @office.longitude_max)
+				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	if @worktime.update_attribute('checkout',Time.now) && @worktime.update_attribute('place_checkout',@office.name)
 		    				render :json => { :code => '200', :time => Time.now }
 		    			else
@@ -120,8 +113,7 @@ class WorktimesController < ApplicationController
 				    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
 				    	found = false
 				    	@offices.each  do | o |
-				    		if (params[:latitude].to_f > o.latitude_min) && (params[:latitude].to_f < o.latitude_max &&
-				    			params[:longitude].to_f > o.longitude_min) && (params[:longitude].to_f < o.longitude_max)
+				    		if valid_location(o, params[:latitude], params[:longitude])
 								if @worktime.update_attribute('checkout',Time.now) && @worktime.update_attribute('place_checkout',o.name)
 				    				render :json => { :code => '200', :time => Time.now }
 				    			else
@@ -139,4 +131,11 @@ class WorktimesController < ApplicationController
 			end
 		end
     end
+
+    private
+
+    	def valid_location (office, latitude, longitude)
+    		return (latitude.to_f > office.latitude_min) && (latitude.to_f < office.latitude_max) && 
+    		(longitude.to_f > office.longitude_min) && (longitude.to_f < @office.longitude_max)
+    	end
 end

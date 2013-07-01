@@ -8,6 +8,7 @@ Oats::Application.routes.draw do
   put "change_password/:id", :to =>"users#change_password"
   post "checkin", :to => "worktimes#create"
   post "checkout", :to => "worktimes#update"
+  post "mobile_signin", :to => "users#mobile_signin"
 
   devise_scope :user do
     get "signin" => "devise/sessions#new", :as => :new_user_session
