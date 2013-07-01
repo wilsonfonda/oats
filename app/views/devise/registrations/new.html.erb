@@ -55,7 +55,7 @@ Your Profile <br/>
         var map = new GMap2(document.getElementById("map"));
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
-        var center = new GLatLng(-6.890604199999999,107.6170511);
+        var center = new GLatLng(0,    0);
         map.setCenter(center, 15);
         geocoder = new GClientGeocoder();
         var marker = new GMarker(center, {draggable: true});  
@@ -66,8 +66,8 @@ Your Profile <br/>
     GEvent.addListener(marker, "dragend", function() {
        var point = marker.getPoint();
         map.panTo(point);
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+       document.new_user.office_latitude.value = point.lat().toFixed(5);
+       document.new_user.office_longitude.value = point.lng().toFixed(5);
 
         });
 
@@ -77,15 +77,15 @@ Your Profile <br/>
     var center = map.getCenter();
       var marker = new GMarker(center, {draggable: true});
       map.addOverlay(marker);
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+      document.new_user.office_latitude.value = center.lat().toFixed(5);
+     document.new_user.office_longitude.value = center.lng().toFixed(5);
 
 
    GEvent.addListener(marker, "dragend", function() {
       var point =marker.getPoint();
        map.panTo(point);
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+      document.new_user.office_latitude.value = point.lat().toFixed(5);
+       document.new_user.office_longitude.value = point.lng().toFixed(5);
 
         });
  
@@ -105,8 +105,8 @@ Your Profile <br/>
             if (!point) {
               alert(address + " not found");
             } else {
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+      document.new_user.office_latitude.value = point.lat().toFixed(5);
+     document.new_user.office_longitude.value = point.lng().toFixed(5);
      map.clearOverlays()
       map.setCenter(point, 14);
    var marker = new GMarker(point, {draggable: true});  
@@ -115,8 +115,8 @@ Your Profile <br/>
     GEvent.addListener(marker, "dragend", function() {
       var pt = marker.getPoint();
        map.panTo(pt);
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+      document.new_user.office_latitude.value = pt.lat().toFixed(5);
+       document.new_user.office_longitude.value = pt.lng().toFixed(5);
         });
 
 
@@ -124,14 +124,15 @@ Your Profile <br/>
       map.clearOverlays();
     var center = map.getCenter();
       var marker = new GMarker(center, {draggable: true});
-      map.addOverlay(marker);        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+      map.addOverlay(marker);
+      document.new_user.office_latitude.value = center.lat().toFixed(5);
+     document.new_user.office_longitude.value = center.lng().toFixed(5);
 
    GEvent.addListener(marker, "dragend", function() {
      var pt = marker.getPoint();
       map.panTo(pt);
-        document.new_user.office_latitude.value = center.lat().toFixed(5);
-        document.new_user.office_longitude.value = center.lng().toFixed(5);
+    document.new_user.office_latitude.value = pt.lat().toFixed(5);
+     document.new_user.office_longitude.value = pt.lng().toFixed(5);
         });
  
         });
