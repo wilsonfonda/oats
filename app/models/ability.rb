@@ -57,6 +57,7 @@ class Ability
 			can :update, User do |employee|
 				user == employee
 			end
+			cannot :index, User
 			can :manage, Worktime do |worktime|
 				worktime.user_id == user.id
 			end

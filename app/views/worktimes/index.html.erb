@@ -1,8 +1,164 @@
-<br/>checkin <span/> place_checkin <span/> checkout <span/> place_checkout
-<% @user.worktimes.each do |w| %>
-	<br/>
-	<%= w.checkin %> <span/>
-	<%= w.place_checkin %> <span/>
-	<%= w.checkout %> <span/>
-	<%= w.place_checkout %> <span/>
-<% end %>
+<!-- /worktimes -->
+
+<%= javascript_include_tag "zingchart-html5-min" %>
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Performance</h1></strong>
+		</div>
+		<div class="row floating-paper">
+      <div class="row">
+          <div class="span6">
+              <div class="row">
+                        <div class="span2" style="width:90px;">Period from : </div>
+                      <div id="datetimepicker_from" class="span4">
+                                  <div id="date_from" class="input-append input-medium">
+                                    <input data-format="dd-MM-yyyy" type="text" id="datefrom" value='<%= Time.parse((Date.today()-6).to_s).strftime("%d-%m-%Y")  unless (Date.today()-6).nil? %>'></input>
+                                    <span class="add-on">
+                                      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                            </div>
+                            <script type="text/javascript">
+                              $(function() {
+                                $('#date_from').datetimepicker({
+                                  pickTime: false
+                                });
+                              });
+                            </script>
+                        </div>
+              </div>
+              <div class="row">
+                            <div class="span2" style="width:90px;">to : </div>
+                      <div id="datetimepicker_to" class="span4">
+                                  <div id="date_to" class="input-append input-medium">
+                                    <input  data-format="dd-MM-yyyy" type="text" id="dateto" value='<%= Time.parse(Date.current.to_s).strftime("%d-%m-%Y")  unless Date.current.nil? %>'></input>
+                                    <span class="add-on">
+                                      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                            </div>
+                            <script type="text/javascript">
+                              $(function() {
+                                $('#date_to').datetimepicker({
+                                  pickTime: false
+                                });
+                              });
+                            </script>
+                        </div>
+              </div>
+          </div>
+          <div class="span1">
+              <input type="button" class="btn btn-large btn-primary" value="Refresh" onclick="refresh_performance(<%= current_user.id %>)"/>
+          </div>
+      </div>
+
+    <div class="row">
+      <div class="span8">     
+		    <div id="perf_chart"></div>
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="span7">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Checkin Time</th>
+                <th>Checkout Time</th>
+                <th>Place Checkin</th>
+                <th>Place Checkout</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @worktimes.each do |w| %>
+	              <tr>
+	                <td><%= w.checkin %></td>
+	                <td><%= w.checkout %></td>
+	                <td><%= w.place_checkin %></td>
+	                <td><%= w.place_checkout %></td>
+	              </tr>
+	          <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
+
+<script>
+  window.onload = function(){
+    zingchart.render(
+      {
+        id : "perf_chart",
+        height : 450,
+        width : 600,
+        data : myChart
+      }
+    );
+  }
+
+  var myChart = {
+    type : "bar",
+    title : {text : "Performance Graph"},
+    "legend" : {
+            "header" : {
+            "text" : "Legend"
+            },
+
+    },
+    "scale-x"  : {
+        "text" : "Scale-x"
+    },
+    "scale-y"  : {
+        "text" : "Scale-y"
+    },
+    series :[
+    	{	values : [	
+            <% if !params[:from].nil? && !params[:to].nil? %>
+				<% date = Time.parse(params[:from]) %>
+				<% x = 0%>
+				<% while date <= Time.parse(params[:to])%>
+				<% a=0 %>
+				<% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
+				    <% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+				    <% x+=1 %>
+				    <% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
+				      <% a+= (@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+				      <% x+=1 %>
+			    <% end %>
+			    <%= a.to_f/3600 %>
+			<% else %>
+			    <%= 0 %>
+			<% end %>
+			<% if !(date == Time.parse(params[:to])) %>
+			      ,
+			<% end %>
+			<% date += 1.day %>
+			<% end %>
+			<% end %>
+    		],
+    		"text": "Worktime"
+    	}
+    ]
+  };
+</script>
+<script>
+  function refresh_performance(id)
+  {
+      if (checkDate())
+      {
+        var from = document.getElementById("datefrom").value.replace("/", "-").replace("/", "-");
+        var to = document.getElementById("dateto").value.replace("/", "-").replace("/", "-");
+        var url_now = location.protocol + '//' + location.host + location.pathname;
+
+        window.location = url_now + "?id=" + id + "&from=" + from + "&to=" + to;
+      }
+      else
+      {
+      }          
+  }
+</script>

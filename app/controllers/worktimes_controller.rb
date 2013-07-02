@@ -5,6 +5,7 @@ class WorktimesController < ApplicationController
 	def index
 		@user = User.find(params[:id])
 		@worktime = @user.worktimes[0]
+		@worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
 		if @worktime.nil?
 			redirect_to user_path current_user
 		else

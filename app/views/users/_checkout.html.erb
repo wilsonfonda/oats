@@ -1,0 +1,72 @@
+<div class="row">
+	<h2><strong>Check In</strong></h2>
+</div>
+<div class="row transparent-field">
+	<div class="span4 pull-left">
+		<div id="timer">
+			<div id="timer-hour">
+				<% if @timer / 3600 <10%>
+				0<%= @timer / 3600 %>
+				<%else%>
+				<%= @timer / 3600 %>
+				<% end %>
+				<% @timer %= 3600 %>
+			</div>
+			<div id="timer-symbol">
+				:
+			</div>
+			<div id="timer-minute">
+				<% if @timer / 60 <10%>
+				0<%= @timer / 60 %> 
+				<%else%>
+				<%= @timer / 60 %> 
+				<% end %>
+				<% @timer %= 60 %>
+			</div>
+			<div id="timer-symbol">
+				:
+			</div>
+			<div id="timer-second">
+				<% if @timer <10%>
+				0<%= @timer %>
+				<%else%>
+				<%= @timer %>
+				<% end %>
+				
+			</div>
+		</div>
+	</div>
+	<script>
+	var latitude
+	var longitude
+	function getLocation()
+	  {
+	  if (navigator.geolocation)
+	    {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	    }
+	  else{alert("Geolocation is not supported by this browser.");}
+	  }
+	function showPosition(position)
+	  {
+		latitude = position.coords.latitude;
+		longitude = position.coords.longitude;
+		document.check_out_form.latitude.value = latitude;
+		document.check_out_form.longitude.value = longitude;
+		document.check_out_form.submit()
+	  }
+	</script>
+
+	<div class="span2 pull-right space20">
+		<button class="btn btn-large btn-danger center" onclick="getLocation()" >Checkout</button>
+	</div>
+</div>
+
+<%= form_tag('/checkout', :method => 'post', :name => "check_out_form") do %>
+  <%= hidden_field_tag(:latitude) %>
+
+  <%= hidden_field_tag(:longitude) %>
+<% end %>
+
+<body onload="start()">
+</body>

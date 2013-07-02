@@ -1,58 +1,109 @@
-<% @users.each do |user| %>
-<br/>
-  <%if can? :update, user || user!=current_user  %>
-	 <%= form_for(user) do |f| %>
+<!-- /users -->
+<%= render 'layouts/alt_navigation' %>
+<div class="row">
+  <div class="span12">
+    <div class="row">
+      <h1><strong>Employees</strong></h1>
+    </div>
+    <div class="row floating-paper">
+      <table id="users" class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Division</th>
+            <th>Role</th>
+            <th>Office</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <td><%=user.id%></td>
+            
+            
+            <%if (can? :update, user) && user!=current_user  %>
+              <td><%= link_to user.name, edit_user_path(user) %></td>
+              <td><%=user.email%></td>
+              <%= form_for(user) do |f| %>
+                <td><%= f.text_field :division %></td>
+                <td><%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%></td>
+                <td><%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %></td>
+                <td><%= f.submit "Save", class: "btn btn-primary" %></td>
+                <td><%= button_to "Delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.name, class: "btn btn-primary"%></td>
+              <% end %>
+            <% else %>
+              <td><%= link_to user.name, user %></td>
+              <td><%=user.email%></td>
+              <td><%=user.division%></td>
+              <td>
+              <% if user.role == "0" %>
+                Admin
+              <% elsif user.role == "1"%>
+                Owner
+              <% elsif user.role == "2"%>
+                HR
+              <% elsif user.role == "3"%>
+                Employee
+              <% end %>
+              </td>
+              <td><%= Office.find(user.office_id).name %> </td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
+      <!--<form method="link" action="/employee/add">
+        <input type="submit" value="Add employee" class="btn btn-primary">
+      </form>-->
+    </div>
 
-      <%= f.label :name %>
-      <%= f.text_field :name%>
+    <div id="add_employee_label" class="row">
+      <h2><strong>Add Employee</strong></h2>
+    </div>
+    <div id="add_employee_form" class="row floating-paper" style="height:0;">
+      <%= form_for(User.new, :url => url_for(:controller=>'users', :action => 'add'), html: {class: "form-horizontal"}) do |f| %>
 
-      <%= f.label :division %>
-      <%= f.text_field :division %>
+        <div class="control-group">
+          <%= f.label :name, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :name, :placeholder=>'Type your name here' %>
+          </div>
+        </div>
 
-      <%= f.label :role %>
-      <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+        <div class="control-group">
+          <%= f.label :email, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :email, :placeholder=>'Type your email here' %>
+          </div>
+        </div>
 
-      <%= f.label :office %>
-      <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+        <div class="control-group">
+          <%= f.label :division, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :division, :placeholder=>'Type your division here' %>
+          </div>
+        </div>
 
-      <%= f.submit "Save", class: "btn btn-primary" %>
+        <div class="control-group">
+          <%= f.label :role, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+          </div>
+        </div>
 
-      <%= link_to "delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.email %>
-      
-    <% end %>
-  <% else %>
-    <%=user.name%> <span/>
-    <%=user.division%> <span/>
-    <% if user.role == "0" %>
-      Admin
-    <% elsif user.role == "1"%>
-      Owner
-    <% elsif user.role == "2"%>
-      HR
-    <% elsif user.role == "3"%>
-      Employee
-    <% end %>
-    <span/><%= Office.find(user.office_id).name %> <span/>
-  <% end %>
-<% end %>
-<br/>
+        <div class="control-group">
+          <%= f.label :office, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+          </div>
+        </div>
 
-<%= form_for(User.new, :url => url_for(:controller=>'users', :action => 'add')) do |f| %>
-
-<%= f.label :name %>
-  <%= f.text_field :name%>
-
-  <%= f.label :email %>
-  <%= f.text_field :email%>
-
-  <%= f.label :division %>
-  <%= f.text_field :division %>
-
-  <%= f.label :role %>
-  <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
-
-  <%= f.label :office %>
-  <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
-
-  <%= f.submit "Add", class: "btn btn-primary" %>
-<% end %>
+        <%= f.submit "Add", class: "btn btn-large btn-primary pull-right" %>
+        <% end %>
+        
+      </div>
+  </div>
+</div>

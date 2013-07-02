@@ -22,6 +22,9 @@ class UsersController < ApplicationController
     end
 
 	def show
+		unless Worktime.find_by_user_id(current_user, :limit => 1, :order => 'created_at desc').nil?
+	      @timer = (Time.now - Worktime.find_by_user_id(current_user, :limit => 1, :order => 'created_at desc').checkin).to_i
+	    end
 		@user = User.find(params[:id])
 	end
 
@@ -46,12 +49,15 @@ class UsersController < ApplicationController
 
 	def change_password
 		@user = User.find(params[:id])
-		if (@user.valid_password?(params[:user][:old_password]) && (params[:user][:password] == params[:user][:password_confirmation]))
+		if (@user.valid_password?(params[:user][:old_password]) && (params[:user][:password] == params[:user][:password_confirmation]) && params[:user][:password].length > 5 )
 			@user.update_attribute('password',params[:user][:password])
 			@user.update_attribute('password_confirmation',params[:user][:password_confirmation])
-			sign_in @user
+			flash[:notice] = "Successfully change your password"
+			sign_in @user,:bypass => true
+		else
+			flash[:notice] = "Invalid old / new password"
 		end
-		redirect_to :back
+		redirect_back_or_default(user_path current_user)
 	end
 
 	def mobile_signin

@@ -111,9 +111,6 @@ function startCount(){
 }
 
 function start(){
-	document.getElementById("timer-second").innerHTML = "00";
-	document.getElementById("timer-minute").innerHTML = "00";
-	document.getElementById("timer-hour").innerHTML = "00";
 	interval = setInterval(function() {startCount();}, 1000);
 }
 

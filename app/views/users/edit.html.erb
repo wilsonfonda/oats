@@ -1,52 +1,111 @@
-<%= form_for(@user) do |f| %>
-  <%= f.label :name %>
-  <% if current_user==@user %>
-  <%= f.text_field :name %>
-  <% else %>
-  <%= @user.name%>
-  <% end %>
+<!-- /users/:id/edit -->
 
-  <%= f.label :division %>
-  <%= f.text_field :division %>
+<div class="row">
+  <div class="span8">
+    <div class="row">
+      <strong><h1>Profile</h1></strong>
+    </div>
+    <div class="row floating-paper">
+      <%= form_for(@user, html: {class: "form-horizontal"}) do |f| %>
+        <div class="control-group">
+          <%= f.label :name, :class=>'control-label' %>
+          <div class="controls">
+            <% if current_user==@user %>
+              <%= f.text_field :name, :placeholder=>'Type your name here' %>
+            <% else %>
+            <div style="margin-top:5px">
+              <%= @user.name%>
+            </div>
+            <% end %>
+          </div>
+        </div>
 
-  <%= f.label :role %>
-  <% if can? :change_role, @user %>
-  <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
-  <% else %>
-      <% if @user.role == "0" %>
-        Admin
-      <% elsif @user.role == "1"%>
-        Owner
-      <% elsif @user.role == "2"%>
-        HR
-      <% elsif @user.role == "3"%>
-        Employee
+        <div class="control-group">
+          <%= f.label :email, :class=>'control-label' %>
+          <div class="controls">
+            <div style="margin-top:5px">
+              <%= @user.email %>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :office, :class=>'control-label' %>
+          <div class="controls">
+            <% if can? :change_office, @user %>
+              <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
+            <% else %>
+            <div style="margin-top:5px">
+              <%= Office.find(@user.office_id).name %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :division, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :division, :placeholder=>'Type your division here' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :role, :class=>'control-label' %>
+          <div class="controls">
+            <% if can? :change_role, @user %>
+              <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
+            <% else %>
+            <div style="margin-top:5px">
+                <% if @user.role == "0" %>
+                  Admin
+                <% elsif @user.role == "1"%>
+                  Owner
+                <% elsif @user.role == "2"%>
+                  HR
+                <% elsif @user.role == "3"%>
+                  Employee
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
       <% end %>
-  <% end %>
+      
+    </div>
+    <% if current_user==@user %>
+      <div class="row">
+        <strong><h2>Change Password</h2></strong>
+      </div>
+      <div class="row floating-paper">
+        <%= form_for(@user, :url => url_for(:controller=>'users', :action => 'change_password')) do |f| %>
 
-  <%= f.label :office %>
-  <% if can? :change_office, @user %>
-    <%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %>
-  <% else %>
-    <%= Office.find(@user.office_id).name %>
-  <% end %>
-  
+        <div class="control-group">
+          <%= f.label :old_password, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.password_field :old_password, :placeholder=>'Your old password' %>
+          </div>
+        </div>
 
-  <%= f.submit "Save", class: "btn btn-large btn-primary" %>
-<% end %>
+        <div class="control-group">
+          <%= f.label :new_password, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.password_field :password, :placeholder=>'Your new password' %>
+          </div>
+        </div>
 
-<% if current_user==@user %>
-  <br/>
-  <%= form_for(@user, :url => url_for(:controller=>'users', :action => 'change_password')) do |f| %>
-    <%= f.label :old_password %>
-    <%= f.password_field :old_password %>
+        <div class="control-group">
+          <%= f.label :password_confirmation, "Password confirmation", :class=>'control-label' %>
+          <div class="controls">
+            <%= f.password_field :password_confirmation, :placeholder=>'Type your new password again' %>
+          </div>
+        </div>
 
-    <%= f.label :new_password %>
-    <%= f.password_field :password %>
-
-    <%= f.label :password_confirmation, "Confirmation" %>
-    <%= f.password_field :password_confirmation %>
-
-    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-  <% end %>
-<% end %> 
+        <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
+        <% end %>
+      </div> 
+    <% end %>  
+  </div>
+  <%= render 'layouts/navigation' %>
+</div>

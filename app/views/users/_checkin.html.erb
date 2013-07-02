@@ -1,0 +1,55 @@
+<div class="row">
+	<h2><strong>Check In</strong></h2>
+</div>
+<div class="row transparent-field">
+	<div class="span4 pull-left">
+		<div id="timer">
+			<div id="timer-hour">
+				00
+			</div>
+			<div id="timer-symbol">
+				:
+			</div>
+			<div id="timer-minute">
+				00
+			</div>
+			<div id="timer-symbol">
+				:
+			</div>
+			<div id="timer-second">
+				00
+			</div>
+		</div>
+	</div>
+	<br/>
+	<script>
+	var latitude
+	var longitude
+	function getLocation()
+	  {
+	  if (navigator.geolocation)
+	    {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	    }
+	  else{alert("Geolocation is not supported by this browser.");}
+	  }
+	function showPosition(position)
+	  {
+		latitude = position.coords.latitude;
+		longitude = position.coords.longitude;
+		document.check_in_form.latitude.value = latitude;
+		document.check_in_form.longitude.value = longitude;
+		document.check_in_form.submit()
+	  }
+	</script>
+
+	
+	<div class="span2 pull-right space20">
+		<button class="btn btn-large btn-success center" onclick="getLocation()">Checkin</button>
+	</div>
+</div>
+<%= form_tag('/checkin', :method => 'post', :name => "check_in_form") do %>
+  <%= hidden_field_tag(:latitude) %>
+
+  <%= hidden_field_tag(:longitude) %>
+<% end %>

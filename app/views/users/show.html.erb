@@ -1,18 +1,41 @@
-<%= @user.email %>
-<%= @user.name %>
-<%= @user.division %>
-<%= @user.role %>
 
-<% if User.checkin?(@user) %>
-  <%= form_tag('/checkout', :method => 'post', :name => "check_out_form") do %>
-	  <%= text_field_tag(:latitude) %>
-	  <%= text_field_tag(:longitude) %>
-	  <%= submit_tag "checkout", class: "btn btn-large btn-primary" %>
-  <% end %>
-<% else %>
-  <%= form_tag('/checkin', :method => 'post', :name => "check_in_form") do %>
-	  <%= text_field_tag(:latitude) %>
-	  <%= text_field_tag(:longitude) %>
-	  <%= submit_tag "checkin", class: "btn btn-large btn-primary" %>
-  <% end %>
-<% end %>
+<!-- /users/:id -->
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Employee Profile</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<dl class="dl-horizontal">
+			    <dt>Name</dt>
+			    <dd><%= @user.name %></dd>
+			    <dt>Email</dt>
+			    <dd><%= @user.email %></dd>
+			    <dt>Company</dt>
+			    <dd><%= Company.find(@user.company_id).name %></dd>
+			    <dt>Office</dt>
+			    <dd><%= Office.find(@user.office_id).name %></dd>
+			    <dt>Division</dt>
+			    <dd><%= @user.division %></dd>
+			    <dt>Role</dt>
+			    <dd>
+				  <% if @user.role == "0" %>
+	                Admin
+	              <% elsif @user.role == "1"%>
+	                Owner
+	              <% elsif @user.role == "2"%>
+	                HR
+	              <% elsif @user.role == "3"%>
+	                Employee
+	              <% end %>
+          		</dd>
+		    </dl>
+		</div>
+		<% if @user==current_user %>
+		<div class="row horizontal-bar"></div>
+		<%= render 'checkin_form' %>
+		<% end%>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
