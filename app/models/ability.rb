@@ -4,6 +4,12 @@ class Ability
 	def initialize(user)
 		if user.role == '0'
 			can :manage, :all
+			cannot :destroy, User do |admin|
+				admin.role == '0'
+			end
+			cannot :destroy, Company do |company|
+				Ownership.find_by_owner_id(user).company_id == company.id
+			end
 		elsif user.role == '1'
 			can :read, Company do |company|
 				Ownership.find_by_owner_id(user).company_id == company.id

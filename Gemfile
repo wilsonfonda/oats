@@ -9,6 +9,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'bootstrap-datetimepicker-rails'
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
@@ -24,6 +25,9 @@ end
 group :assets do
   gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '3.2.2'
+  gem "twitter-bootstrap-rails"
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '1.2.3'
 end
 

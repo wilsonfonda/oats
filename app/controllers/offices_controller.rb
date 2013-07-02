@@ -22,6 +22,12 @@ class OfficesController < ApplicationController
 	def update
 		@office = Office.find(params[:id])
 		@office.update_attributes(params[:office])
+		delta_lat = params[:office][:range].to_f / 6378137 * 180 / Math::PI
+	    delta_long = 2 * Math.asin(Math.sin(params[:office][:range].to_f / 12756274) / Math.cos(params[:office][:latitude].to_f * Math::PI / 180)) * 180 / Math::PI
+	    @office.update_attribute('latitude_min',params[:office][:latitude].to_f - delta_lat)
+	    @office.update_attribute('latitude_max',params[:office][:latitude].to_f + delta_lat)
+	    @office.update_attribute('longitude_min',params[:office][:longitude].to_f - delta_long)
+	    @office.update_attribute('longitude_max',params[:office][:longitude].to_f + delta_long)
 		redirect_to :back
 	end
 

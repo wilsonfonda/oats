@@ -4,6 +4,9 @@ Oats::Application.routes.draw do
   resources :companies
   resources :worktimes
   resources :offices
+  
+  root to: 'static_pages#home'
+
   post "add", :to =>"users#add"
   put "change_password/:id", :to =>"users#change_password"
   post "checkin", :to => "worktimes#create"
@@ -17,6 +20,13 @@ Oats::Application.routes.draw do
     delete "signout" => "devise/sessions#destroy", :as => :destroy_user_session
     get "signup", :to => "devise/registrations#new"
   end
+  
+  get "/help", :to => 'static_pages#help'
+  get "/about", :to => 'static_pages#about'
+  get "/privacy", :to => 'static_pages#privacy'
+  get "/testimony", :to => 'static_pages#testimony'
+  get "/contact", :to => 'static_pages#contact'
+  get "/terms", :to => 'static_pages#terms'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

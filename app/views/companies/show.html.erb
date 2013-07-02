@@ -1,13 +1,52 @@
-<%= @company.name %><br/>
-<%= @company.address %><br/>
-<%= @company.contact %><br/>
-<%= @company.deposit %><br/>
-<% if @company.status %>Working<%else%>Freeze<% end %>
-<br/>
-Offices
-<% @offices.each do |office| %> 
-	<%= office.name %><span/>
-	<%= office.range %><span/>
-	<%= office.longitude %><span/>
-	<%= office.latitude %><br/>
-<% end %>
+<!-- /companies/:id -->
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1>Company</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<dl class="dl-horizontal">
+		    <dt>Company Name</dt>
+		    <dd><%= @company.name %></dd>
+		    <dt>Address</dt>
+		    <dd><%= @company.address %></dd>
+		    <dt>Contact</dt>
+		    <dd><%= @company.contact %></dd>
+		    <dt>Deposit</dt>
+		    <dd><%= @company.deposit %></dd>
+		    <dt>Status</dt>
+		    <dd><% if @company.status %>Working<% else %>Freeze<% end %></dd>
+	    </dl>
+	    <%= button_to "Edit Information", edit_company_path(@company), method: :get, class: "btn btn-primary"%>
+		</div>
+		<div class="row">
+			<strong><h1>Offices</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Office name</th>
+						<th>Latitude</th>
+						<th>Longitude</th>
+						<th>Range</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @offices.each do |office| %> 
+						<tr>
+							<td><%= office.id %></td>
+							<td><%= office.name %></td>
+							<td><%= office.range %></td>
+							<td><%= office.longitude %></td>
+							<td><%= office.latitude %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>

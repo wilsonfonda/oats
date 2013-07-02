@@ -1,45 +1,108 @@
-<%= form_for(@company) do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+<!-- /companies/:id/edit -->
 
-  <%= f.label :address %>
-  <%= f.text_field :address %>
+<div class="row">
+  <div class="span8">
+    <div class="row">
+      <strong><h1>Edit Company</h1></strong>
+    </div>
+    <div class="row floating-paper">
+      <%= form_for(@company, html: {class: "form-horizontal"}) do |f| %>
 
-  <%= f.label :contact %>
-  <%= f.text_field :contact %>
+      <div class="control-group">
+        <%= f.label :company_name, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :name, :placeholder=>'Type your name here' %>
+        </div>
+      </div>
 
-  <%= f.submit "Save", class: "btn btn-large btn-primary" %>
-<% end %>
-<br/>
-<br/>
-<% @offices.each do |office| %>
-	<%= form_for(office) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+      <div class="control-group">
+        <%= f.label :address, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :address, :placeholder=>'Type your address here' %>
+        </div>
+      </div>
 
-    <%= f.label :longitude %>
-    <%= f.text_field :longitude %>
+      <div class="control-group">
+        <%= f.label :contact, :class=>'control-label' %>
+        <div class="controls">
+          <%= f.text_field :contact, :placeholder=>'Type your contact here' %>
+        </div>
+      </div>
 
-    <%= f.label :latitude %>
-    <%= f.text_field :latitude %>
-    <%= f.submit "Save", class: "btn btn-large btn-primary" %>
-  <% end %>
-  <%= link_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name %>
-  <br/>
- <% end %>
+      <%= f.submit "Save", class: "btn btn-large btn-primary pull-right" %>
+      <% end %>
+    </div>
+    <div class="row">
+      <strong><h1>Offices</h1></strong>
+    </div>
+    <div class="row floating-paper">
+      <table id="edit-office-table" class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Range</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @offices.each do |office| %>
+          <tr>
+            <%= form_for(office) do |f| %>
+              <td><%= f.text_field :name %></td>
+              <td><%= f.text_field :range %></td>
+              <td><%= f.text_field :latitude %></td>
+              <td><%= f.text_field :longitude %></td>
+              <td><%= f.submit "Save", class: "btn btn-primary" %></td>
+            <% end %>
+            <td><%= button_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <input type="button" value="Add office" class="btn btn-primary" onclick="add_office();"/>
+    </div>
 
-<%= form_for(Office.new) do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+    <div id="add_employee_label" class="row">
+      <strong><h2>Add Office</h2></strong>
+    </div>
+    <div id="add_employee_form" class="row floating-paper" style="height:0;">
+      <%= form_for(Office.new, html: {class: "form-horizontal"}) do |f| %>
 
-  <%= f.label :longitude %>
-  <%= f.text_field :longitude %>
+        <div class="control-group">
+          <%= f.label :name, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :name, :placeholder=>'Type your name here' %>
+          </div>
+        </div>
 
-  <%= f.label :latitude %>
-  <%= f.text_field :latitude %>
+        <div class="control-group">
+          <%= f.label :longitude, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :longitude, :placeholder=>'Location longitude' %>
+          </div>
+        </div>
 
-  <%= f.label :range %>
-  <%= f.text_field :range %>
+        <div class="control-group">
+          <%= f.label :latitude, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :latitude, :placeholder=>'Location latitude' %>
+          </div>
+        </div>
 
-  <%= f.submit "Add", class: "btn btn-large btn-primary" %>
-<% end %>
+        <div class="control-group">
+          <%= f.label :range, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :range, :placeholder=>'Acceptable range' %>
+          </div>
+        </div>
+
+        <%= f.submit "Add", class: "btn btn-large btn-primary pull-right" %>
+      <% end %>
+        
+      </div>
+  </div>
+  <%= render 'layouts/navigation' %>
+</div>
