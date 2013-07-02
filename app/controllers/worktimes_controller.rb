@@ -1,5 +1,5 @@
 class WorktimesController < ApplicationController
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, :only => :index
 	load_and_authorize_resource
 	
 	def index
@@ -140,7 +140,7 @@ class WorktimesController < ApplicationController
 			render :json => { :code => '502' }
 		else
 			arr = Array.new
-			worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]))
+			worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
 			date = Time.parse(params[:from])
 			x = 0
 			while date <= Time.parse(params[:to])

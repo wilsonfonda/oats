@@ -20,3 +20,32 @@
 </div>
 <div class="push">
 </div>
+
+<%= form_tag('/mobile_signin', :method => 'post', :name => "mobile_signin_form") do %>
+  <%= email_field_tag :email %>
+  <%= password_field_tag :password %>
+
+  <%= submit_tag "signin", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<%= form_tag('/checkout', :method => 'post', :name => "check_out_form") do %>
+  <%= text_field_tag(:access_token) %>
+  <%= text_field_tag(:latitude) %>
+  <%= text_field_tag(:longitude) %>
+  <%= submit_tag "checkout", class: "btn btn-large btn-primary" %>
+<% end %>
+
+
+<%= form_tag('/checkin', :method => 'post', :name => "check_in_form") do %>
+  <%= text_field_tag(:access_token) %>
+  <%= text_field_tag(:latitude) %>
+  <%= text_field_tag(:longitude) %>
+  <%= submit_tag "checkin", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<%= form_tag('/mobile_graph', :method => 'post', :name => "mobile_graph_form") do %>
+  <%= text_field_tag(:access_token) %>
+  <%= text_field_tag(:from) %>
+  <%= text_field_tag(:to) %>
+  <%= submit_tag "mobile_graph", class: "btn btn-large btn-primary" %>
+<% end %>

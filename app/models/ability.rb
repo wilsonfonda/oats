@@ -2,6 +2,8 @@ class Ability
 	include CanCan::Ability
 	
 	def initialize(user)
+		user ||= User.new
+
 		if user.role == '0'
 			can :manage, :all
 			cannot :destroy, User do |admin|
@@ -48,7 +50,7 @@ class Ability
 			end
 			can :create, Worktime
 			can :read, Worktime
-		else
+		elsif user.role == '3'
 			can :read, User do |employee|
 				user == employee
 			end
@@ -59,6 +61,11 @@ class Ability
 				worktime.user_id == user.id
 			end
 			can :create, Worktime
+		else
+			can :mobile_signin, User
+			can :create, Worktime
+			can :update, Worktime
+			can :mobile_graph, Worktime
 		end
 	end
 end
