@@ -1,4 +1,16 @@
 class UsersController < ApplicationController
+	def mobile_signin
+		@user = User.find_by_email(params[:email])
+		if @user.nil?
+			render :json => { :code => '502' }
+		else
+			if !@user.valid_password?(params[:password])
+				render :json => { :code => '501' }
+			else
+				render :json => { :code => '200', :access_token => @user.access_token }
+			end
+		end
+	end
 	before_filter :authenticate_user!
 	load_and_authorize_resource
 	
@@ -54,16 +66,5 @@ class UsersController < ApplicationController
 		redirect_to :back
 	end
 
-	def mobile_signin
-		@user = User.find_by_email(params[:email])
-		if @user.nil?
-			render :json => { :code => '502' }
-		else
-			if !@user.valid_password?(params[:password])
-				render :json => { :code => '501' }
-			else
-				render :json => { :code => '200', :access_token => @user.access_token }
-			end
-		end
-	end
+	
 end
