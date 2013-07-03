@@ -32,9 +32,13 @@
           		</dd>
 		    </dl>
 		</div>
-		<% if @user==current_user %>
+
 		<div class="row horizontal-bar"></div>
-		<%= render 'checkin_form' %>
+
+		<% if @user==current_user %>
+			<%= render 'checkin_form' %>
+		<% else %>
+			<%= link_to "Performance", worktimes_path+"?id=" + params[:id] + "&from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: "btn btn-primary" %>
 		<% end%>
 	</div>
 	<%= render 'layouts/navigation' %>

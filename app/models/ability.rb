@@ -35,6 +35,10 @@ class Ability
 				user == owner
 			end
 			cannot :change_status, Company
+			can :manage, Worktime do |worktime|
+				worktime.user_id == user.id
+			end
+			can :create, Worktime
 			can :read, Worktime
 		elsif user.role == '2'
 			can :manage, User do |employee|
@@ -51,12 +55,10 @@ class Ability
 			can :create, Worktime
 			can :read, Worktime
 		elsif user.role == '3'
-			can :read, User do |employee|
+			can :manage, User do |employee|
 				user == employee
 			end
-			can :update, User do |employee|
-				user == employee
-			end
+			cannot :destroy, User
 			cannot :index, User
 			can :manage, Worktime do |worktime|
 				worktime.user_id == user.id
