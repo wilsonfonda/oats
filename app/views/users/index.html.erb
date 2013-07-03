@@ -24,7 +24,7 @@
             
             
             <%if (can? :update, user) && user!=current_user  %>
-              <td><%= link_to user.name, edit_user_path(user) %></td>
+              <td><%= link_to user.name, user_path(user) %></td>
               <td><%=user.email%></td>
               <%= form_for(user) do |f| %>
                 <td><%= f.text_field :division %></td>
