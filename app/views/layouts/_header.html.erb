@@ -21,7 +21,7 @@
           <% if user_signed_in? %>
             <ul class="nav" style="float: right; display: inline-block;">
               <li class="">
-                Welcome,<a href="/profile" style="display:inline-block"><%= current_user.name %></a>
+                Welcome,<a href= <%= user_path(current_user) %> style="display:inline-block"><%= current_user.name %></a>
               </li>
               <li class="">
                 <%= link_to "Sign out", destroy_user_session_path, method: :delete %>

@@ -72,7 +72,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @worktimes.each do |w| %>
+              <% @worktimes_paged.each do |w| %>
 	              <tr>
 	                <td><%= w.checkin %></td>
 	                <td><%= w.checkout %></td>
@@ -82,8 +82,10 @@
 	          <% end %>
             </tbody>
           </table>
+          <%= will_paginate @worktimes_paged%>
         </div>
       </div>
+
 		</div>
 	</div>
 	<%= render 'layouts/navigation' %>

@@ -6,6 +6,7 @@ class WorktimesController < ApplicationController
 		@user = User.find(params[:id])
 		@worktime = @user.worktimes[0]
 		@worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
+		@worktimes_paged = @worktimes.paginate(:page => params[:page], :per_page => 10)
 		if @worktime.nil?
 			redirect_to user_path current_user
 		else

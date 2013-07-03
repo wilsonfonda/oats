@@ -54,6 +54,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= will_paginate @users %>
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
       <!--<form method="link" action="/employee/add">
         <input type="submit" value="Add employee" class="btn btn-primary">
