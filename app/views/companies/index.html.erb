@@ -6,7 +6,7 @@
 			<strong><h1>Companies</h1></strong>
 		</div>
 		<div class="row floating-paper">
-			<table class="table table-hover">
+			<table id="company-table" class="table table-hover">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -40,6 +40,12 @@
 					<% end %>
 				</tbody>
 			</table>
+			<%= will_paginate @companies %>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+  var TSort_Data = new Array ('company-table', 'i', 's', 's', 's', 's', 's', 's');
+  tsRegister();
+</script>

@@ -24,7 +24,7 @@
 			<strong><h1>Offices</h1></strong>
 		</div>
 		<div class="row floating-paper">
-			<table class="table table-hover">
+			<table id="office-table" class="table table-hover">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -46,7 +46,13 @@
 					<% end %>
 				</tbody>
 			</table>
+			<%= will_paginate @offices %>
 		</div>
 	</div>
 	<%= render 'layouts/navigation' %>
 </div>
+
+<script type="text/javascript">
+  var TSort_Data = new Array ('office-table', 'i', 's', 'f', 'f', 'f');
+  tsRegister();
+</script>

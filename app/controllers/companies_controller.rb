@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
 	load_and_authorize_resource
 	
 	def index
-		@companies = Company.all
+		@companies = Company.paginate(:page => params[:page])
 	end
 
 	def edit
@@ -19,7 +19,7 @@ class CompaniesController < ApplicationController
 
 	def show
 		@company = Company.find(params[:id])
-		@offices = @company.offices
+		@offices = @company.offices.paginate(:page => params[:page])
 	end
 
 	def destroy	

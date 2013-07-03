@@ -13,12 +13,12 @@
 //= require modernizr-2.6.2.min.js
 //= require jquery
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
+//= require gs_sortable
 //= require bootstrap-datepicker
-if (window.location == "/performance")
+if (window.location == "/worktimes")
 {
 	//= require_tree .
 }

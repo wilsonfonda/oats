@@ -54,6 +54,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= will_paginate @users %>
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
       <!--<form method="link" action="/employee/add">
         <input type="submit" value="Add employee" class="btn btn-primary">
@@ -107,3 +108,8 @@
       </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var TSort_Data = new Array ('users', 'i', 's', 's', 's', 's', 's');
+  tsRegister();
+</script>

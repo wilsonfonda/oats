@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from CanCan::AccessDenied do |exception|
-  	flash[:error] = "Access denied."
+  	flash[:error] = "Access denied. Either that you don't have the authorization or your company's status is freezed"
   	redirect_back_or_default(user_path current_user)
   end
 
