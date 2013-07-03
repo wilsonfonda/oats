@@ -62,7 +62,7 @@
 
       <div class="row">
         <div class="span7">
-          <table class="table table-hover">
+          <table id="worktime-table" class="table table-hover">
             <thead>
               <tr>
                 <th>Checkin Time</th>
@@ -120,28 +120,28 @@
     },
     series :[
     	{	values : [	
-            <% if !params[:from].nil? && !params[:to].nil? %>
-				<% date = Time.parse(params[:from]) %>
-				<% x = 0%>
-				<% while date <= Time.parse(params[:to])%>
-				<% a=0 %>
-				<% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
-				    <% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
-				    <% x+=1 %>
-				    <% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
-				      <% a+= (@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
-				      <% x+=1 %>
-			    <% end %>
-			    <%= a.to_f/3600 %>
-			<% else %>
-			    <%= 0 %>
-			<% end %>
-			<% if !(date == Time.parse(params[:to])) %>
-			      ,
-			<% end %>
-			<% date += 1.day %>
-			<% end %>
-			<% end %>
+          <% if !params[:from].nil? && !params[:to].nil? %>
+            <% date = Time.parse(params[:from]) %>
+            <% x = 0%>
+            <% while date <= Time.parse(params[:to])%>
+              <% a=0 %>
+              <% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
+                <% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+                <% x+=1 %>
+                <% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
+                    <% a+= (@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+                    <% x+=1 %>
+                <% end %>
+                <%= a.to_f/3600 %>
+              <% else %>
+                <%= 0 %>
+              <% end %>
+              <% if !(date == Time.parse(params[:to])) %>
+              ,
+              <% end %>
+              <% date += 1.day %>
+            <% end %>
+          <% end %>
     		],
     		"text": "Worktime"
     	}
@@ -163,4 +163,9 @@
       {
       }          
   }
+</script>
+
+<script type="text/javascript">
+  var TSort_Data = new Array ('worktime-table', 'd', 'd', 's', 's');
+  tsRegister();
 </script>
