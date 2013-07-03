@@ -42,24 +42,6 @@ function add_employee()
 	}
 }
 
-function add_office()
-{
-	document.getElementById("add_employee_label").style.display = "block";
-	document.getElementById("add_employee_form").style.display = "block";
-
-	var form = $("#add_employee_form");
-    startAnimation();
-    function startAnimation(){
-      form.animate({height:250},"slow");
-    }
-
-    setTimeout(func, 500);
-
-    function func() {
-		document.getElementById("add_employee_label").scrollIntoView();
-	}
-}
-
 function show_hidden()
 {
 	modifyStyleRule('.hidden_field', "display: block !important;");
@@ -69,17 +51,6 @@ function show_hidden()
 function hide_hidden()
 {
 	window.location.reload();
-}
-
-function add_office_row()
-{
-	var table = document.getElementById("edit-office-table");
-	var tbody = table.getElementsByTagName("tbody")[0];
-	var length = tbody.getElementsByTagName("tr").length;
-	tbody.innerHTML += "<tr><form method='post' action='/company/edit' accept-charset='UTF-8'></form>\n<td>"+(length+1)+"<\/td>\n<td><input id='user_office_name' type='text' size='30' name='user[office_name]'/><\/td>\n<td><input id='user_address' type='text' size='30' name='user[address]'/><\/td>\n<td><input id='user_latitude' type='text' size='30' name='user[latitude]'/><\/td>\n<td><input id='user_longitude' type='text' size='30' name='user[longitude]'/><\/td>\n<td><input class='btn btn-primary' type='submit' value='Save' name='commit'/><\/td>\n<td><form method='link' action='#'><input type='submit' value='Delete' class='btn btn-primary'><\/form><\/td> <\/tr>\n";
-	
-                
-              
 }
 
 /* complementary function */

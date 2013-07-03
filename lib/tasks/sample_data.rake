@@ -34,16 +34,17 @@ name  = Faker::Name.name
 end
 
 def make_users
-    companies = Company.all
+    head, *tail = Company.all
+    companies = tail
     n = 0
     companies.each do |company|
-	name  = Faker::Name.name
+	    name  = Faker::Name.name
     	email = "owner-#{n+1}@email.com"
     	password  = "123123"
-   	access_token = Digest::SHA2.hexdigest(email) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
-    owner = company.offices.first.users.create!(name: name, email: email, password: "123123", password_confirmation: "123123", division: "IT", access_token: access_token, role: "1")
+   	  access_token = Digest::SHA2.hexdigest(email) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
+      owner = company.offices.first.users.create!(name: name, email: email, password: "123123", password_confirmation: "123123", division: "IT", access_token: access_token, role: "1")
         Ownership.create!(company_id: company.id, owner_id: owner.id)
-    	 n = n+1
+    	n = n+1
    end 
   
   i = 0
@@ -85,7 +86,8 @@ def make_offices
   3.times do
     companies.each do |company| 
     name  = Faker::Name.name
-    company.offices.create!(name: name, range: 100, latitude: 50, longitude: 60, latitude_min: "49", latitude_max: "51", longitude_min: "59", longitude_max: "61") 
+    company.offices.create!(name: name, latitude: -6.89059, longitude: 107.61709, 
+      latitude_min: -6.8914883152841195, latitude_max: -6.889691684715881, longitude_min: 107.61618514903097, longitude_max: 107.61799485096904, range: 100) 
     end 
   end
 end
@@ -106,14 +108,14 @@ def make_companies
 end
 
 def make_worktimes
-    users = User.all
+    users = User.all[14..20]
     users.each do |user| 
       i = 240
       10.times do
-       checkin = Time.now.advance(:hours => -i)
-	place_checkin = "Office checkin"
-	checkout = Time.now.advance(:hours => -i+8)
-	place_checkout = "Office checkout"
+        checkin = Time.now.advance(:hours => -i)
+      	place_checkin = "Office checkin"
+      	checkout = Time.now.advance(:hours => -i+(i/25))
+      	place_checkout = "Office checkout"
 	
         user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
         i = i - 24

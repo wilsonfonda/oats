@@ -69,7 +69,7 @@
       <strong><h2>Add Office</h2></strong>
     </div>
     <div id="add_employee_form" class="row floating-paper" style="height:0;">
-      <%= form_for(Office.new, html: {class: "form-horizontal"}) do |f| %>
+      <%= form_for(Office.new, html: {class: "form-horizontal", :id => 'new_office', :name => 'new_office'}) do |f| %>
 
         <div class="control-group">
           <%= f.label :name, :class=>'control-label' %>
@@ -79,16 +79,16 @@
         </div>
 
         <div class="control-group">
-          <%= f.label :longitude, :class=>'control-label' %>
-          <div class="controls">
-            <%= f.text_field :longitude, :placeholder=>'Location longitude' %>
-          </div>
-        </div>
-
-        <div class="control-group">
           <%= f.label :latitude, :class=>'control-label' %>
           <div class="controls">
             <%= f.text_field :latitude, :placeholder=>'Location latitude' %>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :longitude, :class=>'control-label' %>
+          <div class="controls">
+            <%= f.text_field :longitude, :placeholder=>'Location longitude' %>
           </div>
         </div>
 
@@ -99,6 +99,13 @@
           </div>
         </div>
 
+        <div class="input-append" style="margin-bottom:10px;">
+        <input class="span2" type="text" name="address" value="">
+        <input type="submit" value="Search!" class="btn" onclick="showAddress(address.value); return false">
+        </div>
+
+        <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
+
         <%= f.submit "Add", class: "btn btn-large btn-primary pull-right" %>
       <% end %>
         
@@ -106,3 +113,155 @@
   </div>
   <%= render 'layouts/navigation' %>
 </div>
+
+<head>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBlCtjE7pE8Y8pLOY0LQ1E1rRc7_BM7ji4"
+      type="text/javascript"></script>
+    <script type="text/javascript">
+    var latitude ;
+    var longitude;
+if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+  
+function showPosition(position)
+  {
+  latitude=position.coords.latitude;
+  longitude= position.coords.longitude;  
+  }
+
+ function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+        var center = new GLatLng(latitude,    longitude);
+        map.setCenter(center, 15);
+        geocoder = new GClientGeocoder();
+        var marker = new GMarker(center, {draggable: true});  
+        map.addOverlay(marker);
+        document.new_office.office_latitude.value = center.lat().toFixed(5);
+        document.new_office.office_longitude.value = center.lng().toFixed(5);
+
+    GEvent.addListener(marker, "dragend", function() {
+       var point = marker.getPoint();
+        map.panTo(point);
+       document.new_office.office_latitude.value = point.lat().toFixed(5);
+       document.new_office.office_longitude.value = point.lng().toFixed(5);
+
+        });
+
+
+   GEvent.addListener(map, "moveend", function() {
+      map.clearOverlays();
+    var center = map.getCenter();
+      var marker = new GMarker(center, {draggable: true});
+      map.addOverlay(marker);
+      document.new_office.office_latitude.value = center.lat().toFixed(5);
+     document.new_office.office_longitude.value = center.lng().toFixed(5);
+
+
+   GEvent.addListener(marker, "dragend", function() {
+      var point =marker.getPoint();
+       map.panTo(point);
+      document.new_office.office_latitude.value = point.lat().toFixed(5);
+       document.new_office.office_longitude.value = point.lng().toFixed(5);
+
+        });
+ 
+        });
+
+      }
+    }
+
+     function showAddress(address) {
+     var map = new GMap2(document.getElementById("map"));
+       map.addControl(new GSmallMapControl());
+       map.addControl(new GMapTypeControl());
+       if (geocoder) {
+        geocoder.getLatLng(
+          address,
+          function(point) {
+            if (!point) {
+              alert(address + " not found");
+            } else {
+      document.new_office.office_latitude.value = point.lat().toFixed(5);
+     document.new_office.office_longitude.value = point.lng().toFixed(5);
+     map.clearOverlays()
+      map.setCenter(point, 14);
+   var marker = new GMarker(point, {draggable: true});  
+     map.addOverlay(marker);
+
+    GEvent.addListener(marker, "dragend", function() {
+      var pt = marker.getPoint();
+       map.panTo(pt);
+      document.new_office.latitude.value = pt.lat().toFixed(5);
+       document.new_office.longitude.value = pt.lng().toFixed(5);
+        });
+
+
+   GEvent.addListener(map, "moveend", function() {
+      map.clearOverlays();
+    var center = map.getCenter();
+      var marker = new GMarker(center, {draggable: true});
+      map.addOverlay(marker);
+      document.new_office.office_latitude.value = center.lat().toFixed(5);
+     document.new_office.office_longitude.value = center.lng().toFixed(5);
+
+   GEvent.addListener(marker, "dragend", function() {
+     var pt = marker.getPoint();
+      map.panTo(pt);
+    document.new_office.office_latitude.value = pt.lat().toFixed(5);
+     document.new_office.office_longitude.value = pt.lng().toFixed(5);
+        });
+ 
+        });
+
+            }
+          }
+        );
+      }
+    }
+    </script>
+  <script type="text/javascript">
+//<![CDATA[
+var gs_d=new Date,DoW=gs_d.getDay();gs_d.setDate(gs_d.getDate()-(DoW+6)%7+3);
+var ms=gs_d.valueOf();gs_d.setMonth(0);gs_d.setDate(4);
+var gs_r=(Math.round((ms-gs_d.valueOf())/6048E5)+1)*gs_d.getFullYear();
+var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</head>
+
+<body onload="load()" onunload="GUnload()" >
+
+  
+  <script type="text/javascript">
+//<![CDATA[
+if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
+//]]>
+</script>
+</body>
+
+<script>
+  function add_office()
+  {
+    document.getElementById("add_employee_label").style.display = "block";
+    document.getElementById("add_employee_form").style.display = "block";
+
+    var form = $("#add_employee_form");
+      startAnimation();
+      function startAnimation(){
+        form.animate({height:725},"slow");
+      }
+
+      setTimeout(func, 500);
+
+      function func() {
+      document.getElementById("add_employee_label").scrollIntoView();
+    }
+  }
+</script>

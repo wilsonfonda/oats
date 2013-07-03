@@ -137,7 +137,7 @@
                 <%= 0 %>
               <% end %>
               <% if !(date == Time.parse(params[:to])) %>
-              ,
+                ,
               <% end %>
               <% date += 1.day %>
             <% end %>
@@ -165,6 +165,7 @@
   }
 </script>
 
+<script type="text/javascript" src="assets/gs_sortable.js"></script>
 <script type="text/javascript">
   var TSort_Data = new Array ('worktime-table', 'd', 'd', 's', 's');
   tsRegister();

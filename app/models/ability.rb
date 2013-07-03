@@ -73,9 +73,6 @@ class Ability
 					can :mobile_graph, Worktime
 				end
 			else
-				can :read, User do |employee|
-					user == employee
-				end
 				if user.role == '1'
 					can :read, Company do |company|
 						Ownership.find_by_owner_id(user).company_id == company.id
@@ -86,6 +83,18 @@ class Ability
 					can :read, Office do |office|
 						Ownership.find_by_owner_id(user).company_id == office.company_id
 					end
+					can :read, User do |employee|
+						user == employee
+					end
+				elsif user.role == '2'
+					can :read, User do |employee|
+						user == employee
+					end
+				elsif user.role == '3'
+					can :read, User do |employee|
+						user == employee
+					end
+					cannot :index, User
 				end
 			end
 		end

@@ -16,7 +16,6 @@
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
-//= require gs_sortable
 //= require bootstrap-datepicker
 if (window.location == "/worktimes")
 {
