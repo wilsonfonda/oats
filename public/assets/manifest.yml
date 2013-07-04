@@ -17,6 +17,8 @@ rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 application.js: application-2ca0259e9467779c047fbc5cbcaad49d.js
 application/index.js: application-2ca0259e9467779c047fbc5cbcaad49d.js
+zingchart-html5-min.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
+zingchart-html5-min/index.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
 application.css: application-ea7439fb54067ca2165796d291a98fca.css
 application/index.css: application-ea7439fb54067ca2165796d291a98fca.css
 dataTables/back_disabled.png: dataTables/back_disabled-7a902951219d10f938f642f8dcfbd0b2.png
