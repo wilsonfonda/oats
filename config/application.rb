@@ -59,6 +59,7 @@ module Oats
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.precompile += %w( zingchart-html5-min.js )
+    config.assets.precompile += %w( gs_sortable.js )
     config.assets.initialize_on_precompile = false
   end
 end
