@@ -28,6 +28,8 @@ Oats::Application.routes.draw do
   get "/contact", :to => 'static_pages#contact'
   get "/terms", :to => 'static_pages#terms'
 
+  match "*path", :to => "static_pages#routing_error"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
