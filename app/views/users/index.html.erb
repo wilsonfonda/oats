@@ -31,8 +31,8 @@
                 <td><%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%></td>
                 <td><%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %></td>
                 <td><%= f.submit "Save", class: "btn btn-primary" %></td>
-                <td><%= button_to "Delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.name, class: "btn btn-primary"%></td>
               <% end %>
+              <td><%= button_to "Delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.name, class: "btn btn-primary"%></td>
             <% else %>
               <td><%= link_to user.name, user %></td>
               <td><%=user.email%></td>
