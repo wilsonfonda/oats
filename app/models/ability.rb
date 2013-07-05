@@ -95,7 +95,6 @@ class Ability
 						can :read, User do |employee|
 							user == employee
 						end
-						cannot :index, User
 					end
 				end
 			end

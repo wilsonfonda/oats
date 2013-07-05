@@ -9,43 +9,7 @@
     <%= form_tag(resource, :as => resource_name, :class => 'form-horizontal', :url => registration_path(resource_name), :name => 'new_user') do %>
     <%= devise_error_messages! %>
 
-    <h4>User Data</h4><br/>
-    <div class="control-group">
-      <%= label_tag :email, nil, :class=>'control-label' %>
-      <div class="controls">
-        <%= text_field_tag :email, nil, :placeholder=>'Type your email here' %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= label_tag :password, nil, :class=>'control-label' %>
-      <div class="controls">
-        <%= password_field_tag :password, nil, :placeholder=>'Type your password here' %>
-      </div>
-    </div>
-    
-    <div class="control-group">
-      <%= label_tag :password_confirmation, "Password confirmation", :class=>'control-label' %>
-      <div class="controls">
-        <%= password_field_tag :password_confirmation, nil, :placeholder=>'Type your password again' %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= label_tag :name, nil, :class=>'control-label' %>
-      <div class="controls">
-        <%= text_field_tag :name, nil, :placeholder=>'Type your name here' %>
-      </div>
-    </div>
-
-     <div class="control-group">
-      <%= label_tag :division, nil, :class=>'control-label' %>
-      <div class="controls">
-        <%= text_field_tag :division, nil, :placeholder=>'Type your division here' %>
-      </div>
-    </div>
-   
-    <br/><br/><h4>Company Data</h4><br/>
+    <h4>Company Data</h4><br/>
 
     <div class="control-group">
       <%= label_tag :company_name, nil, :class=>'control-label' %>
@@ -97,14 +61,50 @@
         <%= text_field_tag :office_range, nil, :placeholder=>'Insert the longitude of your office location here' %>
       </div>
     </div>
-    
+    <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
     <div class="input-append" style="margin-bottom:10px;">
-      <input class="span2" type="text" name="address" value="">
+      <input class="span2" type="text" name="address" value="" placeholder='Search your office location here'>
       <input type="submit" value="Search!" class="btn" onclick="showAddress(address.value); return false">
     </div>
 
-    <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
+    
 
+    <br/><br/><h4>User Data</h4><br/>
+    <div class="control-group">
+      <%= label_tag :email, nil, :class=>'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :email, nil, :placeholder=>'Type your email here' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :password, nil, :class=>'control-label' %>
+      <div class="controls">
+        <%= password_field_tag :password, nil, :placeholder=>'Type your password here' %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= label_tag :password_confirmation, "Password confirmation", :class=>'control-label' %>
+      <div class="controls">
+        <%= password_field_tag :password_confirmation, nil, :placeholder=>'Type your password again' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :name, nil, :class=>'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :name, nil, :placeholder=>'Type your name here' %>
+      </div>
+    </div>
+
+     <div class="control-group">
+      <%= label_tag :division, nil, :class=>'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :division, nil, :placeholder=>'Type your division here' %>
+      </div>
+    </div>
+   
     <%= submit_tag "Create my account", class: "btn btn-large btn-primary pull-right" %>
     <%= render "devise/shared/links" %>
     <% end %>

@@ -6,11 +6,6 @@ class ApplicationController < ActionController::Base
   	redirect_back_or_default(user_path current_user)
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    flash[:error] = "Not found."
-    redirect_back_or_default(user_path current_user)
-  end
-
   rescue_from TypeError do |exception|
     flash[:error] = "Wrong parameters."
     redirect_back_or_default(user_path current_user)
