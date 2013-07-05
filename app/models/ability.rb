@@ -12,6 +12,9 @@ class Ability
 			cannot :destroy, Company do |company|
 				Ownership.find_by_owner_id(user).company_id == company.id
 			end
+			cannot :destroy, Office do |office|
+				user.office_id == office.id
+			end
 		else
 			if (user.office_id.nil?)
 				can :mobile_signin, User
@@ -41,6 +44,9 @@ class Ability
 						can :add, User
 						cannot :destroy, User do |owner|
 							user == owner
+						end
+						cannot :destroy, Office do |office|
+							user.office_id == office.id
 						end
 						cannot :change_status, Company
 						can :manage, Worktime do |worktime|
