@@ -30,12 +30,16 @@
 						<td><%= b.total_employee %></td>
 						<td><%= b.month %></td>
 						<td><%= b.price %></td>
-						<% if (can? :update, Billing.new) %>
-							<%= form_for :billing do |f| %>
+						<% if (can? :update, b) %>
+							<%= form_for(b) do |f| %>
 							
 							<td>
 	                            <div id="date<%= b.id %>" class="input-append input-medium">
-	                                <input data-format="dd-MM-yyyy" type="text" value=<%= b.payment_date.strftime("%d-%m-%Y") unless b.payment_date.nil?%>></input>
+	                            	<% if b.payment_date.nil? %>
+	                            		<%= f.text_field :payment_date, :'data-format' => "dd-MM-yyyy" %>
+	                            	<% else %>
+	                                	<%= f.text_field :payment_date, :value=> b.payment_date.strftime("%d-%m-%Y"), :'data-format' => "dd-MM-yyyy" %>
+	                                <% end %>
 	                                <span class="add-on">
 	                                  <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar">
 	                                  </i>
@@ -62,13 +66,9 @@
 							<% end %>
 						</td>
 						<% end %>
-						<td>
-							<% if (can? :destroy, Billing.new) %>
-								<form method="link" action="#">
-									<input type="submit" value="Delete" class="btn btn-primary">
-								</form>
-							<% end %>
-						</td>
+						<% if (can? :destroy, b) %>
+							<td><%= button_to "Delete", b, method: :delete, data: { confirm: "You sure?" }, title: b.id, class: "btn btn-primary"%></td>
+						<% end %>
 					</tr>
 					<% end %>
 				</tbody>

@@ -4,7 +4,15 @@
 <div class="row">
 	<div class="span8">
 		<div class="row">
-			<strong><h1>Employee Profile</h1></strong>
+			<strong><h1>
+				<% if @user.role == "0" %>
+	                Admin
+	              <% elsif @user.role == "1"%>
+	                Owner
+	              <% else %>
+	                Employee
+	              <% end %> 
+	              Profile</h1></strong>
 		</div>
 		<div class="row floating-paper">
 			<dl class="dl-horizontal">

@@ -37,4 +37,15 @@ class BillingsController < ApplicationController
 		redirect_to :back
 	end
 
+	def update
+		@billing = Billing.find(params[:id])
+		@billing.update_attribute("payment_date",params[:billing][:payment_date])
+		redirect_to :back
+	end
+
+	def destroy	
+		Billing.find(params[:id]).destroy
+        redirect_to :back
+	end
+
 end

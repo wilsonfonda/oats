@@ -11,6 +11,11 @@
 			<% if can? :index, current_user %>
 				<li><a href=<%=users_path%>><i class="icon-list icon-white"></i> Employees</a></li>
 			<% end %>
+			<% if (can? :index, Billing.first) %>
+				<li><a href=<%=billings_path%>><i class="icon-tags icon-white"></i> Billings</a></li>
+			<% elsif (can? :read, Billing.find_by_company_id(current_user.company_id)) %>
+				<li><a href=<%=billings_path+"?id="+current_user.company_id.to_s%>><i class="icon-tags icon-white"></i> Billings</a></li>
+			<% end %>
 		</ul>
 	</div>
 </div>

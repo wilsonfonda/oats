@@ -6,16 +6,6 @@ class ApplicationController < ActionController::Base
   	redirect_back_or_default(user_path current_user)
   end
 
-  rescue_from TypeError do |exception|
-    flash[:error] = "Wrong parameters."
-    redirect_back_or_default(user_path current_user)
-  end
-
-  rescue_from ArgumentError do |exception|
-    flash[:error] = "Wrong parameters."
-    redirect_back_or_default(user_path current_user)
-  end
-
   def store_location
     session[:return_to] = request.url
   end
