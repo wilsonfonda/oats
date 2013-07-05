@@ -4,6 +4,7 @@ Oats::Application.routes.draw do
   resources :companies
   resources :worktimes
   resources :offices
+  resources :billings
   
   root to: 'static_pages#home'
 

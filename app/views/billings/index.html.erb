@@ -1,0 +1,170 @@
+<!-- /billings params: company_id -->
+
+<%= render 'layouts/alt_navigation' %>
+<div class="row">
+	<div class="span12">
+		<div class="row">
+			<strong><h1>Billings</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<table class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>Company Name</th>
+						<th>Employee Count</th>
+						<th>Month</th>
+						<th>Price</th>
+						<th>Payment Date</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @billings.each do |b| %>
+					<tr>
+						<% if params[:id].nil? %>
+							<td><%= link_to Company.find(b.company_id).name, billings_path+"?id="+b.company_id.to_s %></td>
+						<% else %>
+							<td><%= Company.find(b.company_id).name %></td>
+						<% end %>
+						<td><%= b.total_employee %></td>
+						<td><%= b.month %></td>
+						<td><%= b.price %></td>
+						<% if (can? :update, b) %>
+							<%= form_for(b) do |f| %>
+							
+							<td>
+	                            <div id="date<%= b.id %>" class="input-append input-medium">
+	                            	<% if b.payment_date.nil? %>
+	                            		<%= f.text_field :payment_date, :'data-format' => "dd-MM-yyyy" %>
+	                            	<% else %>
+	                                	<%= f.text_field :payment_date, :value=> b.payment_date.strftime("%d-%m-%Y"), :'data-format' => "dd-MM-yyyy" %>
+	                                <% end %>
+	                                <span class="add-on">
+	                                  <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="icon-calendar">
+	                                  </i>
+	                                </span>
+	                            </div>
+	                            <script type="text/javascript">
+	                              $(function() {
+	                                $('#date<%= b.id %>').datetimepicker({
+	                                  pickTime: false
+	                                });
+	                              });
+	                            </script>
+							</td>
+							<td>
+								<%= f.submit "Save", class: "btn btn-primary" %>
+							</td>
+							<% end %>
+						<% else %>
+							<td>
+							<% if b.payment_date.nil? %>
+								Unpaid
+							<% else %>
+								<%= b.payment_date.strftime("%d-%m-%Y") %>
+							<% end %>
+						</td>
+						<% end %>
+						<% if (can? :destroy, b) %>
+							<td><%= button_to "Delete", b, method: :delete, data: { confirm: "You sure?" }, title: b.id, class: "btn btn-primary"%></td>
+						<% end %>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+	<% if (!params[:id].nil?) && (can? :create, Billing.new) %>
+			<input type="button" value="Add new bill" class="btn btn-primary" onclick="add_bill();"/>
+	<% end %>
+		</div>
+		<% if (!params[:id].nil?) && (can? :create, Billing.new) %>
+		<div id="add_employee_label" class="row">
+			<strong><h2>Add Bills</h2></strong>
+		</div>
+		<div id="add_employee_form" class="row floating-paper" style="height:0;">
+
+		<%= form_tag(Billing.new, class: "form-horizontal" ) do %>
+
+	      <div class="control-group">
+	        <%= label_tag :company, nil, :class=>'control-label' %>
+	        <div class="controls", style="margin-top: 5px;">
+	        	<%= Company.find(params[:id]).name %>
+	        </div>
+	      </div>
+
+	      <%= hidden_field_tag(:company_id, params[:id]) %>
+
+	      <div class="control-group">
+	        <%= label_tag :month, nil, :class=>'control-label' %>
+	        <div class="controls">
+	          <%= select_tag :month, options_for_select(1..12)%>
+	        </div>
+	      </div>
+
+	      <div class="control-group">
+	        <%= label_tag :total_employee, nil, :class=>'control-label' %>
+	        <div class="controls">
+	          <%= text_field_tag :total_employee, nil, id: 'total_employee', onkeyup: 'calculate_bill();', value: @users.count %>
+	        </div>
+	      </div>
+
+	      <div class="control-group">
+	        <%= label_tag :price_employee, nil, :class=>'control-label' %>
+	        <div class="controls">
+	          <%= text_field_tag :price_employee, nil, id: 'price_employee', onkeyup: 'calculate_bill();' %>
+	        </div>
+	      </div>
+
+	      <div class="control-group">
+	        <%= label_tag :additional_price, nil, :class=>'control-label' %>
+	        <div class="controls">
+	          <%= text_field_tag :additional_price, nil, id: 'additional_price', onkeyup: 'calculate_bill();', value: '0' %>
+	        </div>
+	      </div>
+
+	      <div class="control-group">
+	        <%= label_tag :total_price, nil, :class=>'control-label' %>
+	        <div class="controls">
+	          <%= text_field_tag :price, nil, id: 'total_price', onkeyup: 'calculate_bill();' %>
+	        </div>
+	      </div>
+
+	      <%= submit_tag "Add Bill", class: "btn btn-large btn-primary pull-right" %>
+	      <% end %>
+	      
+	  	</div>
+	  	<% end %>
+	</div>
+</div>
+
+<% if (!params[:id].nil?) && (can? :create, Billing.new) %>
+<script>
+	function add_bill()
+	{
+		document.getElementById("add_employee_label").style.display = "block";
+		document.getElementById("add_employee_form").style.display = "block";
+
+		var form = $("#add_employee_form");
+	    startAnimation();
+	    function startAnimation(){
+	      form.animate({height:350},"slow");
+	    }
+
+	    setTimeout(func, 500);
+
+	    function func() {
+			document.getElementById("add_employee_label").scrollIntoView();
+		}
+	}
+
+	function calculate_bill()
+	{
+		var total = document.getElementById('total_price');
+		var count = document.getElementById('total_employee');
+		var price = document.getElementById('price_employee');
+		var addit = document.getElementById('additional_price');
+
+		total.value = parseInt(count.value)*parseInt(price.value) + parseInt(addit.value);
+	}
+</script>
+<% end %>
