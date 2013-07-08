@@ -72,6 +72,7 @@ class Ability
 						can :manage, User do |employee|
 							user == employee
 						end
+						cannot :change_role, User
 						cannot :destroy, User
 						cannot :index, User
 						can :manage, Worktime do |worktime|
