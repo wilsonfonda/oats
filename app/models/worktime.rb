@@ -1,5 +1,5 @@
 class Worktime < ActiveRecord::Base
-  attr_accessible :checkin, :checkout, :place_checkin, :place_checkout, :user_id
+  attr_accessible :checkin, :checkout, :place_checkin, :place_checkout
   belongs_to :user
 
   validates :user_id, presence: true
