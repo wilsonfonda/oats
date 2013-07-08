@@ -18,7 +18,8 @@
 		    <dt>Status</dt>
 		    <dd><% if @company.status %>Working<% else %>Freeze<% end %></dd>
 	    </dl>
-	    <%= button_to "Edit Information", edit_company_path(@company), method: :get, class: "btn btn-primary"%>
+	    <%= link_to "Edit Information", edit_company_path(@company), class: "btn btn-primary"%>
+	    <%= link_to "View Bills", billings_path+"?id="+@company.id.to_s, class: "btn btn-primary"%>
 		</div>
 		<div class="row">
 			<strong><h1>Offices</h1></strong>
@@ -39,8 +40,8 @@
 						<tr>
 							<td><%= office.id %></td>
 							<td><%= office.name %></td>
-							<td><%= office.longitude %></td>
 							<td><%= office.latitude %></td>
+							<td><%= office.longitude %></td>
 							<td><%= office.range %></td>
 						</tr>
 					<% end %>
