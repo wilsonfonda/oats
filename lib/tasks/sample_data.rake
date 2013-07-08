@@ -6,6 +6,7 @@ namespace :db do
     make_offices
     make_users
     make_worktimes
+    make_billing
   end
 end
 
@@ -122,4 +123,11 @@ def make_worktimes
       end 
     end
 end
+
+def make_billing
+    companies = Company.all
+    company = companies.first
+    company.billings.create!(month: 7, payment_date: "07-07-2013", price: 50, total_employee: 60)
+end
+
 
