@@ -3,15 +3,31 @@ class WorktimesController < ApplicationController
 	load_and_authorize_resource
 	
 	def index
-		@user = User.find(params[:id])
-		@worktime = @user.worktimes[0]
-		@worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
-		@worktimes_paged = @worktimes.paginate(:page => params[:page], :per_page => 10)
-		if @worktime.nil?
-			redirect_to user_path current_user
+		if params[:id].nil?
+			if !params[:from].nil? && !params[:to].nil?
+				if current_user.role != "3"
+					@offices = Company.find(current_user.company_id).offices
+					@users = User.where("office_id IN (?)",@offices).paginate(:page => params[:page])
+				else
+					flash[:alert]="Access Denied !"
+					redirect_to user_path current_user
+				end
+			else
+				flash[:alert]="Worktimes date range is unavailable"
+				redirect_to user_path current_user
+			end
 		else
-			if cannot? :read, @worktime
-				redirect_to worktimes_path+"?id="+current_user.id.to_s
+			@user = User.find(params[:id])
+			@worktime = @user.worktimes[0]
+			@worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
+			@worktimes_paged = @worktimes.paginate(:page => params[:page], :per_page => 10)
+			if @worktime.nil?
+				redirect_to user_path current_user
+			else
+				if cannot? :read, @worktime
+					flash[:alert]="Access Denied !"
+					redirect_to worktimes_path+"?id="+current_user.id.to_s
+				end
 			end
 		end
 	end
