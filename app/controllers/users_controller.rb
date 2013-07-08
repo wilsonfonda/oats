@@ -17,7 +17,11 @@ class UsersController < ApplicationController
       @user.password = params[:user][:email]
       @user.password_confirmation = params[:user][:email]
       @user.access_token = Digest::SHA2.hexdigest(params[:user][:email]) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
-      @user.save
+      if @user.save
+      	flash[:notice] = "Employee added."
+      else
+      	flash[:error] = "Failed to add employee."
+      end
       redirect_to :back
     end
 
@@ -30,6 +34,7 @@ class UsersController < ApplicationController
 
 	def destroy	
 		User.find(params[:id]).destroy
+		flash[:notice] = "Employee deleted."
         redirect_to :back	
 	end
 
@@ -40,9 +45,17 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if can? :change_role, @user
-			@user.update_attributes(params[:user])
+			if @user.update_attributes(params[:user])
+				flash[:notice] = "Employee information updated."
+			else
+				flash[:error] = "Failed to update employee information"
+			end
 		else
-			@user.update_attributes(params[:user].except(:role))
+			if @user.update_attributes(params[:user].except(:role))
+				flash[:notice] = "Employee information updated."
+			else
+				flash[:error] = "Failed to update employee information"
+			end
 		end
 		redirect_to :back
 	end

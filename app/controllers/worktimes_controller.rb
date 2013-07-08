@@ -24,14 +24,21 @@ class WorktimesController < ApplicationController
 		    if valid_location(@office, params[:latitude], params[:longitude])
 		    	@worktime.place_checkin = @office.name
 		    	@worktime.save
+		    	flash[:notice] = "Successfully checked in."
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
+		    	found = false
 		    	@offices.each  do | o |
 		    		if valid_location(o, params[:latitude], params[:longitude])
 		    			@worktime.place_checkin = o.name
 		    			@worktime.save
+		    			flash[:notice] = "Successfully checked in."
+		    			found = true
 		    			break
 		    		end
+		    	end
+		    	if !found
+		    		flash[:error] = "Failed to checkin. Please check your location."
 		    	end
 		    end
 		    redirect_to :back
@@ -84,14 +91,21 @@ class WorktimesController < ApplicationController
 		    if valid_location(@office, params[:latitude], params[:longitude])
 				@worktime.update_attribute('checkout',Time.now)
 				@worktime.update_attribute('place_checkout',@office.name)
+				flash[:notice] = "Successfully checked out."
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
+		    	found = false
 		    	@offices.each  do | o |
 		    		if valid_location(o, params[:latitude], params[:longitude])
 						@worktime.update_attribute('checkout',Time.now)
 						@worktime.update_attribute('place_checkout',o.name)
+						flash[:notice] = "Successfully checked out."
+						found = true
 		    			break
 		    		end
+		    	end
+		    	if !found
+		    		flash[:error] = "Failed to checkout. Please check your location."
 		    	end
 		    end
 	      	redirect_to :back

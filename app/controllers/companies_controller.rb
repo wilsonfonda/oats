@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
 	def update
 		@company = Company.find(params[:id])
 		@company.update_attributes(params[:company])
+		flash[:notice] = "Company information updated."
 		redirect_to :back
 	end
 
@@ -24,6 +25,7 @@ class CompaniesController < ApplicationController
 
 	def destroy	
 		Company.find(params[:id]).destroy
+		flash[:notice] = "Company deleted."
         redirect_to :back
 	end
 end

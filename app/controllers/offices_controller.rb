@@ -15,7 +15,11 @@ class OfficesController < ApplicationController
 	    @office.latitude_max = params[:office][:latitude].to_f + delta_lat
 	    @office.longitude_min = params[:office][:longitude].to_f - delta_long
 	    @office.longitude_max = params[:office][:longitude].to_f + delta_long
-	    @office.save
+	    if @office.save
+	    	flash[:notice] = "Office created."
+	    else
+	    	flash[:error] = "Failed to create office"
+	    end
 	    redirect_to :back
 	end
 
@@ -28,11 +32,13 @@ class OfficesController < ApplicationController
 	    @office.update_attribute('latitude_max',params[:office][:latitude].to_f + delta_lat)
 	    @office.update_attribute('longitude_min',params[:office][:longitude].to_f - delta_long)
 	    @office.update_attribute('longitude_max',params[:office][:longitude].to_f + delta_long)
+	    flash[:notice] = "Office updated."
 		redirect_to :back
 	end
 
 	def destroy	
 		Office.find(params[:id]).destroy
+		flash[:notice] = "Office deleted."
         redirect_to :back
 	end
 

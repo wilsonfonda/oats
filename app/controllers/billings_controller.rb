@@ -37,18 +37,24 @@ class BillingsController < ApplicationController
 		@billing.payment_date = nil
 		@billing.price = params[:price]
 		@billing.total_employee = params[:total_employee]
-		@billing.save
+		if @billing.save
+			flash[:notice] = "Bill created."
+		else
+			flash[:error] = "Failed to create bill."
+		end
 		redirect_to :back
 	end
 
 	def update
 		@billing = Billing.find(params[:id])
 		@billing.update_attribute("payment_date",params[:billing][:payment_date])
+		flash[:notice] = "Payment date updated."
 		redirect_to :back
 	end
 
 	def destroy	
 		Billing.find(params[:id]).destroy
+		flash[:notice] = "Bill deleted."
         redirect_to :back
 	end
 
