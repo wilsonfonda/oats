@@ -16,10 +16,7 @@ class BillingsController < ApplicationController
 				redirect_to billings_path+"?id="+current_user.company_id.to_s
 			end
 		else
-			if (Billing.find_by_company_id(params[:id]).nil?)
-				flash[:alert] = "You don't have any billings yet."
-				redirect_to user_path (current_user)
-			elsif (can? :read, Billing.find_by_company_id(params[:id]))
+			if Billing.find_by_company_id(params[:id]).nil? || (can? :read, Billing.find_by_company_id(params[:id]))
 				@offices = Company.find(params[:id]).offices
 				@users = User.where("office_id IN (?)",@offices)
 				@billings = Billing.where("company_id = ?", params[:id])
