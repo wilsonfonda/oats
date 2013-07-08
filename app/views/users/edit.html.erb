@@ -52,7 +52,7 @@
         <div class="control-group">
           <%= f.label :role, :class=>'control-label' %>
           <div class="controls">
-            <% if can? :change_role, @user %>
+            <% if (can? :change_role, @user) && @user.role != '0' && @user.role != '1'%>
               <%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%>
             <% else %>
             <div style="margin-top:5px">

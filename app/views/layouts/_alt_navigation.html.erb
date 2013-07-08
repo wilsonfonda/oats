@@ -1,7 +1,11 @@
 <div class="row">
 	<div class="span12">
 		<ul class="nav nav-tabs">
-			<li><a href=<%=user_path(current_user)%>><i class="icon-home icon-white"></i> Home</a></li>
+			<% if current_user.role == '0' %>
+				<li><a href=<%=companies_path%>><i class="icon-home icon-white"></i> Companies</a></li>
+			<% else %>
+				<li><a href=<%=user_path(current_user)%>><i class="icon-home icon-white"></i> Home</a></li>
+			<% end %>
 			<li><a href=<%=edit_user_path(current_user)%>><i class="icon-user icon-white"></i> Edit Profile</a></li>
 			<li><a href=<%=worktimes_path+"?id=" + current_user.id.to_s + "&from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y")%>>
 				<i class="icon-time icon-white"></i> My Performance</a></li>
