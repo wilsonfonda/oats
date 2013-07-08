@@ -17,9 +17,13 @@ class BillingsController < ApplicationController
 			end
 		else
 			if Billing.find_by_company_id(params[:id]).nil? || (can? :read, Billing.find_by_company_id(params[:id]))
-				@offices = Company.find(params[:id]).offices
-				@users = User.where("office_id IN (?)",@offices)
-				@billings = Billing.where("company_id = ?", params[:id])
+				if (current_user.role == '0' || params[:id] == current_user.company_id.to_s)
+					@offices = Company.find(params[:id]).offices
+					@users = User.where("office_id IN (?)",@offices)
+					@billings = Billing.where("company_id = ?", params[:id])
+				else
+					redirect_to billings_path+"?id="+current_user.company_id.to_s
+				end
 			else
 				redirect_to billings_path+"?id="+current_user.company_id.to_s
 			end
