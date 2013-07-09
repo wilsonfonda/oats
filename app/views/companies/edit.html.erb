@@ -50,16 +50,15 @@
         <tbody>
           <% @offices.each do |office| %>
           <tr>
-            <%= form_for(office) do |f| %>
-              <td><%= f.text_field :name %></td>
-              <td><%= f.text_field :range %></td>
-              <td><%= f.text_field :latitude %></td>
-              <td><%= f.text_field :longitude %></td>
-              <td><%= f.submit "Save", class: "btn btn-primary" %></td>
-            <% end %>
-            <% if can? :destroy, office %>
-              <td><%= button_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
-            <% end %>
+            <td><%= office.id %></td>
+              <td><%= office.name %></td>
+              <td><%= office.latitude %></td>
+              <td><%= office.longitude %></td>
+              <td><%= office.range %></td>
+              <td><%= link_to "Edit", edit_office_path(office), class: "btn btn-primary"%></td>
+              <% if can? :destroy, office %>
+                <td><%= button_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>

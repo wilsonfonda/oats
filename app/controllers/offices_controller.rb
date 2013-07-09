@@ -23,6 +23,10 @@ class OfficesController < ApplicationController
 	    redirect_to :back
 	end
 
+	def edit
+		@office = Office.find(params[:id])
+	end
+
 	def update
 		@office = Office.find(params[:id])
 		@office.update_attributes(params[:office])
@@ -33,7 +37,7 @@ class OfficesController < ApplicationController
 	    @office.update_attribute('longitude_min',params[:office][:longitude].to_f - delta_long)
 	    @office.update_attribute('longitude_max',params[:office][:longitude].to_f + delta_long)
 	    flash[:notice] = "Office updated."
-		redirect_to :back
+		redirect_to company_path(current_user.company_id)
 	end
 
 	def destroy	
