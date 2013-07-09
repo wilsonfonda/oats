@@ -1,6 +1,7 @@
 Oats::Application.routes.draw do
   devise_for :users, :skip => [:sessions], :controllers => {:registrations => "registrations"}
   resources :users
+  resources :user_imports
   resources :companies
   resources :worktimes
   resources :offices

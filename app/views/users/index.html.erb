@@ -56,7 +56,7 @@
       </table>
       <%= will_paginate @users %>
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
-      <%= link_to "Employee Performance", worktimes_path+"?from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: 'btn btn-primary pull-right' %>
+      <%= link_to "Employee Performance", worktimes_path+"?from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: 'btn btn-primary pull-right white-link' %>
       <!--<form method="link" action="/employee/add">
         <input type="submit" value="Add employee" class="btn btn-primary">
       </form>-->
@@ -107,6 +107,7 @@
         <% end %>
         
       </div>
+      <p><%= link_to "Import users", new_user_import_path %></p>
   </div>
 </div>
 
