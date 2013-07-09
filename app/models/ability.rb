@@ -56,6 +56,7 @@ class Ability
 						can :read, Worktime do |worktime|
 							User.find(worktime.user_id).company_id == user.company_id
 						end
+						can :manage, UserImport
 					elsif user.role == '2'
 						can :manage, User do |employee|
 							employee == user || (Office.find(user.office_id).company_id == employee.company_id && employee.role != '0' && employee.role != '1' && employee.role != '2')
@@ -72,6 +73,7 @@ class Ability
 						can :read, Worktime do |worktime|
 							User.find(worktime.user_id).company_id == user.company_id
 						end
+						can :manage, UserImport
 					elsif user.role == '3'
 						can :manage, User do |employee|
 							user == employee

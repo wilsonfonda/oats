@@ -1,34 +1,40 @@
-<h1>User Import</h1>
+<div class="row">
+  <div class="span8">
 
-<p>A CSV or Excel file can be used to import records. The first row should be the column name. The following columns are allowed.</p>
 
-<ul>
-  <% User.columns.each do |column| %>
-    <% if column.name.in? ["id", *User.accessible_attributes] %>
-      <li>
-        <strong><%= column.name %></strong> -
-        <%= column.type.to_s.titleize %> type
-      </li>
+  <%= form_for @user_import do |f| %>
+    <% if @user_import.errors.any? %>
+      <div id="error_explanation" class="alert alert-error">
+        <h4><%= pluralize(@user_import.errors.count, "error") %> prohibited this import from completing:</h4>
+        <ul>
+        <% @user_import.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     <% end %>
-  <% end %>
-</ul>
 
-<p>If an <strong>id</strong> is supplied it will update the matching record instead of creating a new one.</p>
 
-<%= form_for @user_import do |f| %>
-  <% if @user_import.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_import.errors.count, "error") %> prohibited this import from completing:</h2>
-      <ul>
-      <% @user_import.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="row">
+      <strong><h1>User Import</h1></strong>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.file_field :file %>
+    <div class="row floating-paper">
+      <p>A CSV or Excel file can be used to import records. The first row should be the column name. The following columns are allowed.</p>
+
+      <ul>
+        <li>email : string (If you want to update existing employee's profile, insert his/her email here)</li>
+        <li>name : string</li>
+        <li>division : string</li>
+        <li>office : string (You must specify existing office name here)</li>
+      </ul>
+
+        <span class="field">
+          <%= f.file_field :file, class: '' %>
+        </span>
+        <span class="buttons"><%= f.submit "Import", class: 'pull-right' %></span>
+      <% end %>
+    </div>
   </div>
-  <div class="buttons"><%= f.submit "Import" %></div>
-<% end %>
+  <%= render 'layouts/navigation' %>
+</div>
