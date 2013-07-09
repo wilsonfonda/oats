@@ -17,6 +17,9 @@
 //= require custom
 //= require plugins
 //= require bootstrap-datepicker
+//= require bootstrap-fileupload
+//= require bootstrap-fileupload.min
+
 if (window.location == "/worktimes")
 {
 	//= require_tree .

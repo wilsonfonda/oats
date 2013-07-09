@@ -7,12 +7,17 @@ class UserImportsController < ApplicationController
   end
 
   def create
-    @user_import = UserImport.new(params[:user_import])
-    if @user_import.save(current_user.company_id)
-      flash[:notice] = "Imported employees successfully."
-      redirect_to users_path
+    if !params[:user_import].nil?
+      @user_import = UserImport.new(params[:user_import])
+      if @user_import.save(current_user.company_id)
+        flash[:notice] = "Imported employees successfully."
+        redirect_to users_path
+      else
+        render :new
+      end
     else
-      render :new
+      flash[:error]="Wrong File format"
+      redirect_to new_user_import_path
     end
   end
 end
