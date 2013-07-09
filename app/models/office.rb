@@ -18,5 +18,6 @@ class Office < ActiveRecord::Base
   														 :less_than_or_equal_to => 90}
   validates :longitude_max, :numericality => {:greater_than_or_equal_to => -180, 
   														 :less_than_or_equal_to => 180}	
-  validates :range, presence: true	
+  validates :range, presence: true	, :numericality => {:greater_than_or_equal_to => 0, 
+                               :less_than_or_equal_to => 40000000} 
 end

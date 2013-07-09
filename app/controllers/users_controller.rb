@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       @user.password_confirmation = params[:user][:email]
       @user.access_token = Digest::SHA2.hexdigest(params[:user][:email]) + Array.new(8){[*'0'..'9', *'a'..'z', *'A'..'Z'].sample}.join
       if @user.save
-      	flash[:notice] = "Employee added."
+      	flash[:notice] = "Employee succesfully added."
       else
       	flash[:error] = "Failed to add employee."
       end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
 	def destroy	
 		User.find(params[:id]).destroy
-		flash[:notice] = "Employee deleted."
+		flash[:notice] = "Employee succesfully deleted."
         redirect_to :back	
 	end
 
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 			flash[:notice] = "Successfully change your password"
 			sign_in @user,:bypass => true
 		else
-			flash[:notice] = "Invalid old / new password"
+			flash[:error] = "Invalid old / new password"
 		end
 		redirect_back_or_default(user_path current_user)
 	end
