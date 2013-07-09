@@ -12,6 +12,7 @@
         <Cell><Data ss:Type="String">Place Checkin</Data></Cell>
         <Cell><Data ss:Type="String">Checkout Time</Data></Cell>
         <Cell><Data ss:Type="String">Place Checkout</Data></Cell>
+        <Cell><Data ss:Type="String">Total hours</Data></Cell>
       </Row>
     <% @users.each do |user| %>
       <% first = true %>
@@ -24,10 +25,11 @@
           <% else %>
             <Cell><Data ss:Type="String"></Data></Cell>
           <% end %>
-          <Cell><Data ss:Type="String"><%= w.checkin %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= w.place_checkout %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= w.checkout %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= w.place_checkin %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= w.checkin %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= w.place_checkout %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= w.checkout %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= w.place_checkin %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= ((w.checkout-w.checkin)/3600).to_i %></Data></Cell>
         </Row>
       <% end %>
     <% end %>
