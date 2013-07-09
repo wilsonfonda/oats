@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">User name</Data></Cell>
+        <Cell><Data ss:Type="String">Checkin Time</Data></Cell>
+        <Cell><Data ss:Type="String">Place Checkin</Data></Cell>
+        <Cell><Data ss:Type="String">Checkout Time</Data></Cell>
+        <Cell><Data ss:Type="String">Place Checkout</Data></Cell>
+      </Row>
+    <% @users.each do |user| %>
+      <% first = true %>
+      <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)) %>
+      <% @worktimes.each do |w| %>
+        <Row>
+          <% if first %>
+            <Cell><Data ss:Type="String"><%= user.name %> (<%= user.email %>)</Data></Cell>
+            <% first = false %>
+          <% else %>
+            <Cell><Data ss:Type="String"></Data></Cell>
+          <% end %>
+          <Cell><Data ss:Type="Date"><%= w.checkin %></Data></Cell>
+          <Cell><Data ss:Type="Date"><%= w.place_checkout %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= w.checkout %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= w.place_checkin %></Data></Cell>
+        </Row>
+      <% end %>
+      <% if !@worktimes.blank? %>
+        <tr><td><br/></td><td></td><td></td><td></td><td></td></tr>
+      <% end %>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

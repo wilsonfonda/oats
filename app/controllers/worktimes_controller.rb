@@ -7,13 +7,17 @@ class WorktimesController < ApplicationController
 			if !params[:from].nil? && !params[:to].nil?
 				if current_user.role != "3"
 					@offices = Company.find(current_user.company_id).offices
-					@users = User.where("office_id IN (?)",@offices).paginate(:page => params[:page])
+					@users = User.where("office_id IN (?)",@offices)
+					respond_to do |format|
+						format.html
+						format.xls
+					end
 				else
-					flash[:alert]="Access Denied !"
+					flash[:alert]="Access Denied."
 					redirect_to user_path current_user
 				end
 			else
-				flash[:alert]="Worktimes date range is unavailable"
+				flash[:alert]="Worktimes date range is unavailable."
 				redirect_to user_path current_user
 			end
 		else
@@ -25,7 +29,7 @@ class WorktimesController < ApplicationController
 				redirect_to user_path current_user
 			else
 				if cannot? :read, @worktime
-					flash[:alert]="Access Denied !"
+					flash[:alert]="Access Denied."
 					redirect_to worktimes_path+"?id="+current_user.id.to_s
 				end
 			end

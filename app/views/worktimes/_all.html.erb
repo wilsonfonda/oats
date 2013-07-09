@@ -1,0 +1,112 @@
+<%= render 'layouts/alt_navigation' %>
+<div class="row">
+  <div class="span12">
+    <div class="row">
+      <h1><strong>Worktimes of all Employees</strong></h1>
+    </div>
+
+    <div class="row floating-paper blue-link">
+      <div class="row">
+          <div class="span6">
+              <div class="row">
+                        <div class="span2" style="width:90px;">Period from : </div>
+                      <div id="datetimepicker_from" class="span4">
+                                  <div id="date_from" class="input-append input-medium">
+                                    <input data-format="dd-MM-yyyy" type="text" id="datefrom" value='<%= Time.parse(params[:from]).strftime("%d-%m-%Y") %>'></input>
+                                    <span class="add-on">
+                                      <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                            </div>
+                            <script type="text/javascript">
+                              $(function() {
+                                $('#date_from').datetimepicker({
+                                  pickTime: false
+                                });
+                              });
+                            </script>
+                        </div>
+              </div>
+              <div class="row">
+                            <div class="span2" style="width:90px;">to : </div>
+                      <div id="datetimepicker_to" class="span4">
+                                  <div id="date_to" class="input-append input-medium">
+                                    <input  data-format="dd-MM-yyyy" type="text" id="dateto" value='<%= Time.parse(params[:to]).strftime("%d-%m-%Y") %>'></input>
+                                    <span class="add-on">
+                                      <i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                      </i>
+                                    </span>
+                            </div>
+                            <script type="text/javascript">
+                              $(function() {
+                                $('#date_to').datetimepicker({
+                                  pickTime: false
+                                });
+                              });
+                            </script>
+                        </div>
+              </div>
+          </div>
+          <div class="span1">
+              <input type="button" class="btn btn-large btn-primary" value="Refresh" onclick="refresh_performance(<%= current_user.id %>)"/>
+          </div>
+      </div>
+      Download as 
+      <%= link_to "Excel", worktimes_path(format: "xls")+"?from="+params[:from]+"&to="+params[:to] %>
+      <div class="row">
+        <div class="span11">
+          <table id="worktime-table" class="table table-hover">
+            <thead>
+              <tr>
+                <th>User name</th>
+                <th>Checkin Time</th>
+                <th>Checkout Time</th>
+                <th>Place Checkin</th>
+                <th>Place Checkout</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <% first = true %>
+                <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)) %>
+                <% @worktimes.each do |w| %>
+                  <tr>
+                    <% if first %>
+                      <td><%= link_to user.name, request.fullpath+'&id='+user.id.to_s %><br/><%= user.email %></td>
+                      <% first = false %>
+                    <% else %>
+                      <td></td>
+                    <% end %>
+                    <td><%= w.checkin %></td>
+                    <td><%= w.place_checkin %></td>
+                    <td><%= w.checkout %></td>
+                    <td><%= w.place_checkout %></td>
+                  </tr>
+                <% end %>
+              <% if !@worktimes.blank? %>
+                <tr><td><br/></td><td></td><td></td><td></td><td></td></tr>
+              <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function refresh_performance(id)
+  {
+      if (checkDate())
+      {
+        var from = document.getElementById("datefrom").value.replace("/", "-").replace("/", "-");
+        var to = document.getElementById("dateto").value.replace("/", "-").replace("/", "-");
+        var url_now = location.protocol + '//' + location.host + location.pathname;
+
+        window.location = url_now + "?from=" + from + "&to=" + to;
+      }
+      else
+      {
+      }          
+  }
+</script>
