@@ -43,6 +43,10 @@
 							<td><%= office.latitude %></td>
 							<td><%= office.longitude %></td>
 							<td><%= office.range %></td>
+							<td><%= link_to "Edit", edit_office_path(office), class: "btn btn-primary"%></td>
+							<% if can? :destroy, office %>
+				                <td><%= button_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
+				            <% end %>
 						</tr>
 					<% end %>
 				</tbody>
