@@ -6,15 +6,28 @@
         <a class="brand" href="/">Oats</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
-            <li class="">
+            <li <% if request.fullpath == '/about' %>
+                 class='active' 
+                 <% end %>
+            >
               <a href="/about">About</a>
             </li>
-            <li class="">
+            <li <% if request.fullpath == '/help' %>
+                 class='active' 
+                 <% end %>
+            >
               <a href="/help">Help</a>
-            </li>            <li class="">
+            </li>            
+            <li <% if request.fullpath == '/testimony' %>
+                 class='active' 
+                 <% end %>
+            >
               <a href="/testimony">Testimonies</a>
             </li>
-            <li class="">
+            <li <% if request.fullpath == '/contact' %>
+                 class='active' 
+                 <% end %>
+            >
               <a href="/contact">Contact Us</a>
             </li>
           </ul>

@@ -58,7 +58,7 @@
     <div class="control-group">
       <%= label_tag :office_range, nil, :class=>'control-label' %>
       <div class="controls">
-        <%= text_field_tag :office_range, nil, :placeholder=>'Insert the acceptable range for checkin/checkout' %>
+        <%= text_field_tag :office_range, nil, :placeholder=>'Insert the acceptable range for checkin/checkout in meters' %>
       </div>
     </div>
     <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
@@ -104,6 +104,8 @@
         <%= text_field_tag :division, nil, :placeholder=>'Type your division here' %>
       </div>
     </div>
+
+    <div>Read our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a></div><br/><br/>
    
     <%= submit_tag "Create my account", class: "btn btn-large btn-primary pull-right" %>
     <%= render "devise/shared/links" %>
