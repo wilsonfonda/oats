@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 	
 	def index
 		@offices = Company.find(current_user.company_id).offices
-		@users = User.where("office_id IN (?)",@offices).paginate(:page => params[:page], :per_page => 20)
+		@users = User.where("office_id IN (?)",@offices).order("id").paginate(:page => params[:page], :per_page => 20)
 	end
 
 	def add

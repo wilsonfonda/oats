@@ -9,7 +9,6 @@
       <table id="users" class="table table-hover table-condensed">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Email</th>
             <th>Division</th>
@@ -20,9 +19,6 @@
         <tbody>
           <% @users.each do |user| %>
           <tr>
-            <td><%=user.id%></td>
-            
-            
             <%if (can? :update, user) && user!=current_user  %>
               <td><%= link_to user.name, user_path(user) %></td>
               <td><%=user.email%></td>
