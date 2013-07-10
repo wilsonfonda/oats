@@ -14,7 +14,6 @@ gem 'bootstrap-datetimepicker-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
 
-
 group :development, :test do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.11.0'
