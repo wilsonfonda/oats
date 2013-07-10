@@ -5,7 +5,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    error_msg = ""
     @company = Company.new()
     @company.name = params[:company_name]
     @company.address = params[:company_address]
@@ -46,26 +45,17 @@ class RegistrationsController < Devise::RegistrationsController
             else
                 @company.delete
                 @office.delete
-                @user.errors.full_messages.each do |msg|
-                    error_msg += "User "+msg + "\n"
-                end
-                flash[:alert] = error_msg
-                redirect_to :back
+                flash[:alert] = flash[:alert].to_a.concat @user.errors.full_messages.map{ |x| "User "+ x}
+                render :new
             end
         else
             @company.delete
-            @office.errors.full_messages.each do |msg|
-                error_msg += "Office "+msg + "\n"
-            end
-            flash[:alert] = error_msg
-            redirect_to :back
+            flash[:alert] = flash[:alert].to_a.concat @office.errors.full_messages.map{ |x| "Office "+ x}
+            render :new
         end
     else
-        @company.errors.full_messages.each do |msg|
-            error_msg += "Company "+msg + "\n"
-        end
-        flash[:alert] = error_msg
-        redirect_to :back
+        flash[:alert] = flash[:alert].to_a.concat @company.errors.full_messages.map{ |x| "Company "+ x}
+        render :new
     end
   end
 

@@ -28,17 +28,26 @@
 
 		<div class="container content">
 		<div class="row">
-			<% flash.each do |name,msg| %>
-				<% if name.to_s == "notice" %>
+			 <% flash.each do |name, msg| %>
+		      	<% if msg.class == Array %>
+		      		<div class="span11 alert alert-error">
+		      		<h4><%= pluralize(msg.count, "error") %> prohibited this Signup from completing:</h4>
+        			<ul>
+				        <% msg.each do |message| %>
+				          <li><%= content_tag :div, message, :id => "flash_#{name}" %></li>
+				        <% end %>
+			        </ul>
+			        </div>
+			        <% msg.clear %>
+		      	<% elsif name.to_s == "notice" %>
 					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-success" %>
 				<% elsif name.to_s == "error" %>
 					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-error" %>
 				<% else %>
 					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-" %>
 				<% end %>
-			<% end %>
+	   		 <% end %>
 		</div>
-
 			<%= yield %>
 		</div>
 		<%= render 'layouts/footer' %>
