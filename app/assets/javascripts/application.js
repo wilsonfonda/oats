@@ -19,6 +19,7 @@
 //= require bootstrap-datepicker
 //= require bootstrap-fileupload
 //= require bootstrap-fileupload.min
+//= require magic_grid
 
 if (window.location == "/worktimes")
 {

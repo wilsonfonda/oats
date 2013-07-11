@@ -13,6 +13,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'bootstrap-datetimepicker-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
+gem 'magic_grid'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
@@ -32,7 +33,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '1.2.3'
-  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+  gem 'jquery-ui-rails'
 end
 
 gem 'jquery-rails', '2.0.2'

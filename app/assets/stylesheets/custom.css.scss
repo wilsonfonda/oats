@@ -1,6 +1,7 @@
 /*$linkColor: #FF69d6;*/
 
 @import "bootstrap";
+@import "bootstrap-responsive";
 
 html
 {
@@ -12,8 +13,8 @@ html
 body
 {
 	height: 100%;
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	background-color: #2f2f2f;
 	color: white;
 }
