@@ -1,0 +1,257 @@
+<%= javascript_include_tag "zingchart-html5-min" %>
+
+<div class="row">
+	<div class="span8">
+		<div class="row">
+			<strong><h1><%= User.find(params[:id]).name %>'s Performance</h1></strong>
+		</div>
+		<div class="row floating-paper">
+			<div class="row">
+					<div class="span6">
+							<div class="row">
+												<div class="span2" style="width:90px;">Period from : </div>
+											<div id="datetimepicker_from" class="span4">
+																	<div id="date_from" class="input-append input-medium">
+																		<input data-format="dd-MM-yyyy" type="text" id="datefrom" value='<%= Time.parse(params[:from]).strftime("%d-%m-%Y") %>'></input>
+																		<span class="add-on">
+																			<i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
+																			</i>
+																		</span>
+														</div>
+														<script type="text/javascript">
+															$(function() {
+																$('#date_from').datetimepicker({
+																	pickTime: false
+																});
+															});
+														</script>
+												</div>
+							</div>
+							<div class="row">
+														<div class="span2" style="width:90px;">to : </div>
+											<div id="datetimepicker_to" class="span4">
+																	<div id="date_to" class="input-append input-medium">
+																		<input  data-format="dd-MM-yyyy" type="text" id="dateto" value='<%= Time.parse(params[:to]).strftime("%d-%m-%Y") %>'></input>
+																		<span class="add-on">
+																			<i class="icon-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar">
+																			</i>
+																		</span>
+														</div>
+														<script type="text/javascript">
+															$(function() {
+																$('#date_to').datetimepicker({
+																	pickTime: false
+																});
+															});
+														</script>
+												</div>
+							</div>
+					</div>
+					<div class="span1">
+							<input type="button" class="btn btn-large btn-primary" value="Refresh" onclick="refresh_performance(<%= current_user.id %>)"/>
+					</div>
+			</div>
+
+			<div class="row">
+				<div class="span8">     
+					<div id="perf_chart"></div>
+				</div>
+			</div>
+
+<<<<<<< HEAD
+			<div class="row">
+				<div class="span7">
+					<table id="worktime-table" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Checkin Time</th>
+								<th>Checkout Time</th>
+								<th>Place Checkin</th>
+								<th>Place Checkout</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @worktimes_paged.each do |w| %>
+								<tr>
+									<td><%= w.checkin %></td>
+									<td><%= w.place_checkin %></td>
+									<td><%= w.checkout %></td>
+									<td><%= w.place_checkout %></td>
+								</tr>
+						<% end %>
+						</tbody>
+					</table>
+					<%= will_paginate @worktimes_paged%>
+				</div>
+			</div>
+=======
+      <div class="row">
+        <div class="span7">
+          <table id="worktime-table" class="table table-hover">
+            <thead>
+              <tr>
+                <th>Checkin Time</th>
+                <th>Place Checkin</th>
+                <th>Checkout Time</th>
+                <th>Place Checkout</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @worktimes_paged.each do |w| %>
+	              <tr>
+	                <td><p id="checkin<%= w.id %>"></p></td>
+                    <td><%= w.place_checkin %></td>
+                    <td><p id="checkout<%= w.id %>"></p></td>
+                    <td><%= w.place_checkout %></td>
+                    <script>
+                      var cin = new Date( <%= w.checkin.to_i * 1000 %>);
+                      var cout = new Date( <%= w.checkout.to_i * 1000 %>);
+                      document.getElementById("checkin<%= w.id %>").innerHTML = cin.toDateString()+",<br/>"+cin.toLocaleTimeString();
+                      document.getElementById("checkout<%= w.id %>").innerHTML = cout.toDateString()+",<br/>"+cout.toLocaleTimeString();;
+                    </script>
+	              </tr>
+	          <% end %>
+            </tbody>
+          </table>
+          <%= will_paginate @worktimes_paged%>
+        </div>
+      </div>
+>>>>>>> ecae8bd7d658c8c6ee020ec8d72ad8a4a3b1227f
+		</div>
+	</div>
+	<%= render 'layouts/navigation' %>
+</div>
+
+<script>
+	window.onload = function(){
+		zingchart.render(
+			{
+				id : "perf_chart",
+				height : 450,
+				width : 600,
+				data : myChart
+			}
+		);
+	}
+
+	var myChart = {
+		"show-progress":false,
+		"graphset":
+		[{
+			"alpha":1,
+			"background-color":"#cccccc",
+			"background-color-2":"#cccccc",
+			"histogram":false,
+			"stacked":false,
+			"type":"bar",
+			"scale-x":{
+				"text":"Date",
+				"values": [
+					<% date = Time.parse(params[:from]) %>
+					<% while date <= Time.parse(params[:to])%>
+						<%= date.strftime("%d") %>
+						<% if !(date == Time.parse(params[:to])) %>
+								,
+						<% end %>
+						<% date += 1.day %>
+					<% end %>
+				]
+			},
+			"scale-y":{
+				"text":"Hours"
+			},
+			"legend":{
+				"position":"100% 0%",
+				"margin-top":10,
+				"margin-right":10,
+				"margin-left":10,
+				"margin-bottom":10,
+				"layout":"x1",
+				"draggable":false,
+				"minimize":false,
+				"item":{
+					"toggle":false,
+					"margin-top":10,
+					"margin-right":10,
+					"margin-left":10,
+					"margin-bottom":10
+				}
+			},
+			"plot":{
+				"highlight":false,
+				"tooltip-text":"%v"
+			},
+			"plotarea":{
+				"position":"0% 0%",
+				"alpha":1,
+				"background-color":"#cccccc",
+				"background-color-2":"#cccccc",
+				"margin-top":60,
+				"margin-right":20,
+				"margin-left":80,
+				"margin-bottom":80
+			},
+			"title":{
+				"text":"Performance Graph",
+				"alpha":1,
+				"background-color":"#333333",
+				"background-color-2":"#333333",
+				"position":"0% 0%",
+				"margin-top":0,
+				"margin-right":0,
+				"margin-left":0,
+				"margin-bottom":0
+			},
+			"series":[{
+				values : [  
+					<% if !params[:from].nil? && !params[:to].nil? %>
+						<% date = Time.parse(params[:from]) %>
+						<% x = 0%>
+						<% while date <= Time.parse(params[:to])%>
+							<% a=0 %>
+							<% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
+								<% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+								<% x+=1 %>
+								<% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
+										<% a+= (@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+										<% x+=1 %>
+								<% end %>
+								<%= a.to_f/3600 %>
+							<% else %>
+								<%= 0 %>
+							<% end %>
+							<% if !(date == Time.parse(params[:to])) %>
+								,
+							<% end %>
+							<% date += 1.day %>
+						<% end %>
+					<% end %>
+				],
+				"text":"Work Time"
+			}]
+		}]
+	};
+</script>
+<script>
+	function refresh_performance(id)
+	{
+			if (checkDate())
+			{
+				var from = document.getElementById("datefrom").value.replace("/", "-").replace("/", "-");
+				var to = document.getElementById("dateto").value.replace("/", "-").replace("/", "-");
+				var url_now = location.protocol + '//' + location.host + location.pathname;
+
+				window.location = url_now + "?id=" + id + "&from=" + from + "&to=" + to;
+			}
+			else
+			{
+			}          
+	}
+</script>
+
+<script type="text/javascript" src="assets/gs_sortable.js"></script>
+<script type="text/javascript">
+	var TSort_Data = new Array ('worktime-table', 'd', 'd', 's', 's');
+	tsRegister();
+</script>
+
