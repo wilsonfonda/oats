@@ -29,6 +29,7 @@ Oats::Application.routes.draw do
   get "/testimony", :to => 'static_pages#testimony'
   get "/contact", :to => 'static_pages#contact'
   get "/terms", :to => 'static_pages#terms'
+  get "/download", :to => 'static_pages#download'
 
   match "*path", :to => "static_pages#routing_error"
 

@@ -1,4 +1,6 @@
 ---
+LaptopOats.png: LaptopOats-5f4fe9c0485b5e2a0dc482f629f8e3c7.png
+LaptopOats/index.png: LaptopOats-5f4fe9c0485b5e2a0dc482f629f8e3c7.png
 front_image.png: front_image-92c9fb545494a8483765d200c17884b9.png
 front_image/index.png: front_image-92c9fb545494a8483765d200c17884b9.png
 logo.png: logo-441f571927d12cc49f4bde2b3012329c.png
@@ -27,8 +29,8 @@ zingchart-html5-min.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
 zingchart-html5-min/index.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
 DS-DIGI.TTF: DS-DIGI-5cb9583c7cae77310dadf8b5076177e4.TTF
 DS-DIGI/index.TTF: DS-DIGI-5cb9583c7cae77310dadf8b5076177e4.TTF
-application.css: application-c0a19be4eb317071570aa4c5000cff24.css
-application/index.css: application-c0a19be4eb317071570aa4c5000cff24.css
+application.css: application-d89da2c553fa668088c97979dcbfc004.css
+application/index.css: application-d89da2c553fa668088c97979dcbfc004.css
 ds_digital/DIGITAL.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DIGITAL/index.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DS-DIGIB.TTF: ds_digital/DS-DIGIB-24ac6161716b62cdec94d7aba89b22c7.TTF

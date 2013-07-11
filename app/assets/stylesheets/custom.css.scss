@@ -121,6 +121,20 @@ footer
 	background-color: rgba(0,0,0,0.5);
 }
 
+.transparent-field2
+{
+	padding: 10px 10px 10px 10px;
+
+	border-radius: 4px;
+	background-color: rgba(0,0,0,0.9);
+}
+
+.background-image
+{
+	position:absolute;
+	z-index:-1;
+}
+
 .big-title
 {
 	font-size: 60px;

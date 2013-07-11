@@ -30,6 +30,12 @@
             >
               <a href="/contact">Contact Us</a>
             </li>
+            <li <% if request.fullpath == '/download' %>
+                 class='active' 
+                 <% end %>
+            >
+              <a href="/download">Download</a>
+            </li>
           </ul>
           <% if user_signed_in? %>
             <ul class="nav" style="float: right; display: inline-block;">
