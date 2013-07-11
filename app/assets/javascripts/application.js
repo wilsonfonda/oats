@@ -17,6 +17,7 @@
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
+//= require magic_grid
 //= require bootstrap-datepicker
 //= require bootstrap-fileupload
 //= require bootstrap-fileupload.min

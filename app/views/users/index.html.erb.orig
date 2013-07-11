@@ -39,6 +39,11 @@
             <% end %>
           </tr>
           <% end %>
+<<<<<<< HEAD
+        </tbody>
+      </table>
+=======
+>>>>>>> 790b24db593f87436eb578b4e1fff43f0d96de14
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
       <%= link_to "Employee Performance", worktimes_path+"?from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: 'btn btn-primary pull-right white-link' %>
 

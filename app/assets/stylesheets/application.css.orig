@@ -10,8 +10,12 @@
  *
  *= require_self
  *= require bootstrap-datepicker
+<<<<<<< HEAD
  *= require jquery.ui.core
  *= require jquery.ui.theme
+ *= require dataTables/jquery.dataTables
+=======
+>>>>>>> 790b24db593f87436eb578b4e1fff43f0d96de14
  *= require bootstrap-fileupload
  *= require_tree .
  */

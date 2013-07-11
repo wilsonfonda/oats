@@ -15,16 +15,10 @@
         <Cell><Data ss:Type="String">Total hours</Data></Cell>
       </Row>
     <% @users.each do |user| %>
-      <% first = true %>
       <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)) %>
       <% @worktimes.each do |w| %>
         <Row>
-          <% if first %>
             <Cell><Data ss:Type="String"><%= user.name %> (<%= user.email %>)</Data></Cell>
-            <% first = false %>
-          <% else %>
-            <Cell><Data ss:Type="String"></Data></Cell>
-          <% end %>
             <Cell><Data ss:Type="String"><%= w.checkin %></Data></Cell>
             <Cell><Data ss:Type="String"><%= w.place_checkout %></Data></Cell>
             <Cell><Data ss:Type="String"><%= w.checkout %></Data></Cell>
