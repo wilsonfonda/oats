@@ -13,14 +13,13 @@
 //= require modernizr-2.6.2.min.js
 //= require jquery
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
-//= require magic_grid
 //= require bootstrap-datepicker
 //= require bootstrap-fileupload
 //= require bootstrap-fileupload.min
+//= require magic_grid
 
 if (window.location == "/worktimes")
 {
