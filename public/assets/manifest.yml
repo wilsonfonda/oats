@@ -35,8 +35,8 @@ application.js: application-9a76937bd777935a4421611727ff9253.js
 application/index.js: application-9a76937bd777935a4421611727ff9253.js
 zingchart-html5-min.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
 zingchart-html5-min/index.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
-application.css: application-0fe997b16d27edea39ea215c3eb49f46.css
-application/index.css: application-0fe997b16d27edea39ea215c3eb49f46.css
+application.css: application-5cc19a3b08cf43cbf595e22bfc61c846.css
+application/index.css: application-5cc19a3b08cf43cbf595e22bfc61c846.css
 ds_digital/DIGITAL.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DIGITAL/index.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DS-DIGIB.TTF: ds_digital/DS-DIGIB-24ac6161716b62cdec94d7aba89b22c7.TTF
@@ -85,6 +85,16 @@ twitter/bootstrap/glyphicons-halflings-white.png: twitter/bootstrap/glyphicons-h
 twitter/bootstrap/glyphicons-halflings-white/index.png: twitter/bootstrap/glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 twitter/bootstrap/glyphicons-halflings.png: twitter/bootstrap/glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
 twitter/bootstrap/glyphicons-halflings/index.png: twitter/bootstrap/glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
+bootstrap/glyphiconshalflings-regular.eot: bootstrap/glyphiconshalflings-regular-8f41a102f5570cb6677eeec342991f8b.eot
+bootstrap/glyphiconshalflings-regular/index.eot: bootstrap/glyphiconshalflings-regular-8f41a102f5570cb6677eeec342991f8b.eot
+bootstrap/glyphiconshalflings-regular.otf: bootstrap/glyphiconshalflings-regular-6ed214c313ea88ee39b995b345c2d1c4.otf
+bootstrap/glyphiconshalflings-regular/index.otf: bootstrap/glyphiconshalflings-regular-6ed214c313ea88ee39b995b345c2d1c4.otf
+bootstrap/glyphiconshalflings-regular.svg: bootstrap/glyphiconshalflings-regular-bb7a80d4a61697056b36dc29be2ecd9e.svg
+bootstrap/glyphiconshalflings-regular/index.svg: bootstrap/glyphiconshalflings-regular-bb7a80d4a61697056b36dc29be2ecd9e.svg
+bootstrap/glyphiconshalflings-regular.ttf: bootstrap/glyphiconshalflings-regular-6502e5a88f02b90aeb32c2dd21ea37ab.ttf
+bootstrap/glyphiconshalflings-regular/index.ttf: bootstrap/glyphiconshalflings-regular-6502e5a88f02b90aeb32c2dd21ea37ab.ttf
+bootstrap/glyphiconshalflings-regular.woff: bootstrap/glyphiconshalflings-regular-f4efd9e8a9f1af441a81cd0b62b33a70.woff
+bootstrap/glyphiconshalflings-regular/index.woff: bootstrap/glyphiconshalflings-regular-f4efd9e8a9f1af441a81cd0b62b33a70.woff
 glyphicons-halflings-white.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 glyphicons-halflings-white/index.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 glyphicons-halflings.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
