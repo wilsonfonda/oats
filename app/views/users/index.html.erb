@@ -6,7 +6,7 @@
       <h1><strong>Employees</strong></h1>
     </div>
     <div class="row floating-paper">
-          <%= magic_grid(@users, [:name, :email, :division, :role, :office_id, "Edit","Delete"], searchable: [:name,:email], class: "table table-hover table-condensed") do |user|%>
+          <%= magic_grid(@users, [:name, :email, :division, :role, :office_id, "Edit","Delete"], searchable: [:name,:email], class: "table table-hover table-condensed", :remote => true) do |user|%>
           <tr>
             <%if (can? :update, user) && user!=current_user  %>
               <td><%= link_to user.name, user_path(user) %></td>
