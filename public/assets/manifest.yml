@@ -1,6 +1,14 @@
 ---
 LaptopOats.png: LaptopOats-5f4fe9c0485b5e2a0dc482f629f8e3c7.png
 LaptopOats/index.png: LaptopOats-5f4fe9c0485b5e2a0dc482f629f8e3c7.png
+Welcome.png: Welcome-997d8916bed30286cddbf56c7be9b48f.png
+Welcome/index.png: Welcome-997d8916bed30286cddbf56c7be9b48f.png
+available.png: available-f6b581672266d44f282448fe1027150a.png
+available/index.png: available-f6b581672266d44f282448fe1027150a.png
+availableandroid.png: availableandroid-f6b581672266d44f282448fe1027150a.png
+availableandroid/index.png: availableandroid-f6b581672266d44f282448fe1027150a.png
+blue.jpg: blue-2ca71e3b1060d85264786dd97f175fb6.jpg
+blue/index.jpg: blue-2ca71e3b1060d85264786dd97f175fb6.jpg
 front_image.png: front_image-92c9fb545494a8483765d200c17884b9.png
 front_image/index.png: front_image-92c9fb545494a8483765d200c17884b9.png
 logo.png: logo-441f571927d12cc49f4bde2b3012329c.png
@@ -19,14 +27,16 @@ main_files/logo.png: main_files/logo-441f571927d12cc49f4bde2b3012329c.png
 main_files/logo/index.png: main_files/logo-441f571927d12cc49f4bde2b3012329c.png
 oats.ico: oats-aaeb23b4889f3b63a62f3608fe8d5924.ico
 oats/index.ico: oats-aaeb23b4889f3b63a62f3608fe8d5924.ico
+oats.png: oats-1503851f7ae0ed4fedd2db2a5cf6facd.png
+oats/index.png: oats-1503851f7ae0ed4fedd2db2a5cf6facd.png
 rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
-application.js: application-605a922af893af2f038cc0762469adaa.js
-application/index.js: application-605a922af893af2f038cc0762469adaa.js
+application.js: application-9a76937bd777935a4421611727ff9253.js
+application/index.js: application-9a76937bd777935a4421611727ff9253.js
 zingchart-html5-min.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
 zingchart-html5-min/index.js: zingchart-html5-min-8ec4204e1947fa6d748cdbc8abe77a3e.js
-application.css: application-b623241e0614cbe889d585d8d2c7eb4f.css
-application/index.css: application-b623241e0614cbe889d585d8d2c7eb4f.css
+application.css: application-0fe997b16d27edea39ea215c3eb49f46.css
+application/index.css: application-0fe997b16d27edea39ea215c3eb49f46.css
 ds_digital/DIGITAL.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DIGITAL/index.TXT: ds_digital/DIGITAL-8cefcbf38fcb03a02b9c41715ed987eb.TXT
 ds_digital/DS-DIGIB.TTF: ds_digital/DS-DIGIB-24ac6161716b62cdec94d7aba89b22c7.TTF

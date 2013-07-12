@@ -36,9 +36,14 @@ GEM
     bootstrap-datepicker-rails (1.1.1.1)
       railties (>= 3.0)
     bootstrap-datetimepicker-rails (0.0.11)
+    bootstrap-glyphicons (0.0.1)
+      railties (>= 3.0)
+      sass (>= 3.2)
     bootstrap-sass (2.1.0.0)
     bootstrap-will_paginate (0.0.6)
       will_paginate
+    bootswatch-rails (0.5.0)
+      railties (>= 3.1)
     builder (3.0.4)
     cancan (1.6.10)
     capybara (1.1.2)
@@ -195,8 +200,10 @@ DEPENDENCIES
   bcrypt-ruby (= 3.0.1)
   bootstrap-datepicker-rails
   bootstrap-datetimepicker-rails
+  bootstrap-glyphicons
   bootstrap-sass (= 2.1)
   bootstrap-will_paginate (= 0.0.6)
+  bootswatch-rails
   cancan
   capybara (= 1.1.2)
   coffee-rails (= 3.2.2)

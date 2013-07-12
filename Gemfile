@@ -14,6 +14,8 @@ gem 'bootstrap-datetimepicker-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
 gem 'magic_grid'
+gem 'bootswatch-rails'
+gem 'bootstrap-glyphicons'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'

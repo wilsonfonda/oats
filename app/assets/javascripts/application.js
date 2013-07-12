@@ -20,6 +20,7 @@
 //= require bootstrap-fileupload
 //= require bootstrap-fileupload.min
 //= require magic_grid
+//= require bootstrap
 
 if (window.location == "/worktimes")
 {
