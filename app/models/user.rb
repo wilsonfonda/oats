@@ -24,4 +24,12 @@ class User < ActiveRecord::Base
       !w.checkin.nil? && w.checkout.nil?
     end
   end
+
+  def self.search(search)  
+    if search  
+      where('name LIKE ? OR email LIKE ? OR division LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")  
+    else  
+      scoped  
+    end  
+  end  
 end

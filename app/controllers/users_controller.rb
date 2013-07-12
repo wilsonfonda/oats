@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 	
 	def index
 		@offices = Company.find(current_user.company_id).offices
-		@users = User.where("office_id IN (?)",@offices).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 20)
+		@users = User.where("office_id IN (?)",@offices).search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 20)
 	end
 
 	def add
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 				flash[:error] = "Failed to update employee information"
 			end
 		end
-		redirect_to :back
+		redirect_to users_path
 	end
 
 	def change_password

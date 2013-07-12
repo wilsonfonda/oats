@@ -1,3 +1,27 @@
+$(function () {  
+  $(document).on('click', '#companies th a, #companies .pagination a', function () {  
+    $.getScript(this.href);  
+    return false;  
+  });  
+
+  $('#companies_search input').keyup(function () {  
+  $.get($('#companies_search').attr('action'),  
+    $('#companies_search').serialize(), null, 'script');  
+  return false;  
+  });  
+
+  $(document).on('click', '#users th a, #users .pagination a', function () {  
+    $.getScript(this.href);  
+    return false;  
+  });  
+
+  $('#users_search input').keyup(function () {  
+  $.get($('#users_search').attr('action'),  
+    $('#users_search').serialize(), null, 'script');  
+  return false;  
+  });
+})  
+
 function to_signup()
 {
 	window.location = '/signup';

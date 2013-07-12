@@ -9,7 +9,7 @@ class WorktimesController < ApplicationController
 				if current_user.role != "3"
 					@offices = Company.find(current_user.company_id).offices
 					@users = User.where("office_id IN (?)",@offices)
-					@worktimes = Worktime.where("user_id IN (?) and checkin > ? and checkin < ?", @users, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).order(sort_column_all + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 10)
+					@worktimes = Worktime.where("user_id IN (?) and checkin > ? and checkin < ?", @users, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).search(params[:search]).order(sort_column_all + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 10)
 					respond_to do |format|
 						format.html
 						format.xls
