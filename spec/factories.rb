@@ -1,9 +1,9 @@
 FactoryGirl.define do
     factory :company do
-    	address "Pisang 21"
+    	address "aaa 21"
     	contact "0819812492174"
     	deposit "0"
-    	name "Shit"
+    	name "aaa"
     	status "true"
     end
 
@@ -20,18 +20,45 @@ FactoryGirl.define do
     end
 
     factory :user do
-        password "foobar"
-        password_confirmation "foobar"
-        name     "Michael Hartl"
-        division "IT"
-        email    "michael@example.com"
-        role "2"
-        access_token "xxxx"
-        office
+
+        factory :user1 do
+            password "foobar"
+            password_confirmation "foobar"
+            name     "Michael Hartl"
+            division "IT"
+            email    "hr@example.com"
+            role "2"
+            access_token "xxxx"
+            office
+        end
+
+        factory :user2 do
+            password "foobar"
+            password_confirmation "foobar"
+            name     "admin"
+            division "IT"
+            email    "admin@new.com"
+            role "0"
+            access_token "xxxx"
+            office
+        end
+
+        factory :user3 do
+            password "foobar"
+            password_confirmation "foobar"
+            name     "Michael Hartl"
+            division "IT"
+            email    "employee@example.com"
+            role "3"
+            access_token "xxxx"
+            office
+        end
     end
 
+    
+
     factory :ownership do
-        company
-        user
+        company_id 1
+        owner_id 1
     end
 end

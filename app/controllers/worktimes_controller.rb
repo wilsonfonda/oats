@@ -8,6 +8,7 @@ class WorktimesController < ApplicationController
 				if current_user.role != "3"
 					@offices = Company.find(current_user.company_id).offices
 					@users = User.where("office_id IN (?)",@offices)
+					@worktimes = Worktime.where("user_id IN (?) and checkin > ? and checkout < ?", @users, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).includes(:user)
 					respond_to do |format|
 						format.html
 						format.xls

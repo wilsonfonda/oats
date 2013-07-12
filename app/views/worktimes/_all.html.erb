@@ -56,28 +56,10 @@
       <%= link_to "Excel", worktimes_path(format: "xls")+"?from="+params[:from]+"&to="+params[:to] %>
       <div class="row">
         <div class="span11">
-          <table id="worktime-table" class="table table-hover">
-            <thead>
-              <tr>
-                <th>User name</th>
-                <th>Checkin Time</th>
-                <th>Place Checkin</th>
-                <th>Checkout Time</th>
-                <th>Place Checkout</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @users.each do |user| %>
-                <% first = true %>
-                <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)) %>
-                <% @worktimes.each do |w| %>
+          <table class="table table-hover">
+                <%= magic_grid(@worktimes, [:user_id, :checkin, :place_checkin, :checkout, :place_checkout], class: "table table-hover table-condensed") do |w| %>
                   <tr>
-                    <% if first %>
-                      <td><%= link_to user.name, request.fullpath+'&id='+user.id.to_s %><br/><%= user.email %></td>
-                      <% first = false %>
-                    <% else %>
-                      <td></td>
-                    <% end %>
+                    <td><%= link_to w.user.name, request.fullpath+'&id='+w.user.id.to_s %><br/><%= w.user.email %></td>
                     <td><p id="checkin<%= w.id %>"></p></td>
                     <td><%= w.place_checkin %></td>
                     <td><p id="checkout<%= w.id %>"></p></td>
@@ -90,10 +72,6 @@
                     </script>
                   </tr>
                 <% end %>
-              <% if !@worktimes.blank? %>
-                <tr><td><br/></td><td></td><td></td><td></td><td></td></tr>
-              <% end %>
-            <% end %>
             </tbody>
           </table>
         </div>
