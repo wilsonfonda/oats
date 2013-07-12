@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!, :except => :mobile_signin
 	load_and_authorize_resource
+	helper_method :sort_column, :sort_direction
 	
 	def index
 		@offices = Company.find(current_user.company_id).offices
-		@users = User.where("office_id IN (?)",@offices).paginate(:page => params[:page], :per_page => 20)
+		@users = User.where("office_id IN (?)",@offices).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 20)
 	end
 
 	def add
@@ -85,4 +86,13 @@ class UsersController < ApplicationController
 			end
 		end
 	end
+
+	private
+		def sort_direction  
+		  %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+		end  
+
+		def sort_column  
+		  User.column_names.include?(params[:sort]) ? params[:sort] : "id"  
+		end  
 end

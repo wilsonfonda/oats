@@ -6,4 +6,12 @@ class Company < ActiveRecord::Base
   has_one :ownership, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
+
+  def self.search(search)  
+    if search  
+      where('name LIKE ?', "%#{search}%")  
+    else  
+      scoped  
+    end  
+  end  
 end

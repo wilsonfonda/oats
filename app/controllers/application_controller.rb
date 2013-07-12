@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+  helper_method :sort_column, :sort_direction
+  
   rescue_from CanCan::AccessDenied do |exception|
   	flash[:error] = "Access denied. Either that you don't have the authorization or your company's status is freezed"
   	redirect_back_or_default(user_path current_user)
@@ -34,4 +35,12 @@ class ApplicationController < ActionController::Base
   	def after_sign_up_path_for(users)
   		user_path current_user
   	end
+
+    def sort_direction  
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+    end  
+
+    def sort_column  
+      Product.column_names.include?(params[:sort]) ? params[:sort] : "name"  
+    end  
 end
