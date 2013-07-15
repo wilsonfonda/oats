@@ -20,6 +20,11 @@ $(function () {
     $('#users_search').serialize(), null, 'script');  
   return false;  
   });
+
+  $(document).on('click', '#worktimes th a, #worktimes .pagination a', function () {  
+    $.getScript(this.href);  
+    return false;  
+  });  
 })  
 
 function to_signup()

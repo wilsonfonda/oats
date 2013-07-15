@@ -1,4 +1,3 @@
-<script type="text/javascript" src="assets/date_format.js"></script>
 <%= render 'layouts/alt_navigation' %>
 <div class="row">
   <div class="span12">
@@ -56,16 +55,6 @@
       <%= link_to "Excel", worktimes_path(format: "xls")+"?from="+params[:from]+"&to="+params[:to] %>
       <div class="row">
         <div class="span11">
-          <%= form_tag worktimes_path, :method => 'get', :id => "worktimes_search" do %>
-            <p>
-              <%= text_field_tag :search, params[:search] %>
-              <%= submit_tag "Search", :name => nil %>
-            </p>
-            <%= hidden_field_tag :direction, params[:direction] %>  
-            <%= hidden_field_tag :sort, params[:sort] %>  
-            <%= hidden_field_tag :from, params[:from] %>  
-            <%= hidden_field_tag :to, params[:to] %>
-          <% end %>
           <div id="worktimes"><%= render 'worktimes' %></div>
         </div>
       </div>
