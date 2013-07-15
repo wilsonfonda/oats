@@ -14,8 +14,6 @@ gem 'bootstrap-datetimepicker-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
 gem 'jquery-rails'
-gem 'bootswatch-rails'
-gem 'bootstrap-glyphicons'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
