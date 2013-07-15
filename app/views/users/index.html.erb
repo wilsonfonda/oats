@@ -14,7 +14,12 @@
         <%= hidden_field_tag :direction, params[:direction] %>  
         <%= hidden_field_tag :sort, params[:sort] %>  
       <% end %>
+
+      <%= form_tag update_batch_path, :method => :put do %>
         <div id="users"><%= render 'users' %></div>
+        <%= submit_tag "Save All", class: "btn btn-primary" %>
+      <% end %>
+
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
       <%= link_to "Employee Performance", worktimes_path+"?from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: 'btn btn-primary pull-right white-link' %>
 

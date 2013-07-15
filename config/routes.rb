@@ -11,6 +11,7 @@ Oats::Application.routes.draw do
 
   post "add", :to =>"users#add"
   put "change_password/:id", :to =>"users#change_password"
+  put "update_batch", :to => "users#update_batch"
   post "checkin", :to => "worktimes#create"
   post "checkout", :to => "worktimes#update"
   post "mobile_signin", :to => "users#mobile_signin"

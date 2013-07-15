@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
 	def update
 		@user = User.find(params[:id])
-		if can? :change_role, @user
+		if (can? :change_role, @user) && params[:user][:role] > current_user.role
 			if @user.update_attributes(params[:user])
 				flash[:notice] = "Employee information updated."
 			else
@@ -58,6 +58,26 @@ class UsersController < ApplicationController
 				flash[:error] = "Failed to update employee information"
 			end
 		end
+		redirect_to users_path
+	end
+
+	def update_batch
+		params[:users].each do |key, value|
+			@user = User.find(key)
+			if (can? :change_role, @user) && value[:role] > current_user.role
+				if @user.update_attributes(value)
+					flash[:notice] = "Employee information updated."
+				else
+					flash[:error] = "Failed to update employee information"
+				end
+			else
+				if @user.update_attributes(value.except(:role))
+					flash[:notice] = "Employee information updated."
+				else
+					flash[:error] = "Failed to update employee information"
+				end
+			end
+		end	
 		redirect_to users_path
 	end
 
