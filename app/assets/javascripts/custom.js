@@ -22,11 +22,16 @@ $(function () {
   });
 
   $(document).on('click', '#worktimes th a, #worktimes .pagination a', function () {  
-    $.getScript(this.href);  
+    $("#worktimes").load(this.href+" #worktimes"); 
     return false;  
   });  
 })  
 
+function convertdate()
+{
+  var din1 = new Date(document.getElementbyId("checkin1"))
+    document.getElementById("checkin1").innerHTML = din1.toDateString()+",<br/>"+din1.toLocaleTimeString();
+}
 function to_signup()
 {
 	window.location = '/signup';

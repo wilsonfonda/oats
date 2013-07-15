@@ -1,7 +1,9 @@
-<table id="worktime-table" class="table table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
-      <th><%= sortable "user_id" %></th>
+      <% if params[:id].nil? %>
+        <th><%= sortable "user_id" %></th>
+      <% end %>
       <th><%= sortable "checkin" %></th>
       <th><%= sortable "place_checkin" %></th>
       <th><%= sortable "checkout" %></th>
@@ -12,19 +14,13 @@
     <% @worktimes.each do |w| %>
       <% user = User.find(w.user_id) %>
       <tr>
-        <td><%= link_to user.name, worktimes_path(:from => params[:from], :to => params[:to], :id => user.id.to_s) %><br/><%= user.email %></td>
-        <td><p id="checkin<%= w.id %>"></p></td>
+        <% if params[:id].nil? %>
+          <td><%= link_to user.name, worktimes_path(:from => params[:from], :to => params[:to], :id => user.id.to_s) %><br/><%= user.email %></td>
+        <% end %>
+        <td><%= w.checkin.advance(:minutes => cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %></td>
         <td><%= w.place_checkin %></td>
-        <td><% if !w.checkout.nil? %><p id="checkout<%= w.id %>"></p><% end %></td>
+        <td><% if !w.checkout.nil? %><%= w.checkout.advance(:minutes => cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %><% end %></td>
         <td><%= w.place_checkout %></td>
-        <script>
-          var cin = new Date( <%= w.checkin.to_i * 1000 %>);
-          var cout = new Date( <%= w.checkout.to_i * 1000 %>);
-          document.getElementById("checkin<%= w.id %>").innerHTML = cin.toDateString()+",<br/>"+cin.toLocaleTimeString();
-          <% if !w.checkout.nil? %>
-            document.getElementById("checkout<%= w.id %>").innerHTML = cout.toDateString()+",<br/>"+cout.toLocaleTimeString();
-            <% end %>
-        </script>
       </tr>
     <% end %>
   </tbody>
