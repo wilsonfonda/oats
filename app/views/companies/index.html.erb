@@ -14,7 +14,12 @@
 		  <%= hidden_field_tag :direction, params[:direction] %>  
 		  <%= hidden_field_tag :sort, params[:sort] %> 
 		<% end %>
-		  <div id="companies"><%= render 'companies' %></div>
+		
+		<%= form_tag update_batch_company_path, :method => :put do %>
+          <div id="companies"><%= render 'companies' %></div>
+          <%= submit_tag "Save All", class: "btn btn-primary" %>
+        <% end %>
+
 		</div>
 	</div>
 </div>

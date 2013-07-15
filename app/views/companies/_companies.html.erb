@@ -13,24 +13,23 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @companies.each do |company| %>
-		<tr>
-			<td><%= company.id %></td>
-			<td><%= link_to company.name, company %></td>
-			<td><%= company.address %></td>
-			<td><%= company.contact %></td>
-			<td><%= User.find(Ownership.find_by_company_id(company).owner_id).email %></td>
-			<%= form_for(company, :remote => true) do |f| %>
+		<% for company in @companies %>
+		<%= fields_for "companies[]", company do |f| %>
+			<tr>
+				<td><%= company.id %></td>
+				<td><%= link_to company.name, company %></td>
+				<td><%= company.address %></td>
+				<td><%= company.contact %></td>
+				<td><%= User.find(Ownership.find_by_company_id(company).owner_id).email %></td>
 				<td><%= f.select :status, {"Working"=>true, "Freeze"=>false}%></td>
 				<td><%= f.text_field :deposit %></td>
-				<td><%= f.submit "Save", class: "btn btn-primary" %></td>
-		    <% end %>
-		    <% if can? :destroy, company %>
-		    	<td><%= button_to "Delete", company, method: :delete, data: { confirm: "You sure?" }, title: company.name, class: "btn btn-primary"%></td>
-		    <% else %>
-		    	<td></td>
-		    <% end %>
-		</tr>
+			    <% if can? :destroy, company %>
+			    	<td><%= link_to "Delete", company, method: :delete, data: { confirm: "You sure?" }, title: company.name, class: "btn btn-primary"%></td>
+			    <% else %>
+			    	<td></td>
+			    <% end %>
+			</tr>
+		<% end %>
 		<% end %>
 	</tbody>
 </table>

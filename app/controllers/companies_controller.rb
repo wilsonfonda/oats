@@ -19,6 +19,11 @@ class CompaniesController < ApplicationController
 		redirect_to :back
 	end
 
+	def update_batch
+		Company.update(params[:companies].keys, params[:companies].values)
+		redirect_to companies_path
+	end
+
 	def show
 		@company = Company.find(params[:id])
 		@offices = @company.offices.paginate(:page => params[:page])

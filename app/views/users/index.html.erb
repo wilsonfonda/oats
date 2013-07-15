@@ -15,7 +15,7 @@
         <%= hidden_field_tag :sort, params[:sort] %>  
       <% end %>
 
-      <%= form_tag update_batch_path, :method => :put do %>
+      <%= form_tag update_batch_user_path, :method => :put do %>
         <div id="users"><%= render 'users' %></div>
         <%= submit_tag "Save All", class: "btn btn-primary" %>
       <% end %>
