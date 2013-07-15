@@ -60,23 +60,7 @@
 
 			<div class="row">
 				<div class="span7">
-					<table class="table table-hover">
-						<%= magic_grid(@worktimes, [:checkin, :place_checkin, :checkout, :place_checkout], class: "table table-hover table-condensed", :remote => true) do |w| %>
-						<tr>
-							<td><p id="checkin<%= w.id %>"></p></td>
-							<td><%= w.place_checkin %></td>
-							<td><p id="checkout<%= w.id %>"></p></td>
-							<td><%= w.place_checkout %></td>
-							<script>
-							var cin = new Date( <%= w.checkin.to_i * 1000 %>);
-							var cout = new Date( <%= w.checkout.to_i * 1000 %>);
-							document.getElementById("checkin<%= w.id %>").innerHTML = cin.toDateString()+",<br/>"+cin.toLocaleTimeString();
-							document.getElementById("checkout<%= w.id %>").innerHTML = cout.toDateString()+",<br/>"+cout.toLocaleTimeString();;
-							</script>
-						</tr>
-						<% end %>
-					</table>
-					<%= will_paginate @worktimes_paged%>
+					<div id="worktimes"><%= render 'worktimes' %></div>
 				</div>
 			</div>
 		</div>
@@ -171,11 +155,11 @@ var myChart = {
 			<% x = 0%>
 			<% while date <= Time.parse(params[:to])%>
 			<% a=0 %>
-			<% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
-			<% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+			<% if !@worktimes_unpaged[x].nil? && date.strftime("%d-%m-%Y") == @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") %>
+			<% a=((@worktimes_unpaged[x].checkout||Time.now) - @worktimes_unpaged[x].checkin).to_i %>
 			<% x+=1 %>
-			<% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
-			<% a+= (@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+			<% while !@worktimes_unpaged[x].nil? && @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") == @worktimes_unpaged[x-1].checkin.strftime("%d-%m-%Y")  %>
+			<% a+= ((@worktimes_unpaged[x].checkout||Time.now) - @worktimes_unpaged[x].checkin).to_i %>
 			<% x+=1 %>
 			<% end %>
 			<%= a.to_f/3600 %>

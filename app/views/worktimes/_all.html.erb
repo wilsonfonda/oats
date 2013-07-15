@@ -1,4 +1,3 @@
-<script type="text/javascript" src="assets/date_format.js"></script>
 <%= render 'layouts/alt_navigation' %>
 <div class="row">
   <div class="span12">
@@ -56,24 +55,7 @@
       <%= link_to "Excel", worktimes_path(format: "xls")+"?from="+params[:from]+"&to="+params[:to] %>
       <div class="row">
         <div class="span11">
-          <table class="table table-hover">
-                <%= magic_grid(@worktimes, [:user_id, :checkin, :place_checkin, :checkout, :place_checkout], class: "table table-hover table-condensed") do |w| %>
-                  <tr>
-                    <td><%= link_to w.user.name, request.fullpath+'&id='+w.user.id.to_s %><br/><%= w.user.email %></td>
-                    <td><p id="checkin<%= w.id %>"></p></td>
-                    <td><%= w.place_checkin %></td>
-                    <td><p id="checkout<%= w.id %>"></p></td>
-                    <td><%= w.place_checkout %></td>
-                    <script>
-                      var cin = new Date( <%= w.checkin.to_i * 1000 %>);
-                      var cout = new Date( <%= w.checkout.to_i * 1000 %>);
-                      document.getElementById("checkin<%= w.id %>").innerHTML = cin.toDateString()+",<br/>"+cin.toLocaleTimeString();
-                      document.getElementById("checkout<%= w.id %>").innerHTML = cout.toDateString()+",<br/>"+cout.toLocaleTimeString();;
-                    </script>
-                  </tr>
-                <% end %>
-            </tbody>
-          </table>
+          <div id="worktimes"><%= render 'worktimes' %></div>
         </div>
       </div>
     </div>

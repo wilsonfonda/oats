@@ -1,0 +1,36 @@
+<table class="table table-condensed table-hover">
+	<thead>
+		<tr>
+			<th><%= sortable "id" %></th>
+			<th><%= sortable "name" %></th>
+			<th><%= sortable "address" %></th>
+			<th><%= sortable "contact" %></th>
+			<th><%= sortable "owner" %></th>
+			<th><%= sortable "status" %></th>
+			<th><%= sortable "deposit" %></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% for company in @companies %>
+		<%= fields_for "companies[]", company do |f| %>
+			<tr>
+				<td><%= company.id %></td>
+				<td><%= link_to company.name, company %></td>
+				<td><%= company.address %></td>
+				<td><%= company.contact %></td>
+				<td><%= User.find(Ownership.find_by_company_id(company).owner_id).email %></td>
+				<td><%= f.select :status, {"Working"=>true, "Freeze"=>false}%></td>
+				<td><%= f.text_field :deposit %></td>
+			    <% if can? :destroy, company %>
+			    	<td><%= link_to "Delete", company, method: :delete, data: { confirm: "You sure?" }, title: company.name, class: "btn btn-primary"%></td>
+			    <% else %>
+			    	<td></td>
+			    <% end %>
+			</tr>
+		<% end %>
+		<% end %>
+	</tbody>
+</table>
+<%= will_paginate @companies%>

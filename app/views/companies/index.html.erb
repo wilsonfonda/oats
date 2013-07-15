@@ -6,23 +6,20 @@
 			<strong><h1>Companies</h1></strong>
 		</div>
 		<div class="row floating-paper">
-		<%= magic_grid(@companies, [:id, :name, :address, :contact, :owner_id,:status, :deposit, "Edit","Delete"], searchable: [:name], class: "table table-hover table-condensed", :remote => true) do |company|%>
-			<tr>
-				<td><%= company.id %></td>
-				<td><%= link_to company.name, company %></td>
-				<td><%= company.address %></td>
-				<td><%= company.contact %></td>
-				<td><%= User.find(Ownership.find_by_company_id(company).owner_id).email %></td>
-				<%= form_for(company, :method => :put) do |f| %>
-					<td><%= f.select :status, {"Working"=>true, "Freeze"=>false}%></td>
-					<td><%= f.text_field :deposit %></td>
-					<td><%= f.submit "Save", class: "btn btn-primary" %></td>
-			    <% end %>
-			    <% if can? :destroy, company %>
-			    <td><%= button_to "Delete", company, method: :delete, data: { confirm: "You sure?" }, title: company.name, class: "btn btn-primary"%></td>
-			    <% end %>
-			</tr>
+		<%= form_tag companies_path, :method => 'get', :id => "companies_search" do %>
+		  <p>
+		    <%= text_field_tag :search, params[:search] %>
+		    <%= submit_tag "Search", :name => nil %>
+		  </p>
+		  <%= hidden_field_tag :direction, params[:direction] %>  
+		  <%= hidden_field_tag :sort, params[:sort] %> 
 		<% end %>
+		
+		<%= form_tag update_batch_company_path, :method => :put do %>
+          <div id="companies"><%= render 'companies' %></div>
+          <%= submit_tag "Save All", class: "btn btn-primary" %>
+        <% end %>
+
 		</div>
 	</div>
 </div>

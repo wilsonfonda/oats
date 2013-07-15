@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!, :except => :mobile_signin
 	load_and_authorize_resource
+	helper_method :sort_column, :sort_direction
 	
 	def index
 		@offices = Company.find(current_user.company_id).offices
-		@users = User.where("office_id IN (?)",@offices).paginate(:page => params[:page], :per_page => 20)
+		@users = User.where("office_id IN (?)",@offices).search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 20)
 	end
 
 	def add
@@ -44,7 +45,7 @@ class UsersController < ApplicationController
 
 	def update
 		@user = User.find(params[:id])
-		if can? :change_role, @user
+		if (can? :change_role, @user) && params[:user][:role] > current_user.role
 			if @user.update_attributes(params[:user])
 				flash[:notice] = "Employee information updated."
 			else
@@ -57,7 +58,27 @@ class UsersController < ApplicationController
 				flash[:error] = "Failed to update employee information"
 			end
 		end
-		redirect_to :back
+		redirect_to users_path
+	end
+
+	def update_batch
+		params[:users].each do |key, value|
+			@user = User.find(key)
+			if (can? :change_role, @user) && value[:role] > current_user.role
+				if @user.update_attributes(value)
+					flash[:notice] = "Employee information updated."
+				else
+					flash[:error] = "Failed to update employee information"
+				end
+			else
+				if @user.update_attributes(value.except(:role))
+					flash[:notice] = "Employee information updated."
+				else
+					flash[:error] = "Failed to update employee information"
+				end
+			end
+		end	
+		redirect_to users_path
 	end
 
 	def change_password
@@ -85,4 +106,13 @@ class UsersController < ApplicationController
 			end
 		end
 	end
+
+	private
+		def sort_direction  
+		  %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+		end  
+
+		def sort_column  
+		  User.column_names.include?(params[:sort]) ? params[:sort] : "id"  
+		end  
 end

@@ -1,3 +1,37 @@
+$(function () {  
+  $(document).on('click', '#companies th a, #companies .pagination a', function () {  
+    $.getScript(this.href);  
+    return false;  
+  });  
+
+  $('#companies_search input').keyup(function () {  
+  $.get($('#companies_search').attr('action'),  
+    $('#companies_search').serialize(), null, 'script');  
+  return false;  
+  });  
+
+  $(document).on('click', '#users th a, #users .pagination a', function () {  
+    $.getScript(this.href);  
+    return false;  
+  });  
+
+  $('#users_search input').keyup(function () {  
+  $.get($('#users_search').attr('action'),  
+    $('#users_search').serialize(), null, 'script');  
+  return false;  
+  });
+
+  $(document).on('click', '#worktimes th a, #worktimes .pagination a', function () {  
+    $("#worktimes").load(this.href+" #worktimes"); 
+    return false;  
+  });  
+})  
+
+function convertdate()
+{
+  var din1 = new Date(document.getElementbyId("checkin1"))
+    document.getElementById("checkin1").innerHTML = din1.toDateString()+",<br/>"+din1.toLocaleTimeString();
+}
 function to_signup()
 {
 	window.location = '/signup';

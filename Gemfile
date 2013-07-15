@@ -13,7 +13,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'bootstrap-datetimepicker-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
-gem 'magic_grid'
+gem 'jquery-rails'
 gem 'bootswatch-rails'
 gem 'bootstrap-glyphicons'
 
@@ -37,8 +37,6 @@ group :assets do
   gem 'uglifier', '1.2.3'
   gem 'jquery-ui-rails'
 end
-
-gem 'jquery-rails', '2.0.2'
 
 group :test do
   gem 'capybara', '1.1.2'

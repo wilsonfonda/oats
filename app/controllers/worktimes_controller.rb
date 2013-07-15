@@ -1,6 +1,7 @@
 class WorktimesController < ApplicationController
 	before_filter :authenticate_user!, :only => :index
 	load_and_authorize_resource
+	helper_method :sort_column, :sort_direction
 	
 	def index
 		if params[:id].nil?
@@ -8,7 +9,7 @@ class WorktimesController < ApplicationController
 				if current_user.role != "3"
 					@offices = Company.find(current_user.company_id).offices
 					@users = User.where("office_id IN (?)",@offices)
-					@worktimes = Worktime.where("user_id IN (?) and checkin > ? and checkout < ?", @users, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).includes(:user)
+					@worktimes = Worktime.where("user_id IN (?) and checkin > ? and checkin < ?", @users, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).order(sort_column_all + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 10)
 					respond_to do |format|
 						format.html
 						format.xls
@@ -24,8 +25,8 @@ class WorktimesController < ApplicationController
 		else
 			@user = User.find(params[:id])
 			@worktime = @user.worktimes[0]
-			@worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", @user.id.to_s, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
-			@worktimes_paged = @worktimes.paginate(:page => params[:page], :per_page => 10)
+			@worktimes_unpaged = Worktime.where("user_id = ? and checkin > ? and checkin < ?", @user.id.to_s, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
+			@worktimes = @worktimes_unpaged.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 10)
 			if !@worktime.nil?
 				if cannot? :read, @worktime
 					flash[:alert]="Access Denied."
@@ -203,4 +204,16 @@ class WorktimesController < ApplicationController
     		return (latitude.to_f > office.latitude_min) && (latitude.to_f < office.latitude_max) && 
     		(longitude.to_f > office.longitude_min) && (longitude.to_f < @office.longitude_max)
     	end
+
+		def sort_direction  
+		  %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+		end  
+
+		def sort_column  
+		  Worktime.column_names.include?(params[:sort]) ? params[:sort] : "checkin"  
+		end  
+
+		def sort_column_all  
+		  Worktime.column_names.include?(params[:sort]) ? params[:sort] : "user_id"  
+		end  
 end

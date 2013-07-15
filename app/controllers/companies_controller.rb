@@ -1,9 +1,10 @@
 class CompaniesController < ApplicationController
 	before_filter :authenticate_user!
 	load_and_authorize_resource
+	helper_method :sort_column, :sort_direction
 	
 	def index
-		@companies = Company.paginate(:page => params[:page])
+		@companies = Company.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])
 	end
 
 	def edit
@@ -18,6 +19,11 @@ class CompaniesController < ApplicationController
 		redirect_to :back
 	end
 
+	def update_batch
+		Company.update(params[:companies].keys, params[:companies].values)
+		redirect_to companies_path
+	end
+
 	def show
 		@company = Company.find(params[:id])
 		@offices = @company.offices.paginate(:page => params[:page])
@@ -28,4 +34,13 @@ class CompaniesController < ApplicationController
 		flash[:notice] = "Company deleted."
         redirect_to :back
 	end
+
+	private
+		def sort_direction  
+		  %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+		end  
+
+		def sort_column  
+		  Company.column_names.include?(params[:sort]) ? params[:sort] : "id"  
+		end  
 end

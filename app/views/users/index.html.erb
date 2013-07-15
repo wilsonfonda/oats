@@ -6,39 +6,20 @@
       <h1><strong>Employees</strong></h1>
     </div>
     <div class="row floating-paper">
-          <%= magic_grid(@users, [:name, :email, :division, :role, :office_id, "Edit","Delete"], searchable: [:name,:email], class: "table table-hover table-condensed", :remote => true) do |user|%>
-          <tr>
-            <%if (can? :update, user) && user!=current_user  %>
-              <td><%= link_to user.name, user_path(user) %></td>
-              <td><%=user.email%></td>
-              <%= form_for(user) do |f| %>
-                <td><%= f.text_field :division %></td>
-                <td><%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%></td>
-                <td><%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %></td>
-                <td><%= f.submit "Save", class: "btn btn-primary" %></td>
-              <% end %>
-              <td><%= button_to "Delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.name, class: "btn btn-primary"%></td>
-            <% else %>
-              <td><%= link_to user.name, user %></td>
-              <td><%=user.email%></td>
-              <td><%=user.division%></td>
-              <td>
-              <% if user.role == "0" %>
-                Admin
-              <% elsif user.role == "1"%>
-                Owner
-              <% elsif user.role == "2"%>
-                HR
-              <% elsif user.role == "3"%>
-                Employee
-              <% end %>
-              </td>
-              <td><%= Office.find(user.office_id).name %> </td>
-              <td></td>
-              <td></td>
-            <% end %>
-          </tr>
-          <% end %>
+      <%= form_tag users_path, :method => 'get', :id => "users_search" do %>
+        <p>
+          <%= text_field_tag :search, params[:search] %>
+          <%= submit_tag "Search", :name => nil %>
+        </p>
+        <%= hidden_field_tag :direction, params[:direction] %>  
+        <%= hidden_field_tag :sort, params[:sort] %>  
+      <% end %>
+
+      <%= form_tag update_batch_user_path, :method => :put do %>
+        <div id="users"><%= render 'users' %></div>
+        <%= submit_tag "Save All", class: "btn btn-primary" %>
+      <% end %>
+
       <input type="button" value="Add employee" class="btn btn-primary" onclick="add_employee();"/>
       <%= link_to "Employee Performance", worktimes_path+"?from=" + Time.now.advance(:hours => -168).strftime("%d-%m-%Y") + "&to=" + Time.now.strftime("%d-%m-%Y"), class: 'btn btn-primary pull-right white-link' %>
 
