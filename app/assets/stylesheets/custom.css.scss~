@@ -335,7 +335,7 @@ background-color: #8dbdd8;
 .carousel-caption{
 	height:200px;
 	left: auto;
-	margin-right:160px;
+	margin-right:80px;
 	margin-top: auto;
 	margin-bottom: auto;
 	bottom:32%;
@@ -343,5 +343,12 @@ background-color: #8dbdd8;
 	background-color: rgba(196,196,196, 0.5);
 	border-radius:5px;
 	padding: 0 auto;
-	z-position: -5px;
+}
+
+#myCarousel{
+	background-image:url('/assets/blue.jpg');
+}
+
+.carousel-inner{
+	width: 100px;
 }
