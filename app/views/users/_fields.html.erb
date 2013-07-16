@@ -1,3 +1,0 @@
-<td><%= f.text_field :division %></td>
-<td><%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%></td>
-<td><%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %></td>
