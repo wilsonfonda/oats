@@ -1,11 +1,12 @@
 <table id="users" class="table table-hover table-condensed">
   <thead>
     <tr>
-      <th><%= sortable "name" %></th>
-      <th><%= sortable "email" %></th>
-      <th><%= sortable "division" %></th>
-      <th><%= sortable "role" %></th>
-      <th><%= sortable "office" %></th>
+      <th><%= sortable "name" %><i class=""></i></th>
+      <th><%= sortable "email" %><i class=""></i></th>
+      <th><%= sortable "division" %><i class=""></i></th>
+      <th><%= sortable "role" %><i class=""></i></th>
+      <th><%= sortable "office" %><i class=""></i></th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,11 @@
           <td><%= f.text_field :division %></td>
           <td><%= f.select :role, {"HR"=>"2", "Employee"=>"3"}%></td>
           <td><%= f.collection_select :office_id, Company.find(Office.find(current_user.office_id).company_id).offices, :id, :name %></td>
+          <% if (User.checkin? user) %>
+            <td><p class = "checked_in">Checked In</p></td>
+          <% else %>
+            <td><p class = "not_checked_in">Not Checked In</p></td>
+          <% end %>
           <td><%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?" }, title: user.name, class: "btn btn-primary"%></td>
         <% else %>
           <td><%= link_to user.name, user %></td>
@@ -35,6 +41,11 @@
           <% end %>
           </td>
           <td><%= Office.find(user.office_id).name %> </td>
+          <% if (User.checkin? user) %>
+            <td><p class = "checked_in">Checked In</p></td>
+          <% else %>
+            <td><p class = "not_checked_in">Not Checked In</p></td>
+          <% end %>
         <% end %>
       </tr>
       <% end %>
@@ -42,4 +53,3 @@
   </tbody>
 </table>
 <%= will_paginate @users %>
-
