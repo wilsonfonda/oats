@@ -61,5 +61,6 @@ module Oats
     config.assets.precompile += %w( zingchart-html5-min.js )
     config.assets.precompile += %w( gs_sortable.js )
     config.assets.initialize_on_precompile = false
+
   end
 end

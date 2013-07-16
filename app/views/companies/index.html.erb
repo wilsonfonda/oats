@@ -6,9 +6,9 @@
 			<strong><h1>Companies</h1></strong>
 		</div>
 		<div class="row floating-paper">
-		<%= form_tag companies_path, :method => 'get', :id => "companies_search" do %>
+		<%= form_tag companies_path, :method => 'get', :id => "companies_search", :class => 'form-search' do %>
 		  <p>
-		    <%= text_field_tag :search, params[:search] %>
+		    <%= text_field_tag :search, params[:search], :class => 'input-large search-query' %>
 		    <%= submit_tag "Search", :name => nil %>
 		  </p>
 		  <%= hidden_field_tag :direction, params[:direction] %>  
