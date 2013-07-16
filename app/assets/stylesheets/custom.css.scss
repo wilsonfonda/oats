@@ -211,6 +211,16 @@ select
 	width: 100px !important;
 }
 
+.checked_in
+{
+	color: green; 
+}
+
+.not_checked_in
+{
+	color: red;
+}
+
 /* timer */
 #timer{
 	height: 60px;
