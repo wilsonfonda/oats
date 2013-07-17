@@ -25,7 +25,7 @@ class WorktimesController < ApplicationController
 		else
 			@user = User.find(params[:id])
 			@worktime = @user.worktimes[0]
-			@worktimes_unpaged = Worktime.where("user_id = ? and checkin > ? and checkin < ?", @user.id.to_s, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24))
+			@worktimes_unpaged = Worktime.where("user_id = ? and checkin > ? and checkin < ?", @user.id.to_s, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).order("id")
 			@worktimes = @worktimes_unpaged.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => 10)
 			if !@worktime.nil?
 				if cannot? :read, @worktime
