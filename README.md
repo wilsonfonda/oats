@@ -1,30 +1,36 @@
-# OATS
-# Open Attendance Service
+# Oats
+Oats is a service we brought to you to help you with your company’s attendance record. We do it by providing a feature to let your employees check in and out to your company through our website and our mobile application.
 
-This application is a software as a service (SAAS) that provides a system to maintain a company's attendance record.
+# Requirements
+Web Browser
+Google Chrome
+Mozilla Firefox 4.x or higher
+Internet Explorer 10 or higher
+Opera 11 or higher
 
-# Model and Database
+Mobile
+Device running Android 2.x or higher with Internet Connection and GPS
 
-We have 6 ActiveRecord model:
-1.  Company
-    This model stores company's informations (name, address, contact).
+# Known Issues
+Sometimes the Google Map didn't show up without particular reason. This issue is sometimes fixed by just reloading the page. 
+Performance Graph is sometimes inconsistent. We still look for the cause, because in development this issue is nonexistent.
 
-2.  Office
-    This model stores location and acceptable range (for checkin/checkout). An office belongs to one company and a company can have many offices.
+# Contributing
+We don't plan to open the repository for external commits as for now (but we still consider the possibility to do so in the future). You can clone the repo if you want to, though. If you wish to contribute, we will greatly appreciate if you leave us feedback in Facebook <https://www.facebook.com/pages/Oats/495179823887930> or Twitter <https://twitter.com/oatsdaily>. 
 
-3.  User
-    This model stores user's informations such as name and email. This model is also used for authentication and authorization, so this model also stores password and role. There are 4 roles:
-    a.  Admin, represented by character '0'
-    b.  Owner, represented by character '1'
-    c.  HR, represented by character '2'
-    d.  Employee, represented by character '3'
-    An user belongs to one office and a office can have many users.
+# License
+Oats - Open Attendance System
+Copyright (C) 2013  Oats Team
 
-4.  Ownership
-    This model stores the relationship between a company and its owner which is a user. A company belongs to one owner and an owner can only have one company.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-5.  Worktime
-    This model stores a pair of checkin and checkout time + place. Worktime belongs to a user and a user can have many worktimes. 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-6.  Billing
-    This model stores a company's bills. A new bill can only be created by an admin. A company can have many billings.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
