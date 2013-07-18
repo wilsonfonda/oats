@@ -6,9 +6,9 @@
       <h1><strong>Employees</strong></h1>
     </div>
     <div class="row floating-paper">
-      <%= form_tag users_path, :method => 'get', :id => "users_search" do %>
+      <%= form_tag users_path, :method => 'get', :id => "users_search", :class => 'form-search' do %>
         <p>
-          <%= text_field_tag :search, params[:search] %>
+          <%= text_field_tag :search, params[:search], :class => 'input-large search-query' %>
           <%= submit_tag "Search", :name => nil %>
         </p>
         <%= hidden_field_tag :direction, params[:direction] %>  
