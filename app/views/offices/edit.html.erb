@@ -35,8 +35,8 @@
         </div>
 
         <div class="input-append" style="margin-bottom:10px;">
-        <input class="span2" type="text" name="address" value="">
-        <input type="submit" value="Search!" class="btn" onclick="showAddress(address.value); return false">
+        <input class="span2" type="text" id="address" value="">
+        <input type="button" value="Search!" class="btn" onclick="getAddress(); return false">
         </div>
 
         <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
@@ -67,98 +67,109 @@ function showPosition(position)
   longitude= position.coords.longitude;  
   }
 
- function load() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map"));
-        map.addControl(new GSmallMapControl());
-        map.addControl(new GMapTypeControl());
-        var center = new GLatLng(latitude,    longitude);
-        map.setCenter(center, 15);
-        geocoder = new GClientGeocoder();
-        var marker = new GMarker(center, {draggable: true});  
-        map.addOverlay(marker);
-        document.office.office_latitude.value = center.lat().toFixed(5);
-        document.office.office_longitude.value = center.lng().toFixed(5);
+ var geocoder;
+    var map = new google.maps.Map(document.getElementById("map"));
+    function initialize()
+    {
+     geocoder = new google.maps.Geocoder();
+     var latlng = new google.maps.LatLng(latitude,longitude)
+     var myOptions =
+     {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+    var marker=new google.maps.Marker({
+      position: latlng,
+      map: map,
+      draggable: true
+    });
+    marker.setMap(map);
 
-    GEvent.addListener(marker, "dragend", function() {
-       var point = marker.getPoint();
+    document.new_user.office_latitude.value=latlng.lat().toFixed(5);
+    document.new_user.office_longitude.value=latlng.lng().toFixed(5);
+
+
+    google.maps.event.addListener(marker, "dragend", function() {
+     var point = marker.getPosition();
+     map.panTo(point);
+     document.new_user.office_latitude.value = point.lat().toFixed(5);
+     document.new_user.office_longitude.value = point.lng().toFixed(5);
+
+   });
+
+
+    google.maps.event.addListener(map, "moveend", function() {
+      var center = map.getCenter();
+      var marker = new google.maps.Marker(center, {draggable: true});
+      marker.setMap(map);
+      document.new_user.office_latitude.value = center.lat().toFixed(5);
+      document.new_user.office_longitude.value = center.lng().toFixed(5);
+
+
+      google.maps.event.addListener(marker, "dragend", function() {
+        var point =marker.getPosition();
         map.panTo(point);
-       document.office.office_latitude.value = point.lat().toFixed(5);
-       document.office.office_longitude.value = point.lng().toFixed(5);
+        document.new_user.office_latitude.value = point.lat().toFixed(5);
+        document.new_user.office_longitude.value = point.lng().toFixed(5);
 
+      });
+
+    });
+  }
+  function getAddress()
+  {
+    var address = document.getElementById("address").value;
+
+    var latlng;
+    geocoder.geocode({'address': address},function(results, status)
+    {
+
+      if (status == google.maps.GeocoderStatus.OK)
+      {
+        latlng = results[0].geometry.location;
+        document.new_user.office_latitude.value= latlng.lat();
+        document.new_user.office_longitude.value= latlng.lng();
+        map.setCenter(results[0].geometry.location);
+        marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+          draggable: true
+        });
+        marker.setMap(map);
+
+        google.maps.event.addListener(marker, "dragend", function() {
+          var pt = marker.getPosition();
+          map.panTo(pt);
+          document.new_user.office_latitude.value = pt.lat().toFixed(5);
+          document.new_user.office_longitude.value = pt.lng().toFixed(5);
         });
 
 
-   GEvent.addListener(map, "moveend", function() {
-      map.clearOverlays();
-    var center = map.getCenter();
-      var marker = new GMarker(center, {draggable: true});
-      map.addOverlay(marker);
-      document.office.office_latitude.value = center.lat().toFixed(5);
-     document.office.office_longitude.value = center.lng().toFixed(5);
+        google.maps.event.addListener(map, "moveend", function() {
+          var center = map.getCenter();
+          var marker = new google.maps.Marker(center, {draggable: true});
+          marker.setMap(map);
+          document.new_user.office_latitude.value = center.lat().toFixed(5);
+          document.new_user.office_longitude.value = center.lng().toFixed(5);
 
+          google.maps.event.addListener(marker, "dragend", function() {
+           var pt = marker.getPosition();
+           map.panTo(pt);
+           document.new_user.office_latitude.value = pt.lat().toFixed(5);
+           document.new_user.office_longitude.value = pt.lng().toFixed(5);
+         });
 
-   GEvent.addListener(marker, "dragend", function() {
-      var point =marker.getPoint();
-       map.panTo(point);
-      document.office.office_latitude.value = point.lat().toFixed(5);
-       document.office.office_longitude.value = point.lng().toFixed(5);
-
-        });
- 
         });
 
       }
-    }
-
-     function showAddress(address) {
-     var map = new GMap2(document.getElementById("map"));
-       map.addControl(new GSmallMapControl());
-       map.addControl(new GMapTypeControl());
-       if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-      document.office.office_latitude.value = point.lat().toFixed(5);
-     document.office.office_longitude.value = point.lng().toFixed(5);
-     map.clearOverlays()
-      map.setCenter(point, 14);
-   var marker = new GMarker(point, {draggable: true});  
-     map.addOverlay(marker);
-
-    GEvent.addListener(marker, "dragend", function() {
-      var pt = marker.getPoint();
-       map.panTo(pt);
-      document.office.latitude.value = pt.lat().toFixed(5);
-       document.office.longitude.value = pt.lng().toFixed(5);
-        });
-
-
-   GEvent.addListener(map, "moveend", function() {
-      map.clearOverlays();
-    var center = map.getCenter();
-      var marker = new GMarker(center, {draggable: true});
-      map.addOverlay(marker);
-      document.office.office_latitude.value = center.lat().toFixed(5);
-     document.office.office_longitude.value = center.lng().toFixed(5);
-
-   GEvent.addListener(marker, "dragend", function() {
-     var pt = marker.getPoint();
-      map.panTo(pt);
-    document.office.office_latitude.value = pt.lat().toFixed(5);
-     document.office.office_longitude.value = pt.lng().toFixed(5);
-        });
- 
-        });
-
-            }
-          }
-        );
+      else {
+        alert("Geocode was not successful for the following reason: " + status);
       }
-    }
+
+    });
+}
     </script>
   <script type="text/javascript">
 //<![CDATA[
@@ -171,7 +182,7 @@ document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?
 </script>
 </head>
 
-<body onload="load()" onunload="GUnload()" >
+<body onload="initialize()" onunload="google.maps.Unload()" >
 
   
   <script type="text/javascript">
