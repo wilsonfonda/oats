@@ -72,6 +72,10 @@ Oats::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl :only => :create}
+  config.to_prepare { Devise::PasswordsController.force_ssl }
+
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
