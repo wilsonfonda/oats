@@ -61,5 +61,8 @@ module Oats
     config.assets.precompile += %w( zingchart-html5-min.js )
     config.assets.precompile += %w( gs_sortable.js )
     config.assets.initialize_on_precompile = false
+
+    config.middleware.use Rack::SslEnforcer, :only_environments => 'production', :only_methods => ['POST', 'PUT', 'DELETE'], :force_secure_cookies => false
+
   end
 end

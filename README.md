@@ -12,8 +12,7 @@ Oats is a service we brought to you to help you with your company’s attendance
 - Device running Android 2.x or higher with Internet Connection and GPS
 
 # Known Issues
-- Sometimes the Google Map didn't show up without particular reason. This issue is sometimes fixed by just reloading the page. 
-- Performance Graph is sometimes inconsistent. We still look for the cause, because in development this issue is nonexistent.
+- Sometimes the Google Map don't show up correctly without particular reason. This issue is sometimes fixed by just reloading the page. We are still trying to fix this.
 
 # Contributing
 We don't plan to open the repository for external commits as for now (but we still consider the possibility to do so in the future). You can clone the repo if you want to, though. If you wish to contribute, we will greatly appreciate if you leave us feedback in [Facebook](https://www.facebook.com/pages/Oats/495179823887930) or [Twitter](https://twitter.com/oatsdaily). 
