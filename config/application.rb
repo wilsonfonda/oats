@@ -62,7 +62,7 @@ module Oats
     config.assets.precompile += %w( gs_sortable.js )
     config.assets.initialize_on_precompile = false
 
-    config.middleware.use Rack::SslEnforcer, :only_methods => ['POST', 'PUT', 'DELETE'], :strict => true, :force_secure_cookies => false
+    config.middleware.use Rack::SslEnforcer, :only_methods => ['POST', 'PUT', 'DELETE'], :strict => false, :force_secure_cookies => false
 
   end
 end
