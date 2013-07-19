@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627035510) do
+ActiveRecord::Schema.define(:version => 20130719052915) do
 
   create_table "billings", :force => true do |t|
     t.integer  "total_employee"
@@ -58,17 +58,25 @@ ActiveRecord::Schema.define(:version => 20130627035510) do
   add_index "ownerships", ["company_id"], :name => "index_ownerships_on_company_id"
   add_index "ownerships", ["owner_id"], :name => "index_ownerships_on_owner_id"
 
+  create_table "presences", :force => true do |t|
+    t.datetime "date"
+    t.boolean  "flag"
+    t.string   "note"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",                    :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "name"
     t.string   "division"
-    t.string   "role"
+    t.string   "role",                   :limit => nil
     t.string   "access_token"
     t.integer  "office_id"
   end
