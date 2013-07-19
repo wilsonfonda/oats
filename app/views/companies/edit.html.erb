@@ -40,9 +40,9 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Range</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Range</th>            
             <th></th>
             <th></th>
           </tr>
@@ -50,26 +50,24 @@
         <tbody>
           <% @offices.each do |office| %>
           <tr>
-            <td><%= office.id %></td>
               <td><%= office.name %></td>
               <td><%= office.latitude %></td>
               <td><%= office.longitude %></td>
               <td><%= office.range %></td>
               <td><%= link_to "Edit", edit_office_path(office), class: "btn btn-primary"%></td>
               <% if can? :destroy, office %>
-                <td><%= button_to "delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
+                <td><%= link_to "Delete", office, method: :delete, data: { confirm: "You sure?" }, title: office.name, class: "btn btn-primary" %></td>
               <% end %>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <input type="button" value="Add office" class="btn btn-primary" onclick="add_office();"/>
     </div>
 
-    <div id="add_employee_label" class="row">
+    <div id="" class="row">
       <strong><h2>Add Office</h2></strong>
     </div>
-    <div id="add_employee_form" class="row floating-paper" style="height:0;">
+    <div id="" class="row floating-paper">
       <%= form_for(Office.new, html: {class: "form-horizontal", :id => 'new_office', :name => 'new_office'}) do |f| %>
 
         <div class="control-group">
@@ -102,7 +100,7 @@
 
         <div class="input-append" style="margin-bottom:10px;">
         <input class="span2" type="text" name="address" value="">
-        <input type="submit" value="Search!" class="btn" onclick="showAddress(address.value); return false">
+        <input type="submit" value="Search!" class="btn btn-primary" onclick="showAddress(address.value); return false">
         </div>
 
         <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
@@ -116,7 +114,7 @@
 </div>
 
 <head>
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyBlCtjE7pE8Y8pLOY0LQ1E1rRc7_BM7ji4"
+    <script src="http://maps-api-ssl.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCNAXEqv9r2yKstfWppeUeSjoM2pdM6vRw"
       type="text/javascript"></script>
     <script type="text/javascript">
     var latitude ;
@@ -133,98 +131,110 @@ function showPosition(position)
   longitude= position.coords.longitude;  
   }
 
- function load() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map"));
-        map.addControl(new GSmallMapControl());
-        map.addControl(new GMapTypeControl());
-        var center = new GLatLng(latitude,    longitude);
-        map.setCenter(center, 15);
-        geocoder = new GClientGeocoder();
-        var marker = new GMarker(center, {draggable: true});  
-        map.addOverlay(marker);
-        document.new_office.office_latitude.value = center.lat().toFixed(5);
-        document.new_office.office_longitude.value = center.lng().toFixed(5);
-
-    GEvent.addListener(marker, "dragend", function() {
-       var point = marker.getPoint();
-        map.panTo(point);
-       document.new_office.office_latitude.value = point.lat().toFixed(5);
-       document.new_office.office_longitude.value = point.lng().toFixed(5);
-
-        });
-
-
-   GEvent.addListener(map, "moveend", function() {
-      map.clearOverlays();
-    var center = map.getCenter();
-      var marker = new GMarker(center, {draggable: true});
-      map.addOverlay(marker);
-      document.new_office.office_latitude.value = center.lat().toFixed(5);
-     document.new_office.office_longitude.value = center.lng().toFixed(5);
-
-
-   GEvent.addListener(marker, "dragend", function() {
-      var point =marker.getPoint();
-       map.panTo(point);
-      document.new_office.office_latitude.value = point.lat().toFixed(5);
-       document.new_office.office_longitude.value = point.lng().toFixed(5);
-
-        });
- 
-        });
-
-      }
+ var geocoder;
+    var map = new google.maps.Map(document.getElementById("map"));
+    function initialize()
+    {
+     geocoder = new google.maps.Geocoder();
+     var latlng = new google.maps.LatLng(latitude,longitude)
+     var myOptions =
+     {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     }
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+    var marker=new google.maps.Marker({
+      map: map,
+      draggable: true,
+      position: latlng,
+      animation: google.maps.Animation.DROP
+    });
+    marker.setMap(map);
 
-     function showAddress(address) {
-     var map = new GMap2(document.getElementById("map"));
-       map.addControl(new GSmallMapControl());
-       map.addControl(new GMapTypeControl());
-       if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-      document.new_office.office_latitude.value = point.lat().toFixed(5);
+    document.new_office.office_latitude.value=latlng.lat().toFixed(5);
+    document.new_office.office_longitude.value=latlng.lng().toFixed(5);
+
+
+    google.maps.event.addListener(marker, "dragend", function() {
+     var point = marker.getPosition();
+     map.panTo(point);
+     document.new_office.office_latitude.value = point.lat().toFixed(5);
      document.new_office.office_longitude.value = point.lng().toFixed(5);
-     map.clearOverlays()
-      map.setCenter(point, 14);
-   var marker = new GMarker(point, {draggable: true});  
-     map.addOverlay(marker);
 
-    GEvent.addListener(marker, "dragend", function() {
-      var pt = marker.getPoint();
-       map.panTo(pt);
-      document.new_office.latitude.value = pt.lat().toFixed(5);
-       document.new_office.longitude.value = pt.lng().toFixed(5);
-        });
+   });
 
 
-   GEvent.addListener(map, "moveend", function() {
-      map.clearOverlays();
-    var center = map.getCenter();
-      var marker = new GMarker(center, {draggable: true});
-      map.addOverlay(marker);
+    google.maps.event.addListener(map, "moveend", function() {
+      var center = map.getCenter();
+      var marker = new google.maps.Marker(center, {draggable: true});
+      marker.setMap(map);
       document.new_office.office_latitude.value = center.lat().toFixed(5);
-     document.new_office.office_longitude.value = center.lng().toFixed(5);
+      document.new_office.office_longitude.value = center.lng().toFixed(5);
 
-   GEvent.addListener(marker, "dragend", function() {
-     var pt = marker.getPoint();
-      map.panTo(pt);
-    document.new_office.office_latitude.value = pt.lat().toFixed(5);
-     document.new_office.office_longitude.value = pt.lng().toFixed(5);
+
+      google.maps.event.addListener(marker, "dragend", function() {
+        var point =marker.getPosition();
+        map.panTo(point);
+        document.new_office.office_latitude.value = point.lat().toFixed(5);
+        document.new_office.office_longitude.value = point.lng().toFixed(5);
+
+      });
+
+    });
+  }
+  function getAddress()
+  {
+    var address = document.getElementById("address").value;
+
+    var latlng;
+    geocoder.geocode({'address': address},function(results, status)
+    {
+
+      if (status == google.maps.GeocoderStatus.OK)
+      {
+        latlng = results[0].geometry.location;
+        document.new_office.office_latitude.value= latlng.lat();
+        document.new_office.office_longitude.value= latlng.lng();
+        map.setCenter(results[0].geometry.location);
+        marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+          draggable: true
         });
- 
+        marker.setMap(map);
+
+        google.maps.event.addListener(marker, "dragend", function() {
+          var pt = marker.getPosition();
+          map.panTo(pt);
+          document.new_office.office_latitude.value = pt.lat().toFixed(5);
+          document.new_office.office_longitude.value = pt.lng().toFixed(5);
         });
 
-            }
-          }
-        );
+
+        google.maps.event.addListener(map, "moveend", function() {
+          var center = map.getCenter();
+          var marker = new google.maps.Marker(center, {draggable: true});
+          marker.setMap(map);
+          document.new_office.office_latitude.value = center.lat().toFixed(5);
+          document.new_office.office_longitude.value = center.lng().toFixed(5);
+
+          google.maps.event.addListener(marker, "dragend", function() {
+           var pt = marker.getPosition();
+           map.panTo(pt);
+           document.new_office.office_latitude.value = pt.lat().toFixed(5);
+           document.new_office.office_longitude.value = pt.lng().toFixed(5);
+         });
+
+        });
+
       }
-    }
+      else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+
+    });
+}
     </script>
   <script type="text/javascript">
 //<![CDATA[
@@ -237,7 +247,7 @@ document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?
 </script>
 </head>
 
-<body onload="load()" onunload="GUnload()" >
+<body onload="initialize()" onunload="google.maps.Unload()" >
 
   
   <script type="text/javascript">
@@ -246,23 +256,3 @@ if (typeof _gstat != "undefined") _gstat.audience('','pagesperso-orange.fr');
 //]]>
 </script>
 </body>
-
-<script>
-  function add_office()
-  {
-    document.getElementById("add_employee_label").style.display = "block";
-    document.getElementById("add_employee_form").style.display = "block";
-
-    var form = $("#add_employee_form");
-      startAnimation();
-      function startAnimation(){
-        form.animate({height:725},"slow");
-      }
-
-      setTimeout(func, 500);
-
-      function func() {
-      document.getElementById("add_employee_label").scrollIntoView();
-    }
-  }
-</script>

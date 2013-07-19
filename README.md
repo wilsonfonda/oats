@@ -1,5 +1,6 @@
 # Oats
 Oats is a service we brought to you to help you with your company’s attendance record. We do it by providing a feature to let your employees check in and out to your company through our website and our mobile application.
+We develop this application because we want to provide cheaper, easier to implement and maintain alternative to existing attendance system such as fingerprint. Because of this Oats is also more vulnerable to cheats, e.g. checkin as other users, but we still strive to add and search for more features and functionalities to prevent this. 
 
 # Requirements
 ###Web Browser
@@ -15,7 +16,7 @@ Oats is a service we brought to you to help you with your company’s attendance
 - Sometimes the Google Map don't show up correctly without particular reason. This issue is sometimes fixed by just reloading the page. We are still trying to fix this.
 
 # Contributing
-We don't plan to open the repository for external commits as for now (but we still consider the possibility to do so in the future). You can clone the repo if you want to, though. If you wish to contribute, we will greatly appreciate if you leave us feedback in [Facebook](https://www.facebook.com/pages/Oats/495179823887930) or [Twitter](https://twitter.com/oatsdaily). 
+We don't plan to open the repository for external commits as for now (but we still consider the possibility to do so in the future). The reason is because we are still new to developing using Github and version controlling as a whole (as you can see from several of our commits) so we don't have the confidence to successfully merge features that is developed by others without breaking the application. You can clone the repo if you want to, though. If you wish to contribute, we will greatly appreciate if you leave us feedback in [Facebook](https://www.facebook.com/pages/Oats/495179823887930) or [Twitter](https://twitter.com/oatsdaily). 
 
 # License
 Oats - Open Attendance System

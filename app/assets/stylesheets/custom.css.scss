@@ -226,6 +226,11 @@ select
 	width: 210px !important;
 }
 
+#map img
+{
+	max-width: none;
+}
+
 /* timer */
 #timer{
 	height: 60px;
