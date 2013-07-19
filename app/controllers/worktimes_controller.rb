@@ -168,6 +168,21 @@ class WorktimesController < ApplicationController
 		end
     end
 
+    def create_absence
+    	@worktime = current_user.worktimes.build()
+    	@worktime.checkin = Time.now
+    	@worktime.checkout = @worktime.checkin
+    	@worktime.place_checkin = " "
+    	@worktime.place_checkout = " "
+    	@worktime.save
+    	@presence = current_user.presences.build()
+    	@presence.date = @worktime.checkin
+    	@presence.flag = false
+    	@presence.note = params[:note]
+    	@presence.save
+    	redirect_to :back
+    end
+
     def mobile_graph
 		@user = User.find_by_access_token(params[:access_token])
 		if @user.nil?
