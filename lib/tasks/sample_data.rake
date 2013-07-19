@@ -7,6 +7,7 @@ namespace :db do
     make_users
     make_worktimes
     make_billing
+    make_absence
   end
 end
 
@@ -117,29 +118,12 @@ def make_worktimes
       	place_checkin = "Office checkin"
       	checkout = Time.now.advance(:hours => -i+(i/25))
       	place_checkout = "Office checkout"
-	
+
         user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
+        user.presence.create!(date: checkin, flag: true)
         i = i - 24
       end 
     end
-    place_checkin = "Office checkin"
-    place_checkout = "Office checkout"
-    user = User.last
-    checkin = Time.parse("10 July 2013, 08:50:05")
-    checkout = Time.parse("10 July 2013, 17:05:52")
-    user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
-    checkin = Time.parse("11 July 2013, 08:14:55")
-    checkout = Time.parse("11 July 2013, 16:30:04")
-    user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
-    checkin = Time.parse("12 July 2013, 08:26:25")
-    checkout = Time.parse("12 July 2013, 17:00:47")
-    user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
-    checkin = Time.parse("15 July 2013, 08:38:29")
-    checkout = Time.parse("15 July 2013, 16:46:54")
-    user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
-    checkin = Time.parse("16 July 2013, 08:31:14")
-    checkout = nil
-    user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
 end
 
 def make_billing
@@ -148,4 +132,7 @@ def make_billing
     company.billings.create!(month: 7, payment_date: "07-07-2013", price: 50, total_employee: 60)
 end
 
+def make_absence
+
+end
 
