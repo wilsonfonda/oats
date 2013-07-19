@@ -16,7 +16,7 @@
 //= require twitter/bootstrap
 //= require custom
 //= require plugins
-//= require bootstrap-datepicker
+//= require bootstrap-datetimepicker.min
 //= require bootstrap-fileupload
 //= require bootstrap-fileupload.min
 //= require bootstrap
