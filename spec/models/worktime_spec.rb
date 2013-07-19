@@ -15,7 +15,7 @@
 require 'spec_helper'
 
 describe Worktime do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user1) }
   before { @worktime = user.worktimes.build(checkin:Time.now, checkout:Time.now.advance(:hours => 1), place_checkin:"bandung", place_checkout:"jakarta") }
 
   subject { @worktime }

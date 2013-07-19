@@ -12,7 +12,7 @@
 require 'spec_helper'
 
 describe Ownership do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user1) }
   let(:company) {Company.find(user.company_id)}
   before { @ownership = Ownership.new(company_id: company.id,owner_id: user.id)}
   
