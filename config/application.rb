@@ -62,5 +62,6 @@ module Oats
     config.assets.precompile += %w( bootstrap-datetimepicker.min.js )
     config.assets.initialize_on_precompile = false
 
+    config.force_ssl = false
   end
 end
