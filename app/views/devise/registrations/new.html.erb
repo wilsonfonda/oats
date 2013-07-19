@@ -62,8 +62,8 @@
     </div>
     <div align="center" id="map" style="width: 600px; height: 400px; margin-bottom:20px;"></div>
     <div class="input-append" style="margin-bottom:10px;">
-      <input class="span2" type="text" id="address" value="" placeholder='Search your office location here'>
-      <input type="button" value="Search!" class="btn btn-primary" onclick="getAddress(); return false">
+    <input class="span2" type="text" id="address" name="address" onkeypress="return noenter()" value="" placeholder='Search your office location here'>
+    <input type="button" value="Search!" class="btn btn-primary" onclick="getAddress(); return false">
 
     </div>
 
@@ -117,6 +117,14 @@
   <script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=false&key=AIzaSyCNAXEqv9r2yKstfWppeUeSjoM2pdM6vRw"
   type="text/javascript"></script>
   <script type="text/javascript">
+  function noenter() {
+  if (window.event && window.event.keyCode == 13)
+  {
+    getAddress();
+    return false;
+  }
+ }
+
     var latitude ; 
     var longitude;
     if (navigator.geolocation)
@@ -233,6 +241,13 @@
       }
 
     });
+}
+
+function searchAdress(e)
+{
+  if (e.keyCode == 13) {
+        
+    }
 }
 </script>
 <script type="text/javascript">
