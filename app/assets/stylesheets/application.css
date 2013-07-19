@@ -13,7 +13,6 @@
  *= require jquery.ui.core
  *= require jquery.ui.theme
  *= require bootstrap-fileupload
+ *= require bootstrap-datetimepicker.min
  *= require_tree .
  */
-
-
