@@ -44,6 +44,10 @@ class WorktimesController < ApplicationController
 		    if valid_location(@office, params[:latitude], params[:longitude])
 		    	@worktime.place_checkin = @office.name
 		    	@worktime.save
+		    	@presence = current_user.presences.build()
+		    	@presence.date = @worktime.checkin
+		    	@presence.flag = true
+		    	@presence.save
 		    	flash[:notice] = "Successfully checked in."
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
@@ -52,6 +56,10 @@ class WorktimesController < ApplicationController
 		    		if valid_location(o, params[:latitude], params[:longitude])
 		    			@worktime.place_checkin = o.name
 		    			@worktime.save
+				    	@presence = current_user.presences.build()
+				    	@presence.date = @worktime.checkin
+				    	@presence.flag = true
+				    	@presence.save
 		    			flash[:notice] = "Successfully checked in."
 		    			found = true
 		    			break
@@ -75,7 +83,10 @@ class WorktimesController < ApplicationController
 				    @worktime.checkin = Time.now
 				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	@worktime.place_checkin = @office.name
-				    	if @worktime.save
+					    @presence = current_user.presences.build()
+				    	@presence.date = @worktime.checkin
+				    	@presence.flag = true
+				    	if @worktime.save && @presence.save
 		    				render :json => { :code => '200', :time => Time.now }
 		    			else
 		    				render :json => { :code => '503', :time => '0' }
@@ -86,7 +97,10 @@ class WorktimesController < ApplicationController
 				    	@offices.each  do | o |
 				    		if valid_location(o, params[:latitude], params[:longitude])
 				    			@worktime.place_checkin = o.name
-				    			if @worktime.save
+							    @presence = current_user.presences.build()
+						    	@presence.date = @worktime.checkin
+						    	@presence.flag = true
+				    			if @worktime.save && @presence.save
 				    				render :json => { :code => '200', :time => Time.now }
 				    			else
 				    				render :json => { :code => '503', :time => '0' }
@@ -174,12 +188,15 @@ class WorktimesController < ApplicationController
     	@worktime.checkout = @worktime.checkin
     	@worktime.place_checkin = " "
     	@worktime.place_checkout = " "
-    	@worktime.save
     	@presence = current_user.presences.build()
     	@presence.date = @worktime.checkin
     	@presence.flag = false
     	@presence.note = params[:note]
-    	@presence.save
+    	if (@worktime.save && @presence.save)
+    		flash[:notice] = "Reason for absence recorded."
+    	else
+    		flash[:error] = "Reason for absence failed to be recorded. Try again."
+    	end
     	redirect_to :back
     end
 
