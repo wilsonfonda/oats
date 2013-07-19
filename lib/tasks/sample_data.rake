@@ -120,7 +120,7 @@ def make_worktimes
       	place_checkout = "Office checkout"
 
         user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
-        user.presences.create!(date: checkin, flag: true)
+        user.presences.create!(date: checkin.to_date.to_s, flag: true)
         i = i - 24
       end 
     end

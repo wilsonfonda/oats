@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719055403) do
+ActiveRecord::Schema.define(:version => 20130719072952) do
 
   create_table "billings", :force => true do |t|
     t.integer  "total_employee"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20130719055403) do
   add_index "ownerships", ["owner_id"], :name => "index_ownerships_on_owner_id"
 
   create_table "presences", :force => true do |t|
-    t.datetime "date"
+    t.string   "date"
     t.boolean  "flag"
     t.string   "note"
     t.datetime "created_at", :null => false
