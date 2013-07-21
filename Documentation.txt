@@ -31,24 +31,60 @@ We have 6 ActiveRecord model:
 For database, we use SQLite3 for development and PostgreSQL for production in Heroku.
 
 # Controller
+Our controllers are mostly RESTful, though there are some exception.
 1.  Application
-    
+    Application controller is mainly used to rescue from several exceptions thrown by Rails. It also handles redirection.
+
 2.  Companies
-    
+    Available only for admins.
+    index - Views all registered companies. 
+    edit - Views the company edit page.
+    update - Saves company information that is edited in edit page.
+    update_batch - Saves companies information that is edited in index page.
+    show - Views the company information
+    destroy - Deletes a company.
+
 3.  Offices
-    
+    Available for the owner of a company.
+    create - Create a new office for the company
+    edit - Views the office edit page.
+    update - Saves office information that is edited in edit page.
+    destroy - Deletes an office.
+
 4.  Users
+    Some are avaiable for all roles, some are only for owner or HR of a company.
+    index - Available for owners and HRs. Views all employees in their company.
+    add - Available for owners and HRs. Add one employee in their company.
+    show - Available for all. Views employee information.
+    destroy - Available for owners and HRs. Deletes a employee (HR cannot delete another HR).
+    edit - Available for all. Shows edit user page.
+    update - Available for all. Saves user information that is edited in edit page.
+    update_batch - Available for owners and HRs. Saves user information that is edited in index page.
+    change_password - Available for all. Change current user's password.
+    mobile_signin - Available for all. Returns access token if successfully authenticated.
 
 5.  Worktimes
+    Available for all, with different things to show.
+    index - Views either performance graph of an user or show worktimes of all employees in a company.
+    create - Create a new worktime (checkin)
+    update - Update an existing worktime (checkout)
+    mobile_graph - Send JSON containing performance graph data.
 
 6.  Billings
+    Available for admin, owner can only views their own.
+    index - Views all latest bills for admin, or for owner their own only.
+    create - Create a new bill.
+    update - Update payment date for a bill that is paid by its company.
+    destroy - Delete a bill.
 
 7.  Registrations
+    create - Create a new user (as an owner), his/her company, and its first office.
 
 8.  Static Pages
+    Containing static pages such as about and help.
 
 9.  User Imports
-
+    Handles user batch add from files.
 
 # Gems and Libraries
 1.  Devise
@@ -65,3 +101,45 @@ For database, we use SQLite3 for development and PostgreSQL for production in He
     Used mostly for AJAX.
 7.  Capybara + Faker
     For testing purposes.
+
+# Mobile API
+URL : https://oatsdailybeta.herokuapp.com
+
+##Sign in
+Do HTTP Request POST containing email and password to /mobile_signin.
+Response in JSON : { code:xxx, access_token:xxx... }
+code => 200: successfully authenticated
+        501: wrong password
+        502: wrong email, or the user didn't exist
+        503: problem in accessing the database
+access_token => 72 digit token used for other actions later. Can be stored indefinitely, because it will never be changed in the database.
+
+##Checkin
+Do HTTP Request POST containing access_token, latitude, and longitude to /checkin.
+Response in JSON : { code:xxx, time:xxx }
+code => 200: success
+        501: wrong access token, or the user didn't exist
+        502: wrong location for this action
+        503: problem in accessing the database
+        504: the user are already checked in.
+time => Date (yyyy-mm-dd), Time (hh:mm:ss), and GMT offset
+
+##Checkout
+Do HTTP Request POST containing access_token, latitude, and longitude to /checkout.
+Response in JSON : { code:xxx, time:xxx }
+code => 200: success
+        501: wrong access token, or the user didn't exist
+        502: wrong location for this action
+        503: problem in accessing the database
+        504: the user are not checked in yet. 
+time => Date (yyyy-mm-dd), Time (hh:mm:ss), and GMT offset
+
+##Performance Graph
+Do HTTP Request POST containing access_token, from (dd-mm-yyyy), and to (dd-mm-yyyy) to /mobile_graph.
+Response in JSON : { code:xxx, performance:[ { date:xx, worktime:x }, ... ] }
+code => 200: success
+        501: wrong access token, or the user didn't exist
+        502: wrong from and to parameters
+        503: problem in accessing the database
+date => dd-mm-yyyy
+worktime => x (in hours)
