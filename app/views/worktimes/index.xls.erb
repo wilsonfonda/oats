@@ -4,29 +4,21 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
-  <Styles>
-    <Style ss:ID="s00">
-      <Interior ss:Color="#CCCCCC" ss:Pattern="Solid"/>
-    </Style>
-    <Style ss:ID="s01">
-      <Interior ss:Color="#FF6666" ss:Pattern="Solid"/>
-    </Style>
-  </Styles>
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Day</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Date</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Email</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">User name</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Division</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Checkin Time</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Place Checkin</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Checkout Time</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Place Checkout</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Total hours</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Status</Data></Cell>
-        <Cell ss:StyleID="s00"><Data ss:Type="String">Note</Data></Cell>
+        <Cell><Data ss:Type="String">Day</Data></Cell>
+        <Cell><Data ss:Type="String">Date</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">User name</Data></Cell>
+        <Cell><Data ss:Type="String">Division</Data></Cell>
+        <Cell><Data ss:Type="String">Checkin Time</Data></Cell>
+        <Cell><Data ss:Type="String">Place Checkin</Data></Cell>
+        <Cell><Data ss:Type="String">Checkout Time</Data></Cell>
+        <Cell><Data ss:Type="String">Place Checkout</Data></Cell>
+        <Cell><Data ss:Type="String">Total hours</Data></Cell>
+        <Cell><Data ss:Type="String">Status</Data></Cell>
+        <Cell><Data ss:Type="String">Note</Data></Cell>
       </Row>
       <% date = Time.parse(params[:from]) %>
       <% while date <= Time.parse(params[:to]) %>
@@ -58,13 +50,13 @@
               <Cell><Data ss:Type="String"><%= presence.flag %></Data></Cell>
               <Cell><Data ss:Type="String"><%= presence.note %></Data></Cell>
             <% else %>
-              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="Number">0</Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="String"><%= presence.flag %></Data></Cell>
-              <Cell ss:StyleID="s01"><Data ss:Type="String"><%= presence.note %></Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="Number">0</Data></Cell>
+              <Cell><Data ss:Type="String"><%= presence.flag %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= presence.note %></Data></Cell>
             <% end %>
             </Row>
           <% end %>
