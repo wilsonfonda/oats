@@ -133,6 +133,18 @@ def make_billing
 end
 
 def make_absence
-
+    users = User.all[21..30]
+    users.each do |user| 
+      i = 240
+      10.times do
+        checkin = Time.now.advance(:hours => -i)
+        place_checkin = " "
+        checkout = Time.now.advance(:hours => -i)
+        place_checkout = " "
+         user.worktimes.create!(checkin: checkin, place_checkin: place_checkin, checkout: checkout, place_checkout: place_checkout) 
+        user.presences.create!(date: checkin.to_date.to_s, flag: false, note: "sakit perut")
+        i = i - 24
+      end 
+    end
 end
 
