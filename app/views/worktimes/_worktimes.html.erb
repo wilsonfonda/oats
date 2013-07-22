@@ -8,20 +8,34 @@
       <th><%= sortable "place_checkin" %></th>
       <th><%= sortable "checkout" %></th>
       <th><%= sortable "place_checkout" %></th>
+      <th>Note</th>
     </tr>
   </thead>
   <tbody>
     <% @worktimes.each do |w| %>
       <% user = User.find(w.user_id) %>
-      <tr>
-        <% if params[:id].nil? %>
-          <td><%= link_to user.name, worktimes_path(:from => params[:from], :to => params[:to], :id => user.id.to_s) %><br/><%= user.email %></td>
-        <% end %>
-        <td><%= w.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %></td>
-        <td><%= w.place_checkin %></td>
-        <td><% if !w.checkout.nil? %><%= w.checkout.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %><% end %></td>
-        <td><%= w.place_checkout %></td>
-      </tr>
+      <% presence = Presence.where("user_id = ? AND date = ?", user.id, w.checkin.to_date.to_s) %>
+      <% if (!presence.blank? && !presence.first.flag) || (w.checkin == w.checkout) %>
+        <tr class="error"> 
+          <% if params[:id].nil? %>
+            <td><%= link_to user.name, worktimes_path(:from => params[:from], :to => params[:to], :id => user.id.to_s) %><br/><%= user.email %></td>
+          <% end %>
+            <td><%= w.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y") %></p></td>
+            <td></td><td></td><td></td>
+            <td><%= presence.first.note %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <% if params[:id].nil? %>
+            <td><%= link_to user.name, worktimes_path(:from => params[:from], :to => params[:to], :id => user.id.to_s) %><br/><%= user.email %></td>
+          <% end %>
+          <td><%= w.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %></td>
+          <td><%= w.place_checkin %></td>
+          <td><% if !w.checkout.nil? %><%= w.checkout.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %><% end %></td>
+          <td><%= w.place_checkout %></td>
+          <td></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

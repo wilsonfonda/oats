@@ -44,6 +44,16 @@ class WorktimesController < ApplicationController
 		    if valid_location(@office, params[:latitude], params[:longitude])
 		    	@worktime.place_checkin = @office.name
 		    	@worktime.save
+		    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+    			if (p.blank?)
+				    @presence = current_user.presences.build()
+			    	@presence.date = Date.today.to_s
+			    	@presence.flag = true
+			    	@presence.save
+			    else
+			    	p.first.flag = true
+			    	p.first.save
+			    end
 		    	flash[:notice] = "Successfully checked in."
 		    else
 		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
@@ -52,6 +62,16 @@ class WorktimesController < ApplicationController
 		    		if valid_location(o, params[:latitude], params[:longitude])
 		    			@worktime.place_checkin = o.name
 		    			@worktime.save
+				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+		    			if (p.blank?)
+						    @presence = current_user.presences.build()
+					    	@presence.date = Date.today.to_s
+					    	@presence.flag = true
+					    	@presence.save
+					    else
+					    	p.first.flag = true
+			    			p.first.save
+					    end
 		    			flash[:notice] = "Successfully checked in."
 		    			found = true
 		    			break
@@ -75,6 +95,16 @@ class WorktimesController < ApplicationController
 				    @worktime.checkin = Time.now
 				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	@worktime.place_checkin = @office.name
+				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+		    			if (p.blank?)
+						    @presence = current_user.presences.build()
+					    	@presence.date = Date.today.to_s
+					    	@presence.flag = true
+					    	@presence.save
+					    else
+					    	p.first.flag = true
+			    			p.first.save
+					    end
 				    	if @worktime.save
 		    				render :json => { :code => '200', :time => Time.now }
 		    			else
@@ -86,6 +116,16 @@ class WorktimesController < ApplicationController
 				    	@offices.each  do | o |
 				    		if valid_location(o, params[:latitude], params[:longitude])
 				    			@worktime.place_checkin = o.name
+						    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+				    			if (p.blank?)
+								    @presence = current_user.presences.build()
+							    	@presence.date = Date.today.to_s
+							    	@presence.flag = true
+							    	@presence.save
+							    else
+							    	p.first.flag = true
+					    			p.first.save
+							    end
 				    			if @worktime.save
 				    				render :json => { :code => '200', :time => Time.now }
 				    			else
@@ -166,6 +206,28 @@ class WorktimesController < ApplicationController
 				end
 			end
 		end
+    end
+
+    def create_absence
+    	if (Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s).blank?)
+	    	@worktime = current_user.worktimes.build()
+	    	@worktime.checkin = Time.now
+	    	@worktime.checkout = @worktime.checkin
+	    	@worktime.place_checkin = " "
+	    	@worktime.place_checkout = " "
+	    	@presence = current_user.presences.build()
+	    	@presence.date = Date.today.to_s
+	    	@presence.flag = false
+	    	@presence.note = params[:note]
+	    	if (@worktime.save && @presence.save)
+	    		flash[:notice] = "Reason for absence recorded."
+	    	else
+	    		flash[:error] = "Reason for absence failed to be recorded. Try again."
+	    	end
+	    else
+	    	flash[:alert] = "You are already checkin today."
+	    end
+    	redirect_to :back
     end
 
     def mobile_graph

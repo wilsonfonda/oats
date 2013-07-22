@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :division, :role, :access_token, :office_id
   
   has_many :worktimes, dependent: :destroy
+  has_many :presences, dependent: :destroy
   has_one :ownership, foreign_key: "owner_id", dependent: :destroy
   belongs_to :office
 
