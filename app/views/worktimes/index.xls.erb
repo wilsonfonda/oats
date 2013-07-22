@@ -33,13 +33,39 @@
         <% @users.each do |user| %>
           <% presence = Presence.where("date = ? and user_id = ?",date.strftime("%Y-%m-%d"),user.id).first %>
           <% if !presence.nil? %>
-            <% datetime = Time.parse(presence.date).advance(:minutes => -cookies["time_zone_offset"].to_i) %>
+            <% datetime = Time.parse(presence.date) %>
             <Row>
             <Cell><Data ss:Type="String"><%= datetime.strftime("%A") %></Data></Cell>
             <Cell><Data ss:Type="String"><%= datetime.strftime("%-d %B %Y") %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.division %></Data></Cell>
+            <% if (presence.flag) %>
+              <% worktimes = Worktime.where("checkin > ? and checkin < ? and user_id = ?", datetime, datetime.advance(:hours => 24),user.id.to_s).order("checkin") %>
+              <Cell><Data ss:Type="String"><%= worktimes.first.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.first.place_checkin %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.last.checkout.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.last.place_checkout %></Data></Cell>
+              <% total = 0 %>
+              <% worktimes.each do |w| %>
+                <% if w.checkout.nil? %>
+                  <% total = (Time.now - w.checkin).to_i %>
+                <% else %>
+                  <% total = (w.checkout - w.checkin).to_i %>
+                <% end %>
+              <% end %>
+              <Cell><Data ss:Type="Number"><%= (total.to_f/3600).to_i %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= presence.flag %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= presence.note %></Data></Cell>
+            <% else %>
+              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="String">-</Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="Number">0</Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="String"><%= presence.flag %></Data></Cell>
+              <Cell ss:StyleID="s01"><Data ss:Type="String"><%= presence.note %></Data></Cell>
+            <% end %>
             </Row>
           <% end %>
         <% end %>
