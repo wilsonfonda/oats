@@ -152,34 +152,34 @@ var myChart = {
 		"series":[{
 			values : [  
 			<% if !params[:from].nil? && !params[:to].nil? %>
-				<% date = Time.parse(params[:from]) %>
-				<% x = 0%>
-				<% while date <= Time.parse(params[:to])%>
-					<% a=0 %>
-					<% if !@worktimes_unpaged[x].nil? && date.strftime("%d-%m-%Y") == @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") %>
-						<% if @worktimes_unpaged[x].checkout.nil? %>
-							<% a=(Time.now - @worktimes_unpaged[x].checkin).to_i %>
-						<% else %>
-							<% a=(@worktimes_unpaged[x].checkout - @worktimes_unpaged[x].checkin).to_i %>
-						<% end %>
-						<% x+=1 %>
-						<% while !@worktimes_unpaged[x].nil? && @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") == @worktimes_unpaged[x-1].checkin.strftime("%d-%m-%Y")  %>
-							<% if @worktimes_unpaged[x].checkout.nil? %>
-								<% a+=(Time.now - @worktimes_unpaged[x].checkin).to_i %>
-							<% else %>
-								<% a+=(@worktimes_unpaged[x].checkout - @worktimes_unpaged[x].checkin).to_i %>
-							<% end %>
-							<% x+=1 %>
-						<% end %>
-						<%= a.to_f/3600 %>
-					<% else %>
-						<%= 0 %>
-					<% end %>
-					<% if !(date == Time.parse(params[:to])) %>
-					,
-					<% end %>
-					<% date += 1.day %>
-				<% end %>
+			<% date = Time.parse(params[:from]) %>
+			<% x = 0%>
+			<% while date <= Time.parse(params[:to])%>
+			<% a=0 %>
+			<% if !@worktimes_unpaged[x].nil? && date.strftime("%d-%m-%Y") == @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") %>
+			<% if @worktimes_unpaged[x].checkout.nil? %>
+			<% a=(Time.now - @worktimes_unpaged[x].checkin).to_i %>
+			<% else %>
+			<% a=(@worktimes_unpaged[x].checkout - @worktimes_unpaged[x].checkin).to_i %>
+			<% end %>
+			<% x+=1 %>
+			<% while !@worktimes_unpaged[x].nil? && @worktimes_unpaged[x].checkin.strftime("%d-%m-%Y") == @worktimes_unpaged[x-1].checkin.strftime("%d-%m-%Y")  %>
+			<% if @worktimes_unpaged[x].checkout.nil? %>
+			<% a+=(Time.now - @worktimes_unpaged[x].checkin).to_i %>
+			<% else %>
+			<% a+=(@worktimes_unpaged[x].checkout - @worktimes_unpaged[x].checkin).to_i %>
+			<% end %>
+			<% x+=1 %>
+			<% end %>
+			<%= a.to_f/3600 %>
+			<% else %>
+			<%= 0 %>
+			<% end %>
+			<% if !(date == Time.parse(params[:to])) %>
+			,
+			<% end %>
+			<% date += 1.day %>
+			<% end %>
 			<% end %>
 			],
 			"text":"Work Time"

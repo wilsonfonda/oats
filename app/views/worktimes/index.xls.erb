@@ -7,26 +7,79 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
+        <Cell><Data ss:Type="String">Day</Data></Cell>
+        <Cell><Data ss:Type="String">Date</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
         <Cell><Data ss:Type="String">User name</Data></Cell>
+        <Cell><Data ss:Type="String">Division</Data></Cell>
         <Cell><Data ss:Type="String">Checkin Time</Data></Cell>
         <Cell><Data ss:Type="String">Place Checkin</Data></Cell>
         <Cell><Data ss:Type="String">Checkout Time</Data></Cell>
         <Cell><Data ss:Type="String">Place Checkout</Data></Cell>
         <Cell><Data ss:Type="String">Total hours</Data></Cell>
+        <Cell><Data ss:Type="String">Status</Data></Cell>
+        <Cell><Data ss:Type="String">Note</Data></Cell>
       </Row>
     <% @users.each do |user| %>
-      <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)) %>
-      <% @worktimes.each do |w| %>
+      <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).order("checkin") %>
+<%
+=begin
+  data : Hash of Total hour get from vailale worktime using worktimes date
+  date : iteration of requested date
+  x : index of query of worktimes
+=end 
+%>
+      <% data = Hash.new{Hash.new} %>
+      <% date = Time.parse(params[:from]) %>
+      <% x = 0%>
+      <% while date <= Time.parse(params[:to])%>
+        <% a=0 %>
+        <% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
+          <% checkinT = @worktimes[x].checkin.advance(:minutes => -cookies["time_zone_offset"].to_i) %>
+          <% place_checkinT = @worktimes[x].checkin.place_checkin %>
+          <% if @worktimes[x].checkout.nil? %>
+            <% a=(Time.now - @worktimes[x].checkin).to_i %>
+          <% else %>
+            <% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+          <% end %>
+          <% x+=1 %>
+          <% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
+            <% if @worktimes[x].checkout.nil? %>
+              <% a+=(Time.now - @worktimes[x].checkin).to_i %>
+            <% else %>
+              <% a+=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
+            <% end %>
+            <% x+=1 %>
+          <% end %>
+          <% checkoutT = @worktimes[x-1].checkout.advance(:minutes => -cookies["time_zone_offset"].to_i) %>
+          <% place_checkoutT = @worktimes[x-1].checkin.place_checkout %>
+          <% hoursT = (a.to_f/3600).to_i %>
+          <% data[checkinT] = [checkinT,place_checkinT,checkoutT,place_checkoutT,hoursT] %>
+          <% date += 1.day %>
+        <% end %>
+      <%end%>
+
+
+      <% data.each do |key,value| %>
         <Row>
-            <Cell><Data ss:Type="String"><%= user.name %> (<%= user.email %>)</Data></Cell>
-            <Cell><Data ss:Type="String"><%= w.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= w.place_checkin %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= w.checkout.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y, %H:%M:%S") %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= w.place_checkout %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= ((w.checkout-w.checkin)/3600).to_i %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= key.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%A") %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= key.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= user.division %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= value[0].advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= value[1] %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= value[2].advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= value[3] %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= value[4] %></Data></Cell>
+            <% p = Presence.where('user_id = ? AND date = ?',user.id, key.to_date.to_s) %>
+            <Cell><Data ss:Type="String"><%= p.flag %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= p.note %></Data></Cell>
         </Row>
       <% end %>
     <% end %>
     </Table>
   </Worksheet>
 </Workbook>
+
+    

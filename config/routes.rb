@@ -15,6 +15,7 @@ Oats::Application.routes.draw do
   put "update_batch_company", :to => "companies#update_batch"
   post "checkin", :to => "worktimes#create"
   post "checkout", :to => "worktimes#update"
+  post "absence", :to => "worktimes#create_absence"
   post "mobile_signin", :to => "users#mobile_signin"
   post "mobile_graph", :to => "worktimes#mobile_graph"
 
