@@ -1,4 +1,5 @@
 <%= javascript_include_tag "zingchart-html5-min" %>
+<%= javascript_include_tag "bootstrap-datetimepicker.min" %>
 
 <div class="row">
 	<div class="span8">
@@ -19,7 +20,7 @@
 								</span>
 							</div>
 							<script type="text/javascript">
-							$(function() {
+							jQuery(function($) {
 								$('#date_from').datetimepicker({
 									pickTime: false
 								});
@@ -38,7 +39,7 @@
 								</span>
 							</div>
 							<script type="text/javascript">
-							$(function() {
+							jQuery(function($) {
 								$('#date_to').datetimepicker({
 									pickTime: false
 								});
@@ -202,4 +203,3 @@ function refresh_performance(id)
 	}          
 }
 </script>
-
