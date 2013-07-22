@@ -68,16 +68,16 @@ ActiveRecord::Schema.define(:version => 20130719072952) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",                    :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "name"
     t.string   "division"
-    t.string   "role"
+    t.string   "role",                   :limit => nil
     t.string   "access_token"
     t.integer  "office_id"
   end
