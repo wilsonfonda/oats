@@ -21,6 +21,7 @@ class Ability
 				can :create, Worktime
 				can :update, Worktime
 				can :mobile_graph, Worktime
+				can :create_absence, Worktime
 			else
 				if Company.find(user.company_id).status
 					if user.role == '1'

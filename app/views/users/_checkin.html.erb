@@ -53,10 +53,18 @@
   <%= hidden_field_tag(:longitude) %>
 <% end %>
 
-<%= form_tag('/absence', :method => 'post', :name => "absence_form") do %>
-	<%= label_tag :note %>
-	<div class="input-append">
-		<%= text_field_tag :note, nil, :style => "width:85% !important", placeholder: 'Type your reason of absence' %>
+<div class="row">
+	<h2><strong>Absence</strong></h2>
+</div>
+<div class="row transparent-field">
+	<%= form_tag('/absence', :method => 'post', :name => "absence_form") do %>
+		
+		<i>If you want to take a leave, you can use this form.</i>
+		<br><br>
+		<%= label_tag :note, nil, style: 'display: inline;' %>
+		<span> : </span>
+		<%= text_field_tag :note, nil, :style => "width:85% !important; display:inline; margin-top: 5px;", placeholder: 'Type your reason of absence' %>
+		<br><br>
 		<%= submit_tag "Absence", class: "btn btn-primary", :style => "height: 30px !important" %>
-	</div>
-<% end %>
+	<% end %>
+</div>

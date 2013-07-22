@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class StaticPagesController - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/static_pages_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-about">#about</a>
+    
+    <li><a href="#method-i-contact">#contact</a>
+    
+    <li><a href="#method-i-help">#help</a>
+    
+    <li><a href="#method-i-home">#home</a>
+    
+    <li><a href="#method-i-privacy">#privacy</a>
+    
+    <li><a href="#method-i-routing_error">#routing_error</a>
+    
+    <li><a href="#method-i-terms">#terms</a>
+    
+    <li><a href="#method-i-testimony">#testimony</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Billing.html">Billing</a>
+  
+    <li><a href="./BillingsController.html">BillingsController</a>
+  
+    <li><a href="./CompaniesController.html">CompaniesController</a>
+  
+    <li><a href="./Company.html">Company</a>
+  
+    <li><a href="./Office.html">Office</a>
+  
+    <li><a href="./OfficesController.html">OfficesController</a>
+  
+    <li><a href="./Ownership.html">Ownership</a>
+  
+    <li><a href="./Presence.html">Presence</a>
+  
+    <li><a href="./RegistrationsController.html">RegistrationsController</a>
+  
+    <li><a href="./StaticPagesController.html">StaticPagesController</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserImport.html">UserImport</a>
+  
+    <li><a href="./UserImportsController.html">UserImportsController</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./Worktime.html">Worktime</a>
+  
+    <li><a href="./WorktimesController.html">WorktimesController</a>
+  
+    <li><a href="./WorktimesHelper.html">WorktimesHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class StaticPagesController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-about" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">about</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="about-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">about</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- about-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- about-method -->
+
+    
+      <div id="method-i-contact" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">contact</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="contact-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">contact</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- contact-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- contact-method -->
+
+    
+      <div id="method-i-help" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">help</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="help-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">help</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- help-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- help-method -->
+
+    
+      <div id="method-i-home" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">home</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="home-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">home</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">user_signed_in?</span>
+    <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">user_path</span> <span class="ruby-identifier">current_user</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- home-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- home-method -->
+
+    
+      <div id="method-i-privacy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">privacy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="privacy-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">privacy</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- privacy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- privacy-method -->
+
+    
+      <div id="method-i-routing_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">routing_error</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="routing_error-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">routing_error</span>
+  <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;Page not found.&quot;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">user_signed_in?</span>
+    <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">user_path</span> <span class="ruby-identifier">current_user</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">root_path</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- routing_error-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- routing_error-method -->
+
+    
+      <div id="method-i-terms" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">terms</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="terms-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">terms</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- terms-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- terms-method -->
+
+    
+      <div id="method-i-testimony" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">testimony</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="testimony-source">
+            <pre><span class="ruby-comment"># File app/controllers/static_pages_controller.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">testimony</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- testimony-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- testimony-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

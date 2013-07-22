@@ -46,16 +46,16 @@ class RegistrationsController < Devise::RegistrationsController
                 @company.delete
                 @office.delete
                 flash[:alert] = flash[:alert].to_a.concat @user.errors.full_messages.map{ |x| "User "+ x}
-                render :new
+                redirect_to signup_path
             end
         else
             @company.delete
             flash[:alert] = flash[:alert].to_a.concat @office.errors.full_messages.map{ |x| "Office "+ x}
-            render :new
+            redirect_to signup_path
         end
     else
         flash[:alert] = flash[:alert].to_a.concat @company.errors.full_messages.map{ |x| "Company "+ x}
-        render :new
+        redirect_to signup_path
     end
   end
 

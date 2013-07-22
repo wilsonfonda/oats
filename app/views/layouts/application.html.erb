@@ -30,7 +30,7 @@
 		<div class="container content">
 		<div class="row">
 			 <% flash.each do |name, msg| %>
-		      	<% if msg.class == Array %>
+		      	<% if msg.class == Array && (request.fullpath.include?("signup"))%>
 		      		<div class="span11 alert alert-error">
 		      		<h4><%= pluralize(msg.count, "error") %> prohibited this Signup from completing:</h4>
         			<ul>
@@ -45,7 +45,7 @@
 				<% elsif name.to_s == "error" %>
 					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-error" %>
 				<% else %>
-					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-" %>
+					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert" %>
 				<% end %>
 	   		 <% end %>
 		</div>
@@ -54,6 +54,12 @@
 		<%= render 'layouts/footer' %>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		
+		<script>
+		var currentTime = new Date();
+		var utcOffset   = currentTime.getTimezoneOffset();
+		document.cookie = 'time_zone_offset='+utcOffset+';';
+		</script>
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>-->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

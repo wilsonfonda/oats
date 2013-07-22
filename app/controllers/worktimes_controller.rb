@@ -4,6 +4,7 @@ class WorktimesController < ApplicationController
 	helper_method :sort_column, :sort_direction
 	
 	def index
+		@zone_offset = cookies["time_zone_offset"].to_i
 		if params[:id].nil?
 			if !params[:from].nil? && !params[:to].nil?
 				if current_user.role != "3"
@@ -38,49 +39,53 @@ class WorktimesController < ApplicationController
 
 	def create
 		if (params[:access_token].nil?)
-			@worktime = current_user.worktimes.build()
-		    @office = Office.find(current_user.office_id)
-		    @worktime.checkin = Time.now
-		    if valid_location(@office, params[:latitude], params[:longitude])
-		    	@worktime.place_checkin = @office.name
-		    	@worktime.save
-		    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
-    			if (p.blank?)
-				    @presence = current_user.presences.build()
-			    	@presence.date = Date.today.to_s
-			    	@presence.flag = true
-			    	@presence.save
+			if (!User.checkin?(current_user))
+				@worktime = current_user.worktimes.build()
+			    @office = Office.find(current_user.office_id)
+			    @worktime.checkin = Time.now
+			    if valid_location(@office, params[:latitude], params[:longitude])
+			    	@worktime.place_checkin = @office.name
+			    	@worktime.save
+			    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+	    			if (p.blank?)
+					    @presence = current_user.presences.build()
+				    	@presence.date = Date.today.to_s
+				    	@presence.flag = true
+				    	@presence.save
+				    else
+				    	p.first.flag = true
+				    	p.first.save
+				    end
+			    	flash[:notice] = "Successfully checked in."
 			    else
-			    	p.first.flag = true
-			    	p.first.save
+			    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
+			    	found = false
+			    	@offices.each  do | o |
+			    		if valid_location(o, params[:latitude], params[:longitude])
+			    			@worktime.place_checkin = o.name
+			    			@worktime.save
+					    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+			    			if (p.blank?)
+							    @presence = current_user.presences.build()
+						    	@presence.date = Date.today.to_s
+						    	@presence.flag = true
+						    	@presence.save
+						    else
+						    	p.first.flag = true
+				    			p.first.save
+						    end
+			    			flash[:notice] = "Successfully checked in."
+			    			found = true
+			    			break
+			    		end
+			    	end
+			    	if !found
+			    		flash[:error] = "Failed to checkin. Please check your location."
+			    	end
 			    end
-		    	flash[:notice] = "Successfully checked in."
-		    else
-		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
-		    	found = false
-		    	@offices.each  do | o |
-		    		if valid_location(o, params[:latitude], params[:longitude])
-		    			@worktime.place_checkin = o.name
-		    			@worktime.save
-				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
-		    			if (p.blank?)
-						    @presence = current_user.presences.build()
-					    	@presence.date = Date.today.to_s
-					    	@presence.flag = true
-					    	@presence.save
-					    else
-					    	p.first.flag = true
-			    			p.first.save
-					    end
-		    			flash[:notice] = "Successfully checked in."
-		    			found = true
-		    			break
-		    		end
-		    	end
-		    	if !found
-		    		flash[:error] = "Failed to checkin. Please check your location."
-		    	end
-		    end
+			else
+				flash[:alert] = "You are already checked in at "+current_user.worktimes.order("checkin").last.checkin.advance(:minutes => -zone_offset).strftime("%H:%M:%S")+"."
+			end
 		    redirect_to :back
 		else
 			@user = User.find_by_access_token(params[:access_token])
@@ -95,9 +100,9 @@ class WorktimesController < ApplicationController
 				    @worktime.checkin = Time.now
 				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	@worktime.place_checkin = @office.name
-				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+				    	p = Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s)
 		    			if (p.blank?)
-						    @presence = current_user.presences.build()
+						    @presence = @user.presences.build()
 					    	@presence.date = Date.today.to_s
 					    	@presence.flag = true
 					    	@presence.save
@@ -116,9 +121,9 @@ class WorktimesController < ApplicationController
 				    	@offices.each  do | o |
 				    		if valid_location(o, params[:latitude], params[:longitude])
 				    			@worktime.place_checkin = o.name
-						    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+						    	p = Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s)
 				    			if (p.blank?)
-								    @presence = current_user.presences.build()
+								    @presence = @user.presences.build()
 							    	@presence.date = Date.today.to_s
 							    	@presence.flag = true
 							    	@presence.save
@@ -209,25 +214,51 @@ class WorktimesController < ApplicationController
     end
 
     def create_absence
-    	if (Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s).blank?)
-	    	@worktime = current_user.worktimes.build()
-	    	@worktime.checkin = Time.now
-	    	@worktime.checkout = @worktime.checkin
-	    	@worktime.place_checkin = " "
-	    	@worktime.place_checkout = " "
-	    	@presence = current_user.presences.build()
-	    	@presence.date = Date.today.to_s
-	    	@presence.flag = false
-	    	@presence.note = params[:note]
-	    	if (@worktime.save && @presence.save)
-	    		flash[:notice] = "Reason for absence recorded."
-	    	else
-	    		flash[:error] = "Reason for absence failed to be recorded. Try again."
-	    	end
+    	if (params[:access_token].nil?)
+	    	if (Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s).blank?)
+		    	@worktime = current_user.worktimes.build()
+		    	@worktime.checkin = Time.now
+		    	@worktime.checkout = @worktime.checkin
+		    	@worktime.place_checkin = " "
+		    	@worktime.place_checkout = " "
+		    	@presence = current_user.presences.build()
+		    	@presence.date = Date.today.to_s
+		    	@presence.flag = false
+		    	@presence.note = params[:note]
+		    	if (@worktime.save && @presence.save)
+		    		flash[:notice] = "Reason for absence recorded."
+		    	else
+		    		flash[:error] = "Reason for absence failed to be recorded. Try again."
+		    	end
+		    else
+		    	flash[:alert] = "You are already checkin today."
+		    end
+	    	redirect_to :back
 	    else
-	    	flash[:alert] = "You are already checkin today."
+	    	@user = User.find_by_access_token(params[:access_token])
+	    	if @user.nil?
+	    		render :json => { :code => '501'}
+	    	else
+		    	if (Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s).blank?)
+			    	@worktime = @user.worktimes.build()
+			    	@worktime.checkin = Time.now
+			    	@worktime.checkout = @worktime.checkin
+			    	@worktime.place_checkin = " "
+			    	@worktime.place_checkout = " "
+			    	@presence = @user.presences.build()
+			    	@presence.date = Date.today.to_s
+			    	@presence.flag = false
+			    	@presence.note = params[:note]
+			    	if (@worktime.save && @presence.save)
+			    		render :json => { :code => '200'}
+			    	else
+			    		render :json => { :code => '503'}
+			    	end
+			    else
+			    	render :json => { :code => '502'}
+			    end
+			end
 	    end
-    	redirect_to :back
     end
 
     def mobile_graph
