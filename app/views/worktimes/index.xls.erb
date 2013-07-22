@@ -20,66 +20,47 @@
         <Cell><Data ss:Type="String">Status</Data></Cell>
         <Cell><Data ss:Type="String">Note</Data></Cell>
       </Row>
-    <% @users.each do |user| %>
-      <% @worktimes = Worktime.where("user_id = ? and checkin > ? and checkout < ?", user.id, Time.parse(params[:from]), Time.parse(params[:to]).advance(:hours => 24)).order("checkin") %>
-<%
-=begin
-  data : Hash of Total hour get from vailale worktime using worktimes date
-  date : iteration of requested date
-  x : index of query of worktimes
-=end 
-%>
-      <% data = Hash.new{Hash.new} %>
       <% date = Time.parse(params[:from]) %>
-      <% x = 0%>
-      <% while date <= Time.parse(params[:to])%>
-        <% a=0 %>
-        <% if !@worktimes[x].nil? && date.strftime("%d-%m-%Y") == @worktimes[x].checkin.strftime("%d-%m-%Y") %>
-          <% checkinT = @worktimes[x].checkin.advance(:minutes => -cookies["time_zone_offset"].to_i) %>
-          <% place_checkinT = @worktimes[x].checkin.place_checkin %>
-          <% if @worktimes[x].checkout.nil? %>
-            <% a=(Time.now - @worktimes[x].checkin).to_i %>
-          <% else %>
-            <% a=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
-          <% end %>
-          <% x+=1 %>
-          <% while !@worktimes[x].nil? && @worktimes[x].checkin.strftime("%d-%m-%Y") == @worktimes[x-1].checkin.strftime("%d-%m-%Y")  %>
-            <% if @worktimes[x].checkout.nil? %>
-              <% a+=(Time.now - @worktimes[x].checkin).to_i %>
-            <% else %>
-              <% a+=(@worktimes[x].checkout - @worktimes[x].checkin).to_i %>
-            <% end %>
-            <% x+=1 %>
-          <% end %>
-          <% checkoutT = @worktimes[x-1].checkout.advance(:minutes => -cookies["time_zone_offset"].to_i) %>
-          <% place_checkoutT = @worktimes[x-1].checkin.place_checkout %>
-          <% hoursT = (a.to_f/3600).to_i %>
-          <% data[checkinT] = [checkinT,place_checkinT,checkoutT,place_checkoutT,hoursT] %>
-          <% date += 1.day %>
-        <% end %>
-      <%end%>
-
-
-      <% data.each do |key,value| %>
-        <Row>
-          <Cell><Data ss:Type="String"><%= key.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%A") %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= key.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%-d %B %Y") %></Data></Cell>
+      <% while date <= Time.parse(params[:to]) %>
+        <% @users.each do |user| %>
+          <% presence = Presence.where("date = ? and user_id = ?",date.strftime("%Y-%m-%d"),user.id).first %>
+          <% if !presence.nil? %>
+            <% datetime = Time.parse(presence.date).advance(:minutes => -cookies["time_zone_offset"].to_i) %>
+            <Row>
+            <Cell><Data ss:Type="String"><%= datetime.strftime("%A") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= datetime.strftime("%-d %B %Y") %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.division %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= value[0].advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= value[1] %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= value[2].advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= value[3] %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= value[4] %></Data></Cell>
-            <% p = Presence.where('user_id = ? AND date = ?',user.id, key.to_date.to_s) %>
-            <Cell><Data ss:Type="String"><%= p.flag %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= p.note %></Data></Cell>
-        </Row>
+            <% if (presence.flag) %>
+              <% worktimes = Worktime.where("checkin > ? and checkin < ? and user_id = ?", datetime, datetime.advance(:hours => 24),user.id).order("checkin") %>
+              <Cell><Data ss:Type="String"><%= worktimes.first.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.first.place_checkin %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.last.checkout.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S") %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= worktimes.last.place_checkout %></Data></Cell>
+              <% total = 0 %>
+              <% worktimes.each do |w| %>
+                <% if w.checkout.nil? %>
+                  <% total = (Time.now - w.checkin).to_i %>
+                <% else %>
+                  <% total = (w.checkout - w.checkin).to_i %>
+                <% end %>
+              <% end %>
+              <Cell><Data ss:Type="Number"><%= (total.to_f/3600).to_i %></Data></Cell>
+            <% else %>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="String">-</Data></Cell>
+              <Cell><Data ss:Type="Number">0</Data></Cell>
+            <% end %>
+            <Cell><Data ss:Type="String"><%= presence.flag %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= presence.note %></Data></Cell>
+            </Row>
+          <% end %>
+        <% end %>
+        <% date += 1.day %>
       <% end %>
-    <% end %>
     </Table>
   </Worksheet>
 </Workbook>
-
-    
