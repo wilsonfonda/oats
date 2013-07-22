@@ -40,6 +40,8 @@
             <Cell><Data ss:Type="String"><%= user.email %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
             <Cell><Data ss:Type="String"><%= user.division %></Data></Cell>
+            </Row>
+          <% end %>
 <%
 =begin            
             <% if (presence.flag) %>
@@ -70,8 +72,6 @@
             <% end %>
 =end 
 %>
-            </Row>
-          <% end %>
         <% end %>
         <% date += 1.day %>
       <% end %>
