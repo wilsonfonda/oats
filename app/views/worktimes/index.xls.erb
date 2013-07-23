@@ -42,9 +42,9 @@
             <Cell><Data ss:Type="String"><%= user.division %></Data></Cell>
             <% if (presence.flag) %>
               <% worktimes = Worktime.where("checkin > ? and checkin < ? and user_id = ?", datetime, (datetime+1.day),user.id).order("checkin") %>
-              <Cell><Data ss:Type="String"><%= worktimes.first.checkin %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= (worktimes.first.checkin.to_datetime-cookies["time_zone_offset"].to_i.minute).strftime("%H:%M:%S") %></Data></Cell>
               <Cell><Data ss:Type="String"><%= worktimes.first.place_checkin %></Data></Cell>
-              <Cell><Data ss:Type="String"><%= worktimes.first.checkout %></Data></Cell>
+              <Cell><Data ss:Type="String"><%= (worktimes.first.checkout.to_datetime-cookies["time_zone_offset"].to_i.minute).strftime("%H:%M:%S") %></Data></Cell>
               <Cell><Data ss:Type="String"><%= worktimes.last.place_checkout %></Data></Cell>
               <% total = 0 %>
               <% worktimes.each do |w| %>
