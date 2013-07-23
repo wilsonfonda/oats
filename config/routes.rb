@@ -18,7 +18,6 @@ Oats::Application.routes.draw do
   post "absence", :to => "worktimes#create_absence"
   post "mobile_signin", :to => "users#mobile_signin"
   post "mobile_graph", :to => "worktimes#mobile_graph"
-  get "/presence", :to => "worktimes#presence"
 
   devise_scope :user do
     get "signin" => "devise/sessions#new", :as => :new_user_session

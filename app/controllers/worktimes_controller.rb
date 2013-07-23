@@ -264,10 +264,6 @@ class WorktimesController < ApplicationController
 		end
     end
 
-    def presence
-    	
-    end
-
     private
 
     	def valid_location (office, latitude, longitude)
