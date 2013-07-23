@@ -38,49 +38,53 @@ class WorktimesController < ApplicationController
 
 	def create
 		if (params[:access_token].nil?)
-			@worktime = current_user.worktimes.build()
-		    @office = Office.find(current_user.office_id)
-		    @worktime.checkin = Time.now
-		    if valid_location(@office, params[:latitude], params[:longitude])
-		    	@worktime.place_checkin = @office.name
-		    	@worktime.save
-		    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
-    			if (p.blank?)
-				    @presence = current_user.presences.build()
-			    	@presence.date = Date.today.to_s
-			    	@presence.flag = true
-			    	@presence.save
+			if (!User.checkin?(current_user))
+				@worktime = current_user.worktimes.build()
+			    @office = Office.find(current_user.office_id)
+			    @worktime.checkin = Time.now
+			    if valid_location(@office, params[:latitude], params[:longitude])
+			    	@worktime.place_checkin = @office.name
+			    	@worktime.save
+			    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+	    			if (p.blank?)
+					    @presence = current_user.presences.build()
+				    	@presence.date = Date.today.to_s
+				    	@presence.flag = true
+				    	@presence.save
+				    else
+				    	p.first.flag = true
+				    	p.first.save
+				    end
+			    	flash[:notice] = "Successfully checked in."
 			    else
-			    	p.first.flag = true
-			    	p.first.save
+			    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
+			    	found = false
+			    	@offices.each  do | o |
+			    		if valid_location(o, params[:latitude], params[:longitude])
+			    			@worktime.place_checkin = o.name
+			    			@worktime.save
+					    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+			    			if (p.blank?)
+							    @presence = current_user.presences.build()
+						    	@presence.date = Date.today.to_s
+						    	@presence.flag = true
+						    	@presence.save
+						    else
+						    	p.first.flag = true
+				    			p.first.save
+						    end
+			    			flash[:notice] = "Successfully checked in."
+			    			found = true
+			    			break
+			    		end
+			    	end
+			    	if !found
+			    		flash[:error] = "Failed to checkin. Please check your location."
+			    	end
 			    end
-		    	flash[:notice] = "Successfully checked in."
-		    else
-		    	@offices = Office.where("company_id = ? AND id <> ?", @office.company_id, @office.id)
-		    	found = false
-		    	@offices.each  do | o |
-		    		if valid_location(o, params[:latitude], params[:longitude])
-		    			@worktime.place_checkin = o.name
-		    			@worktime.save
-				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
-		    			if (p.blank?)
-						    @presence = current_user.presences.build()
-					    	@presence.date = Date.today.to_s
-					    	@presence.flag = true
-					    	@presence.save
-					    else
-					    	p.first.flag = true
-			    			p.first.save
-					    end
-		    			flash[:notice] = "Successfully checked in."
-		    			found = true
-		    			break
-		    		end
-		    	end
-		    	if !found
-		    		flash[:error] = "Failed to checkin. Please check your location."
-		    	end
-		    end
+			else
+				flash[:alert] = "You are already checked in at "+current_user.worktimes.order("checkin").last.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S")+"."
+			end
 		    redirect_to :back
 		else
 			@user = User.find_by_access_token(params[:access_token])
