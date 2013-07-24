@@ -44,9 +44,9 @@
               <% worktimes = Worktime.where("checkin > ? and checkin < ? and user_id = ?", datetime, (datetime+1.day),user.id).order("checkin") %>
               <% cin = worktimes.first.checkin.try(:to_i) %>
               <% cout = worktimes.first.checkout.try(:to_i) %>
-              <Cell><Data ss:Type="String"><% unless cin.nil? %><%= Time.at(cin).advance(:minute => -@zone_offset).strftime("%H:%M:%S") %><% end %></Data></Cell>
+              <Cell><Data ss:Type="String"><% unless cin.nil? %><%= Time.at(cin).advance(:minutes => -@zone_offset).strftime("%H:%M:%S") %><% end %></Data></Cell>
               <Cell><Data ss:Type="String"><%= worktimes.first.place_checkin %></Data></Cell>
-              <Cell><Data ss:Type="String"><% unless cout.nil? %><%= Time.at(cout).advance(:minute => -@zone_offset).strftime("%H:%M:%S") %><% end %></Data></Cell>
+              <Cell><Data ss:Type="String"><% unless cout.nil? %><%= Time.at(cout).advance(:minutes => -@zone_offset).strftime("%H:%M:%S") %><% end %></Data></Cell>
               <Cell><Data ss:Type="String"><%= worktimes.last.place_checkout %></Data></Cell>
               <% total = 0 %>
               <% worktimes.each do |w| %>
