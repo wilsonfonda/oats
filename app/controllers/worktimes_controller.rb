@@ -99,9 +99,9 @@ class WorktimesController < ApplicationController
 				    @worktime.checkin = Time.now
 				    if valid_location(@office, params[:latitude], params[:longitude])
 				    	@worktime.place_checkin = @office.name
-				    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+				    	p = Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s)
 		    			if (p.blank?)
-						    @presence = current_user.presences.build()
+						    @presence = @user.presences.build()
 					    	@presence.date = Date.today.to_s
 					    	@presence.flag = true
 					    	@presence.save
@@ -120,9 +120,9 @@ class WorktimesController < ApplicationController
 				    	@offices.each  do | o |
 				    		if valid_location(o, params[:latitude], params[:longitude])
 				    			@worktime.place_checkin = o.name
-						    	p = Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s)
+						    	p = Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s)
 				    			if (p.blank?)
-								    @presence = current_user.presences.build()
+								    @presence = @user.presences.build()
 							    	@presence.date = Date.today.to_s
 							    	@presence.flag = true
 							    	@presence.save
