@@ -4,9 +4,3 @@
 <% else %>
   <%= render 'all' %>
 <% end %>
-
-<script>
-var currentTime = new Date();
-var utcOffset   = currentTime.getTimezoneOffset();
-document.cookie = 'time_zone_offset='+utcOffset+';';
-</script>

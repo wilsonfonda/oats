@@ -4,6 +4,7 @@ class WorktimesController < ApplicationController
 	helper_method :sort_column, :sort_direction
 	
 	def index
+		@zone_offset = cookies["time_zone_offset"].to_i
 		if params[:id].nil?
 			if !params[:from].nil? && !params[:to].nil?
 				if current_user.role != "3"
@@ -83,7 +84,7 @@ class WorktimesController < ApplicationController
 			    	end
 			    end
 			else
-				flash[:alert] = "You are already checked in at "+current_user.worktimes.order("checkin").last.checkin.advance(:minutes => -cookies["time_zone_offset"].to_i).strftime("%H:%M:%S")+"."
+				flash[:alert] = "You are already checked in at "+current_user.worktimes.order("checkin").last.checkin.advance(:minutes => -zone_offset).strftime("%H:%M:%S")+"."
 			end
 		    redirect_to :back
 		else

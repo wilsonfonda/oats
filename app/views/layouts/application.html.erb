@@ -54,6 +54,12 @@
 		<%= render 'layouts/footer' %>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		
+		<script>
+		var currentTime = new Date();
+		var utcOffset   = currentTime.getTimezoneOffset();
+		document.cookie = 'time_zone_offset='+utcOffset+';';
+		</script>
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>-->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
