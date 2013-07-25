@@ -45,7 +45,7 @@
 				<% elsif name.to_s == "error" %>
 					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-error" %>
 				<% else %>
-					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert alert-" %>
+					<%= content_tag :div, msg,:id => "flash_#{name}", :class => "span11 alert" %>
 				<% end %>
 	   		 <% end %>
 		</div>
