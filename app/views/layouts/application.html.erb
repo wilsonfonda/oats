@@ -30,7 +30,7 @@
 		<div class="container content">
 		<div class="row">
 			 <% flash.each do |name, msg| %>
-		      	<% if msg.class == Array %>
+		      	<% if msg.class == Array && (request.fullpath.include?("signup"))%>
 		      		<div class="span11 alert alert-error">
 		      		<h4><%= pluralize(msg.count, "error") %> prohibited this Signup from completing:</h4>
         			<ul>
