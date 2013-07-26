@@ -214,25 +214,51 @@ class WorktimesController < ApplicationController
     end
 
     def create_absence
-    	if (Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s).blank?)
-	    	@worktime = current_user.worktimes.build()
-	    	@worktime.checkin = Time.now
-	    	@worktime.checkout = @worktime.checkin
-	    	@worktime.place_checkin = " "
-	    	@worktime.place_checkout = " "
-	    	@presence = current_user.presences.build()
-	    	@presence.date = Date.today.to_s
-	    	@presence.flag = false
-	    	@presence.note = params[:note]
-	    	if (@worktime.save && @presence.save)
-	    		flash[:notice] = "Reason for absence recorded."
-	    	else
-	    		flash[:error] = "Reason for absence failed to be recorded. Try again."
-	    	end
+    	if (params[:access_token].nil?)
+	    	if (Presence.where("user_id = ? AND date = ?", current_user.id, Date.today.to_s).blank?)
+		    	@worktime = current_user.worktimes.build()
+		    	@worktime.checkin = Time.now
+		    	@worktime.checkout = @worktime.checkin
+		    	@worktime.place_checkin = " "
+		    	@worktime.place_checkout = " "
+		    	@presence = current_user.presences.build()
+		    	@presence.date = Date.today.to_s
+		    	@presence.flag = false
+		    	@presence.note = params[:note]
+		    	if (@worktime.save && @presence.save)
+		    		flash[:notice] = "Reason for absence recorded."
+		    	else
+		    		flash[:error] = "Reason for absence failed to be recorded. Try again."
+		    	end
+		    else
+		    	flash[:alert] = "You are already checkin today."
+		    end
+	    	redirect_to :back
 	    else
-	    	flash[:alert] = "You are already checkin today."
+	    	@user = User.find_by_access_token(params[:access_token])
+	    	if @user.nil?
+	    		render :json => { :code => '501'}
+	    	else
+		    	if (Presence.where("user_id = ? AND date = ?", @user.id, Date.today.to_s).blank?)
+			    	@worktime = @user.worktimes.build()
+			    	@worktime.checkin = Time.now
+			    	@worktime.checkout = @worktime.checkin
+			    	@worktime.place_checkin = " "
+			    	@worktime.place_checkout = " "
+			    	@presence = @user.presences.build()
+			    	@presence.date = Date.today.to_s
+			    	@presence.flag = false
+			    	@presence.note = params[:note]
+			    	if (@worktime.save && @presence.save)
+			    		render :json => { :code => '200'}
+			    	else
+			    		render :json => { :code => '503'}
+			    	end
+			    else
+			    	render :json => { :code => '502'}
+			    end
+			end
 	    end
-    	redirect_to :back
     end
 
     def mobile_graph
