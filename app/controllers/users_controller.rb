@@ -51,6 +51,7 @@ class UsersController < ApplicationController
 			else
 				flash[:error] = "Failed to update employee information"
 			end
+			redirect_to users_path
 		else
 			if @user.update_attributes(params[:user].except(:role))
 				flash[:notice] = "Employee information updated."
@@ -58,7 +59,7 @@ class UsersController < ApplicationController
 				flash[:error] = "Failed to update employee information"
 			end
 		end
-		redirect_to users_path
+		redirect_to edit_user_path current_user
 	end
 
 	def update_batch
