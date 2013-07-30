@@ -28,6 +28,9 @@ We have 6 ActiveRecord model:
 6.  Billing
     Stores a company's bills. A new bill can only be created by an admin. A company can have many billings.
 
+7.  Presence
+    Stores wether an employee is checked in or absence on a particular day. Belongs to user.
+
 For database, we use SQLite3 for development and PostgreSQL for production in Heroku.
 
 # Controller
@@ -66,9 +69,10 @@ Our controllers are mostly RESTful, though there are some exception.
 5.  Worktimes
     Available for all, with different things to show.
     index - Views either performance graph of an user or show worktimes of all employees in a company.
-    create - Create a new worktime (checkin)
-    update - Update an existing worktime (checkout)
+    create - Create a new worktime and presence (checkin), validates location.
+    update - Update an existing worktime and presence (checkout), validates location.
     mobile_graph - Send JSON containing performance graph data.
+    create_absence - Create a new worktime and presence containing an absence note. Does not validate location.
 
 6.  Billings
     Available for admin, owner can only views their own.
